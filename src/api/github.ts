@@ -15,11 +15,11 @@ export const fetchRepos = async (): Promise<Repo[]> => {
     .then(async (response) => await response.json())
     .then((data) => {
       return data.map(
-        ({ id, name, description, html_url, language, topics, fork }: Repo) => ({
+        ({ id, name, description, html_url: url, language, topics, fork }: Repo) => ({
           id,
           name,
           description,
-          html_url,
+          url,
           language,
           topics,
           fork
