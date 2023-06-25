@@ -19,7 +19,7 @@ export default function Home (): JSX.Element {
       return (
         <Sections
           key={i}
-          title='Projects'
+          title={i === 0 ? 'Projects' : ''}
           color={i % 2 === 0 ? 'white' : 'black'}
         >
           <Project

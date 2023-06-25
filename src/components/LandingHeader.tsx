@@ -5,14 +5,20 @@ export const LandingHeader = (): JSX.Element => {
   const header = useRef<HTMLHeadElement>(null)
   const observer = useRef<IntersectionObserver>()
 
+  const sectionElements = global.document?.querySelectorAll('.landing-section')
+  sectionElements?.forEach((section) => observer.current?.observe(section))
+
+  const listItem = header.current?.querySelectorAll('li')
+
+  const menuBackdrop = header.current?.querySelector(
+    '#menu-backdrop'
+  ) as HTMLDivElement
+
   const handleScroll = useCallback((link: string) => {
     const element = document.getElementById(link)
     if (element) {
-      element.classList.add('animate-ping')
       element.scrollIntoView({ behavior: 'smooth' })
-      setTimeout(() => {
-        element.classList.remove('animate-ping')
-      }, 1000)
+      element.classList.add('scroll-behavior-smooth')
     }
   }, [])
 
@@ -32,15 +38,6 @@ export const LandingHeader = (): JSX.Element => {
       })
     }, observerOptions)
   }, [])
-
-  const sectionElements = global.document?.querySelectorAll('.landing-section')
-  sectionElements?.forEach((section) => observer.current?.observe(section))
-
-  const listItem = header.current?.querySelectorAll('li')
-
-  const menuBackdrop = header.current?.querySelector(
-    '#menu-backdrop'
-  ) as HTMLDivElement
 
   listItem?.forEach((item) => {
     item.addEventListener('mouseenter', () => {
