@@ -19,7 +19,7 @@ export const fetchRepos = async (): Promise<Repo[]> => {
           id,
           name,
           description,
-          url,
+          html_url: url,
           language,
           topics,
           fork

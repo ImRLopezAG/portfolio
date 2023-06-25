@@ -1,10 +1,9 @@
-'use client'
-import Link from 'next/link'
-import { useCallback, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { Logo } from './Logo'
 
 export const LandingHeader = (): JSX.Element => {
   const header = useRef<HTMLHeadElement>(null)
+  const observer = useRef<IntersectionObserver>()
 
   const handleScroll = useCallback((link: string) => {
     const element = document.getElementById(link)
@@ -17,34 +16,33 @@ export const LandingHeader = (): JSX.Element => {
     }
   }, [])
 
-  const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.9
-  }
-
-  const observer: IntersectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      const { isIntersecting } = entry
-      if (isIntersecting) {
-        const color = entry.target.getAttribute('data-header-color') ?? ''
-        if (header.current) {
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.9
+    }
+    observer.current = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const { isIntersecting } = entry
+        if (isIntersecting && header.current) {
+          const color = entry.target.getAttribute('data-header-color') ?? ''
           header.current.style.color = color
         }
-      }
-    })
-  }, observerOptions)
+      })
+    }, observerOptions)
+  }, [])
 
-  const sectionElements = document.querySelectorAll('.landing-section')
-  sectionElements.forEach((section) => observer.observe(section))
+  const sectionElements = global.document?.querySelectorAll('.landing-section')
+  sectionElements?.forEach((section) => observer.current?.observe(section))
 
-  const listItem = document.querySelectorAll('#landing-header li')
+  const listItem = header.current?.querySelectorAll('li')
 
-  const menuBackdrop = document.querySelector(
+  const menuBackdrop = header.current?.querySelector(
     '#menu-backdrop'
   ) as HTMLDivElement
 
-  listItem.forEach((item) => {
+  listItem?.forEach((item) => {
     item.addEventListener('mouseenter', () => {
       const { left, top, width, height } = item.getBoundingClientRect()
 
@@ -64,9 +62,8 @@ export const LandingHeader = (): JSX.Element => {
 
   return (
     <header
-      id='landing-header'
       ref={header}
-      className='flex items-center justify-between fixed top-0 w-full p-2 z-10 max-[420px]:p-0'
+      className='flex items-center justify-between fixed top-0 w-full p-2 z-10 max-[420px]:p-0 '
     >
       <div className='flex flex-grow basis-0'>
         <Logo />
@@ -74,10 +71,10 @@ export const LandingHeader = (): JSX.Element => {
       <nav className='flex flex-grow justify-start'>
         <ul className='flex text-sm [&>li>a]:font-medium [&>li>a]:text-current [&>li>a]:inline-block [&>li>a]:px-4 [&>li>a]:py-2'>
           <li onClick={() => handleScroll('Home')}>
-            <Link href='#Home'>Home</Link>
+            <a href='#Home'>Home</a>
           </li>
           <li onClick={() => handleScroll('Projects')}>
-            <Link href='#Projects'>Projects</Link>
+            <a href='#Projects'>Projects</a>
           </li>
         </ul>
       </nav>

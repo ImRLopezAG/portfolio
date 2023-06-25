@@ -37,7 +37,7 @@ export default function Home (): JSX.Element {
     handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-  }, [repositories, window.innerWidth])
+  }, [repositories])
 
   return (
     <>
