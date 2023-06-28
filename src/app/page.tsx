@@ -1,44 +1,10 @@
 'use client'
 import { LandingHeader, Sections } from '@/components'
-import { Profile, Project } from '@/components/pages'
-import { useRepo } from '@/hooks/useRepo'
-import { useEffect, useState } from 'react'
+import { Profile } from '@/components/pages'
+import { useProject } from '@/hooks/useProject'
 
 export default function Home (): JSX.Element {
-  const { repositories, loading } = useRepo()
-
-  const [projects, setProjects] = useState<React.ReactNode[]>([])
-
-  const handleResize = (): void => {
-    const numSections = Math.ceil(
-      repositories.length / (window.innerWidth <= 420 ? 3 : 8)
-    )
-    const sections = Array.from({ length: numSections }, (_, i) => {
-      const start = i * (window.innerWidth <= 420 ? 3 : 8)
-      const end = start + (window.innerWidth <= 420 ? 3 : 8)
-      return (
-        <Sections
-          key={i}
-          title={i === 0 ? 'Projects' : ''}
-          color={i % 2 === 0 ? 'white' : 'black'}
-        >
-          <Project
-            isFirst={i === 0}
-            repositories={repositories.slice(start, end)}
-            loading={loading}
-          />
-        </Sections>
-      )
-    })
-    setProjects(sections)
-  }
-
-  useEffect(() => {
-    handleResize()
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [repositories])
-
+  const { projects } = useProject()
   return (
     <>
       <LandingHeader />

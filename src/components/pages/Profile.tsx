@@ -1,14 +1,14 @@
-import Image from 'next/image'
-import { technologies } from '../../api'
+import { technologies } from '@/api'
 import { Icon } from './components/Icon'
+import Image from 'next/image'
 
 export const Profile = (): JSX.Element => {
   return (
     <div className='flex max-[420px]:flex-col items-start min-[420px]:mt-4 [&>section]:flex-col [&>section>h2]:font-bold [&>section>h2]:my-4 [&>section]:max-[420px]:w-full '>
       <section className='w-1/2 flex h-full items-center'>
         <h2 className='text-3xl'>Angel Gabriel Lopez</h2>
-        <Image
-          src='/me.jpg'
+        <img
+          src='/me.webp'
           height='400'
           width='400'
           className='rounded-full w-80 h-80 max-[420px]:w-40 max-[420px]:h-40 mb-4'
@@ -47,7 +47,6 @@ export const Profile = (): JSX.Element => {
           <div className='flex gap-3 min-[420px]:flex-wrap overflow-auto max-[420px]:flex-row hide-scrollbar'>
             {technologies.map((technology) => (
               <Image
-                loading='lazy'
                 key={technology.id}
                 src={`technologies/${technology.name}.svg`}
                 alt={technology.name}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { fetchRepos } from '../api'
+import { fetchRepos } from '@/api'
 
 interface Repo {
   id: number
@@ -14,6 +14,7 @@ interface Repo {
 interface UseRepo {
   repositories: Repo[]
   loading: boolean
+  loaded: boolean
 }
 export const useRepo = (): UseRepo => {
   const [repo, setRepo] = useState<Repo[]>([])
@@ -25,9 +26,12 @@ export const useRepo = (): UseRepo => {
     repos.length >= 1 && setLoading(false)
   }
   useEffect(() => {
-    getRepos()
-      .catch((error) => console.error(error))
+    getRepos().catch((error) => console.error(error))
   }, [])
 
-  return { repositories: repo.filter((rep) => rep.description != null), loading }
+  return {
+    repositories: repo.filter((rep) => rep.description != null),
+    loading,
+    loaded: !loading
+  }
 }

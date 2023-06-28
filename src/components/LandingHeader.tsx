@@ -1,61 +1,23 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useHeader, useObserver } from '@/hooks'
+import Link from 'next/link'
+import { useEffect } from 'react'
 import { Logo } from './Logo'
 
 export const LandingHeader = (): JSX.Element => {
-  const header = useRef<HTMLHeadElement>(null)
-  const observer = useRef<IntersectionObserver>()
+  const { header, handleScroll } = useHeader()
 
-  const sectionElements = global.document?.querySelectorAll('.landing-section')
-  sectionElements?.forEach((section) => observer.current?.observe(section))
-
-  const listItem = header.current?.querySelectorAll('li')
-
-  const menuBackdrop = header.current?.querySelector(
-    '#menu-backdrop'
-  ) as HTMLDivElement
-
-  const handleScroll = useCallback((link: string) => {
-    const element = document.getElementById(link)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-      element.classList.add('scroll-behavior-smooth')
-    }
-  }, [])
+  const [entries, observer] = useObserver()
 
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.9
-    }
-    observer.current = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const { isIntersecting } = entry
-        if (isIntersecting && header.current) {
-          const color = entry.target.getAttribute('data-header-color') ?? ''
-          header.current.style.color = color
-        }
-      })
-    }, observerOptions)
-  }, [])
-
-  listItem?.forEach((item) => {
-    item.addEventListener('mouseenter', () => {
-      const { left, top, width, height } = item.getBoundingClientRect()
-
-      menuBackdrop.style.setProperty('--left', `${left}px`)
-      menuBackdrop.style.setProperty('--top', `${top}px`)
-      menuBackdrop.style.setProperty('--width', `${width}px`)
-      menuBackdrop.style.setProperty('--height', `${height}px`)
-      menuBackdrop.style.opacity = '1'
-      menuBackdrop.style.visibility = 'visible'
+    entries?.forEach((entry) => {
+      const { isIntersecting } = entry
+      if (isIntersecting && header.current) {
+        const color = entry.target.getAttribute('data-header-color') ?? 'white'
+        header.current.style.color = color === 'white' ? 'black' : 'white'
+      }
     })
-
-    item.addEventListener('mouseleave', () => {
-      menuBackdrop.style.opacity = '0'
-      menuBackdrop.style.visibility = 'hidden'
-    })
-  })
+    return () => observer?.current?.disconnect()
+  }, [entries])
 
   return (
     <header
@@ -68,10 +30,10 @@ export const LandingHeader = (): JSX.Element => {
       <nav className='flex flex-grow justify-start'>
         <ul className='flex text-sm [&>li>a]:font-medium [&>li>a]:text-current [&>li>a]:inline-block [&>li>a]:px-4 [&>li>a]:py-2'>
           <li onClick={() => handleScroll('Home')}>
-            <a href='#Home'>Home</a>
+            <Link href='#Home'>Home</Link>
           </li>
           <li onClick={() => handleScroll('Projects')}>
-            <a href='#Projects'>Projects</a>
+            <Link href='#Projects'>Projects</Link>
           </li>
         </ul>
       </nav>
