@@ -1,4 +1,5 @@
 import { Card } from './components/Card'
+import { Skeleton } from './components/Skeleton'
 
 interface Repo {
   id: number
@@ -25,7 +26,7 @@ export const Project: React.FC<ProjectProps> = ({ repositories, loading, isFirst
       <div className='grid grid-cols-[repeat(auto-fit,minmax(18rem,1fr))] gap-2 max-w-full'>
         {loading
           ? (
-            <p>Loading...</p>
+            <Skeleton />
             )
           : (
               repositories.map((repo) => (
