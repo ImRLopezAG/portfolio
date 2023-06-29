@@ -15,6 +15,7 @@ export const Icon = ({ name, src, url }: IconProps): JSX.Element => {
       href={isEmail ? `mailto:${url}` : `https://${url}`}
       target={isEmail ? '' : '_blank'}
       rel='noreferrer'
+      title={name}
     >
       <Image
         alt={name}
