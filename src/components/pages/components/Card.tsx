@@ -1,4 +1,13 @@
-import Link from 'next/link'
+import {
+  CsharpIcon,
+  DartIcon,
+  HTMLIcon,
+  HandlebarsIcon,
+  JSIcon,
+  TSIcon
+} from '@/components/icon'
+import * as next from '@nextui-org/react'
+import NextLink from 'next/link'
 
 interface CardProps {
   title: string
@@ -6,65 +15,63 @@ interface CardProps {
   url: string
   tech: string
 }
-interface Color {
-  [key: string]: string
-}
 
 export const Card = ({ title, desc, url, tech }: CardProps): JSX.Element => {
-  const Color: Color = {
+  const Color: Record<string, `#${string}`> = {
     'C#': '#37CB19',
     JavaScript: '#F7DF1E',
     TypeScript: '#3178c6',
     HTML: '#e34c26',
-    Handlebars: '#f7931e'
+    Handlebars: '#f7931e',
+    Dart: '#00B4AB'
   }
 
-  const color: string = Color[tech] ?? '#FFFFFF'
+  const Tech: Record<string, JSX.Element> = {
+    'C#': <CsharpIcon />,
+    JavaScript: <JSIcon />,
+    TypeScript: <TSIcon />,
+    HTML: <HTMLIcon />,
+    Handlebars: <HandlebarsIcon />,
+    Dart: <DartIcon />
+  }
+
+  const color: string = Color[tech] ?? '#808080'
 
   return (
-    <div className='flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] w-70 h-52'>
-      <div className='p-2 md:p-5'>
-        <h3 className='text-lg font-bold text-gray-800 dark:text-white truncate'>
-          {title}
-        </h3>
-        <p className='text-gray-800 dark:text-gray-400 flex-wrap overflow-hidden max-h-16'>
-          {desc}
-        </p>
-        <div className='flex flex-row gap-4 items-center mt-4 justify-between'>
-          {tech && (
-            <div className='flex flex-row gap-2'>
-              <span
-                className='w-4 h-4 rounded-full'
-                style={{
-                  background: color
-                }}
-              />
-              <p className='text-gray-500'>{tech}</p>
-            </div>
-          )}
-          <Link
-            className='inline-flex items-center gap-2 font-medium text-blue-500 hover:text-blue-700'
-            href={url}
-          >
-            Repo link
-            <svg
-              className='w-2.5 h-auto'
-              width='16'
-              height='16'
-              viewBox='0 0 16 16'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path
-                d='M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14'
-                stroke='currentColor'
-                strokeWidth='2'
-                strokeLinecap='round'
-              />
-            </svg>
-          </Link>
-        </div>
-      </div>
-    </div>
+    <next.Card className='max-w-[400px] max-h-[250px]'>
+      <next.CardHeader className='flex gap-3'>
+        {Tech[tech] ?? (
+          <next.Image
+            alt='nextui logo'
+            height={40}
+            radius='sm'
+            src='https://avatars.githubusercontent.com/u/86160567?s=200&v=4'
+            width={40}
+          />
+        )}
+        <section className='flex flex-col truncate'>
+          <p className='text-md'>{title}</p>
+          <div className='text-small text-default-500 flex gap-2 items-center'>
+            <div
+              className='w-4 h-4 rounded-full'
+              style={{
+                background: color
+              }}
+            />
+            <p>{tech ?? 'Fork'}</p>
+          </div>
+        </section>
+      </next.CardHeader>
+      <next.Divider />
+      <next.CardBody>
+        <p>{desc}</p>
+      </next.CardBody>
+      <next.Divider />
+      <next.CardFooter>
+        <next.Link isExternal showAnchorIcon href={url} as={NextLink}>
+          Visit source code on GitHub.
+        </next.Link>
+      </next.CardFooter>
+    </next.Card>
   )
 }

@@ -4,13 +4,12 @@ import { Badged, Icon, Role, SLetter } from './'
 export const DiscordCard = (): JSX.Element => {
   return (
     <section className='dc-card flex flex-col h-full w-full max-[420px]:w-full rounded-2xl bg-[#232428] gap-2 text-white'>
-      <img
-        src='/bck.jfif'
-        className='w-full h-[6.56em] bg-blue-400 rounded-t-2xl'
+      <span
+        className='w-full h-[6.56em] bg-blue-600 rounded-t-2xl'
       />
       <header className='flex flex-col relative justify-center items-center z-10 w-24 h-24 -mt-14 ml-3 rounded-full bg-[#232428]'>
         <Image
-          src='/me.webp'
+          src='/me.jpg'
           className='w-[85%] h-[85%] rounded-full bg-blue-400'
           width={100}
           height={100}

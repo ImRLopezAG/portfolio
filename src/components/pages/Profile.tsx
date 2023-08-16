@@ -5,7 +5,7 @@ import { DiscordCard } from './components'
 export const Profile = (): JSX.Element => {
   return (
     <div className='flex max-[420px]:flex-col gap-20 items-start min-[420px]:mt-4 [&>section]:flex-col [&>section>h2]:font-bold [&>section>h2]:my-4 [&>section]:max-[420px]:w-full '>
-      <section className='w-1/2 flex max-[420px]:hidden'>
+      <section className='w-1/2 flex'>
         <h2 className='text-3xl'>Software Engineer</h2>
         <p className='text-lg'>
           A polyglot developer with a passion for build applications that
