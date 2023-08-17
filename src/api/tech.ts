@@ -67,5 +67,9 @@ export const technologies: Technology[] = [
   {
     id: 16,
     name: 'typescript'
+  },
+  {
+    id: 17,
+    name: 'dart'
   }
 ]

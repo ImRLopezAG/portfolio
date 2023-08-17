@@ -15,11 +15,11 @@ export const useProject = (): ReturnType => {
 
   const handleResize = useCallback((): React.ReactNode[] => {
     const numSections = Math.ceil(
-      repositories.length / (window.innerWidth <= 420 ? 3 : 8)
+      repositories.length / (window.innerWidth <= 420 ? 2 : 8)
     )
     const sections = Array.from({ length: numSections }, (_, i) => {
-      const start = i * (window.innerWidth <= 420 ? 3 : 8)
-      const end = start + (window.innerWidth <= 420 ? 3 : 8)
+      const start = i * (window.innerWidth <= 420 ? 2 : 8)
+      const end = start + (window.innerWidth <= 420 ? 2 : 8)
       return (
         <Sections
           key={i}
