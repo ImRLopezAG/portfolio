@@ -25,6 +25,7 @@ export const useRepo = (): UseRepo => {
     setRepo(repos)
     repos.length >= 1 && setLoading(false)
   }
+
   useEffect(() => {
     getRepos().catch((error) => console.error(error))
   }, [])

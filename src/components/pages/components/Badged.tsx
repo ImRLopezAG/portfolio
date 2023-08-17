@@ -21,7 +21,7 @@ export const Badged: React.FC<BadgedProps> = ({ name, display }) => {
       box.classList.toggle('translate-y-2')
       element.classList.toggle('hidden')
     }
-  }, [])
+  }, [display, name])
 
   return (
     <Image

@@ -98,10 +98,12 @@ export const DiscordCard = (): JSX.Element => {
                 </div>
                 <span className='h-1 w-1 bg-gray-300 rounded-2xl' />
                 <div className='flex flex-row'>
-                  <img
+                  <Image
                     src='/midu.webp'
                     className='w-5 h-5 rounded-full'
                     alt='midu icon'
+                    width={20}
+                    height={20}
                   />
                   <span className='text-x ml-1  text-sm'>Sep 5, 2022</span>
                 </div>

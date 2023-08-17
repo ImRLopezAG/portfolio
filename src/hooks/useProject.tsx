@@ -44,7 +44,7 @@ export const useProject = (): ReturnType => {
     return () => {
       window.removeEventListener('resize', resizeHandler)
     }
-  }, [loaded])
+  }, [handleResize, loaded])
 
   return { projects, loaded }
 }
