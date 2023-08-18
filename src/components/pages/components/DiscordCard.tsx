@@ -1,9 +1,10 @@
 import Image from 'next/image'
-import { Badged, Icon, Role, SLetter } from './'
+import { Badged, Icons, Role, SLetter } from './'
+import { DiscordIcon } from '@/components/icon/icons'
 
 export const DiscordCard = (): JSX.Element => {
   return (
-    <section className='dc-card flex flex-col h-full w-full max-[420px]:w-full rounded-2xl bg-[#232428] gap-2 text-white'>
+    <article className='dc-card flex flex-col h-full w-full max-[420px]:w-full rounded-2xl bg-[#232428] gap-2 text-white'>
       <span
         className='w-full h-[5em] bg-blue-600 rounded-t-2xl'
       />
@@ -64,36 +65,14 @@ export const DiscordCard = (): JSX.Element => {
             <div className='[&>span]: flex flex-col'>
               <span className='text-sm font-bold my-1'>CONTACT</span>
               <div className='flex flex-row gap-2'>
-                <Icon
-                  name='linkedin'
-                  src='linkedin'
-                  url='linkedin.com/in/angel-gabriel-lopez'
-                />
-                <Icon
-                  name='resume'
-                  src='resume'
-                  url='docs.google.com/document/d/176L3kfuVECauW3vadR9yKZREDEfgXDadVGqQ3zm51wc'
-                />
-                <Icon name='github' src='github' url='github.com/imrlopezag' />
-                <Icon
-                  name='twitter'
-                  src='twitter'
-                  url='twitter.com/imr_lopez'
-                />
-                <Icon name='email' src='email' url='angelg00lopez@gmail.com' />
+                <Icons />
               </div>
             </div>
             <div className='flex flex-col'>
-              <span className='text-sm font-bold my-1'>MEMBER SINCE</span>
+              <span className='text-sm font-bold my-1'>DEVELOPER SINCE</span>
               <div className='flex flex-row gap-2 items-center'>
                 <div className='flex flex-row'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='inline-block h-5 w-5 fill-slate-400'
-                    viewBox='0 0 28 20'
-                  >
-                    <path d='M23.02 1.68A21.23 21.23 0 0 0 17.66 0c-.25.46-.49.93-.69 1.42-1.97-.3-3.97-.3-5.94 0-.21-.49-.44-.96-.7-1.41a21.2 21.2 0 0 0-5.36 1.67A22.21 22.21 0 0 0 1.1 16.65 21.5 21.5 0 0 0 7.7 20c.53-.73 1-1.5 1.4-2.3-.76-.3-1.5-.66-2.21-1.09.19-.13.37-.27.54-.43a15.23 15.23 0 0 0 13.16 0c.17.15.36.3.54.43-.71.43-1.46.79-2.22 1.08.4.8.87 1.58 1.4 2.3a21.5 21.5 0 0 0 6.58-3.34c.55-5.68-.91-10.6-3.86-14.97ZM9.68 13.64c-1.28 0-2.34-1.2-2.34-2.65s1.03-2.64 2.34-2.64c1.3 0 2.36 1.2 2.34 2.64 0 1.46-1.04 2.65-2.34 2.65Zm8.64 0c-1.29 0-2.34-1.2-2.34-2.65S17 8.35 18.32 8.35c1.3 0 2.36 1.2 2.33 2.64 0 1.46-1.03 2.65-2.33 2.65Z' />
-                  </svg>
+                  <DiscordIcon className='inline-block h-5 w-5 fill-slate-400' />
                   <span className='text-x ml-1  text-sm'>Dec 24, 2016</span>
                 </div>
                 <span className='h-1 w-1 bg-gray-300 rounded-2xl' />
@@ -124,6 +103,6 @@ export const DiscordCard = (): JSX.Element => {
           </section>
         </main>
       </div>
-    </section>
+    </article>
   )
 }

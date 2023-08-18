@@ -1,23 +1,6 @@
-import {
-  AspIcon,
-  BootstrapIcon,
-  CsharpIcon,
-  CssIcon,
-  DartIcon,
-  DotNetIcon,
-  GitIcon,
-  HTMLIcon,
-  JSIcon,
-  MongoDbIcon,
-  NextJsIcon,
-  NodeIcon,
-  ReactIcon,
-  SequelizeIcon,
-  SqlIcon,
-  TSIcon,
-  TailwindIcon
-} from '@/components/icon'
 import Image from 'next/image'
+import { Tooltip } from '@nextui-org/react'
+import { AspIcon, BootstrapIcon, CsharpIcon, CssIcon, DartIcon, DotNetIcon, GitIcon, HTMLIcon, JSIcon, MongoDbIcon, NextJsIcon, NodeIcon, ReactIcon, SequelizeIcon, SqlIcon, TSIcon, TailwindIcon } from '@/components/icon'
 import { DiscordCard } from './components'
 
 export const Profile = (): JSX.Element => {
@@ -58,28 +41,27 @@ export const Profile = (): JSX.Element => {
           </h2>
           <div className='flex gap-3 min-[420px]:flex-wrap overflow-auto max-[420px]:flex-row hide-scrollbar'>
             {Array.from(Object.keys(Tech)).map((tech) => (
-              <div
-                className='bg-slate-700/40 p-2 rounded-md h-20 w-20 flex justify-center'
-                key={tech}
-              >
-                {tech === 'mongoDb' ? (
-                  <Image
-                    src='technologies/mongoDb.svg'
-                    alt='mongo db'
-                    width='70'
-                    height='70'
-                  />
-                ) : tech === 'node' ? (
-                  <Image
-                    src='technologies/node.svg'
-                    alt='node'
-                    width='70'
-                    height='70'
-                  />
-                ) : (
-                  Tech[tech]
-                )}
-              </div>
+              <Tooltip key={tech} color='success' content={tech}>
+                <div className='bg-slate-700/40 p-2 rounded-md h-20 w-20 flex justify-center'>
+                  {tech === 'mongoDb' ? (
+                    <Image
+                      src='technologies/mongoDb.svg'
+                      alt='mongo db'
+                      width='70'
+                      height='70'
+                    />
+                  ) : tech === 'node' ? (
+                    <Image
+                      src='technologies/node.svg'
+                      alt='node'
+                      width='70'
+                      height='70'
+                    />
+                  ) : (
+                    Tech[tech]
+                  )}
+                </div>
+              </Tooltip>
             ))}
           </div>
         </section>

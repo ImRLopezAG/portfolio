@@ -11,6 +11,7 @@
   "dependencies": {
     "@nextui-org/card": "^2.0.11",
     "@nextui-org/react": "^2.0.22",
+    "@nextui-org/tooltip": "^2.0.13",
     "framer-motion": "^10.16.0",
     "next": "13.4.7",
     "react": "18.2.0",
