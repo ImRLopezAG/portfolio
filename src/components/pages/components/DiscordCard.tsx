@@ -1,20 +1,19 @@
-import Image from 'next/image'
+import { DeveloperIcon } from '@/components/icon'
 import { Badged, Icons, Role, SLetter } from './'
-import { DiscordIcon } from '@/components/icon/icons'
 
 export const DiscordCard = (): JSX.Element => {
   return (
-    <article className='dc-card flex flex-col h-full w-full max-[420px]:w-full rounded-2xl bg-[#232428] gap-2 text-white'>
-      <span
-        className='w-full h-[5em] bg-blue-600 rounded-t-2xl'
-      />
-      <header className='flex flex-col relative justify-center items-center z-10 w-24 h-24 -mt-14 ml-3 rounded-full bg-[#232428]'>
-        <Image
+    <article className='flex flex-col h-fit w-full rounded-2xl bg-[#232428] gap-2 text-white' aria-label='Discord Card'>
+      <span className='w-full h-[5em] bg-blue-600 rounded-t-2xl' />
+      <header className='flex flex-col relative justify-center items-center z-10 w-24 h-24 -mt-14 left-4 rounded-full bg-[#232428]'>
+        <img
           src='/me.jpg'
           className='w-[85%] h-[85%] rounded-full bg-blue-400'
           width={100}
           height={100}
-          alt='my self'
+          loading='lazy'
+          alt='Image of Angel Gabriel Lopez'
+          aria-label='Image of Angel Gabriel Lopez'
         />
       </header>
       <div className='flex flex-col pb-4 px-5 gap-3 -mt-12'>
@@ -72,17 +71,18 @@ export const DiscordCard = (): JSX.Element => {
               <span className='text-sm font-bold my-1'>DEVELOPER SINCE</span>
               <div className='flex flex-row gap-2 items-center'>
                 <div className='flex flex-row'>
-                  <DiscordIcon className='inline-block h-5 w-5 fill-slate-400' />
-                  <span className='text-x ml-1  text-sm'>Dec 24, 2016</span>
+                  <DeveloperIcon className='h-5 w-5' />
+                  <span className='text-x ml-1  text-sm'>Jan 24, 2021</span>
                 </div>
                 <span className='h-1 w-1 bg-gray-300 rounded-2xl' />
                 <div className='flex flex-row'>
-                  <Image
+                  <img
                     src='/midu.webp'
                     className='w-5 h-5 rounded-full'
-                    alt='midu icon'
+                    alt='Icon of midudev'
                     width={20}
                     height={20}
+                    aria-label='Icon of midudev'
                   />
                   <span className='text-x ml-1  text-sm'>Sep 5, 2022</span>
                 </div>

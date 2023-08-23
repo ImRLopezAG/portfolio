@@ -6,16 +6,12 @@ interface SectionProps {
   children: React.ReactNode
 }
 
-export const Sections: React.FC<SectionProps> = ({
-  title,
-  color,
-  children
-}) => {
+export const Sections: React.FC<SectionProps> = ({ title, color, children }) => {
   return (
     <div id={title} className='snap-center'>
       <section
         className={
-          'landing-section flex flex-col pt-9 pb-4 px-3 justify-center h-screen' +
+          'landing-section flex flex-col pt-9 pb-4 px-3 h-screen' +
           (color === 'white' ? ' bg-white text-black' : ' bg-black text-white')
         }
         data-header-color={color}

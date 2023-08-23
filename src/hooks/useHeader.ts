@@ -1,27 +1,19 @@
-import { useCallback, useRef } from 'react'
+import { useEffect, useCallback } from 'react'
+import { useObserver } from './'
 
 interface ReturnObserver {
-  header: React.MutableRefObject<HTMLHeadElement | null>
+  header: HTMLHeadElement | null
   handleScroll: (link: string) => void
 }
 
-export const useHeader = (): ReturnObserver => {
-  const handleScroll = useCallback((link: string) => {
-    const element = document.getElementById(link)
-    if (element) {
-      element.classList.add('scroll-behavior-smooth')
-      element.scrollIntoView({ behavior: 'smooth' })
-      element.classList.remove('scroll-behavior-smooth')
-    }
-  }, [])
-
-  const header = useRef<HTMLHeadElement>(null)
-
-  const { current } = header
-  const listItem = current?.querySelectorAll('li')
-  const menuBackdrop = current?.querySelector(
-    '#menu-backdrop'
-  ) as HTMLDivElement
+export function useHeader (): ReturnObserver {
+  const header: HTMLHeadElement | null =
+    typeof document !== 'undefined'
+      ? document.getElementById('landing-header')
+      : null
+  const listItem: NodeListOf<HTMLLIElement> | undefined =
+    header?.querySelectorAll('li')
+  const menuBackdrop = header?.querySelector('#menu-backdrop') as HTMLDivElement
 
   listItem?.forEach((item) => {
     item.addEventListener('mouseenter', () => {
@@ -40,6 +32,28 @@ export const useHeader = (): ReturnObserver => {
       menuBackdrop.style.visibility = 'hidden'
     })
   })
+
+  const [entries, observer] = useObserver()
+
+  useEffect(() => {
+    entries?.forEach((entry) => {
+      const { isIntersecting } = entry
+      if (isIntersecting && header !== null) {
+        const color = entry.target.getAttribute('data-header-color') ?? 'white'
+        header.style.color = color === 'white' ? 'black' : 'white'
+      }
+    })
+    return () => observer?.current?.disconnect()
+  }, [entries])
+
+  const handleScroll = useCallback((link: string) => {
+    const element = document.getElementById(link)
+    if (element !== null) {
+      element.classList.add('scroll-behavior-smooth')
+      element.scrollIntoView({ behavior: 'smooth' })
+      element.classList.remove('scroll-behavior-smooth')
+    }
+  }, [])
 
   return {
     header,

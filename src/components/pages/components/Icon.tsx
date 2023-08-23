@@ -1,22 +1,22 @@
 import { EmailIcon, GithubIcon, LinkedInIcon, ResumeIcon, TwitterIcon } from '@/components/icon/icons'
-import { Tooltip } from '@nextui-org/react'
+import { Tooltip } from '@nextui-org/tooltip'
 import Link from 'next/link'
 
 export const Icons = (): JSX.Element => {
   const Icon: Record<string, JSX.Element> = {
-    linkedin: <LinkedInIcon className='h-10 w-10' />,
-    resume: <ResumeIcon className='h-10 w-10' />,
-    github: <GithubIcon className='h-10 w-10' />,
-    twitter: <TwitterIcon className='h-10 w-10' />,
-    email: <EmailIcon className='h-10 w-10' />
+    Linkedin: <LinkedInIcon />,
+    Resume: <ResumeIcon />,
+    Github: <GithubIcon />,
+    Twitter: <TwitterIcon />,
+    Email: <EmailIcon />
   }
 
   const Urls: Record<string, string> = {
-    linkedin: 'linkedin.com/in/angel-gabriel-lopez',
-    resume: 'docs.google.com/document/d/176L3kfuVECauW3vadR9yKZREDEfgXDadVGqQ3zm51wc',
-    github: 'github.com/imrlopezag',
-    twitter: 'twitter.com/imr_lopez',
-    email: 'angelg00lopez@gmail.com',
+    Linkedin: 'linkedin.com/in/angel-gabriel-lopez',
+    Resume: 'docs.google.com/document/d/176L3kfuVECauW3vadR9yKZREDEfgXDadVGqQ3zm51wc',
+    Github: 'github.com/imrlopezag',
+    Twitter: 'twitter.com/imr_lopez',
+    Email: 'angelg00lopez@gmail.com'
   }
 
   return (
@@ -32,13 +32,13 @@ export const Icons = (): JSX.Element => {
               icon === 'email' ? `mailto:${Urls[icon]}` : `https://${Urls[icon]}`
             }
             target='_blank'
-            className='flex items-center justify-center cursor-pointer'
+            className='flex items-center justify-center cursor-pointer w-6 h-6'
             rel='noreferrer'
           >
               {Icon[icon]}
           </Link>
         </Tooltip>
       ))}
-    </>    
+    </>
   )
 }

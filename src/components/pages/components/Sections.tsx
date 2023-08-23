@@ -6,11 +6,7 @@ interface SectionProps {
   children: React.ReactNode
 }
 
-export const Sections: React.FC<SectionProps> = ({
-  title,
-  color,
-  children
-}) => {
+export const Sections: React.FC<SectionProps> = ({ title, color, children }) => {
   return (
     <div id={title} className='snap-center'>
       <section
