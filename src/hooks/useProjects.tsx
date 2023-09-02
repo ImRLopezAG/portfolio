@@ -1,7 +1,8 @@
 import { Sections } from '@/components/Sections'
 import { Project } from '@/components/pages/Project'
-import type { TechTypes } from '@/components/pages/components/Tech'
 import { useCallback, useEffect, useState } from 'react'
+
+type TechTypes = '.Net' | 'Asp.Net' | 'Bootstrap' | 'C-Sharp' | 'CSS' | 'Git' | 'HTML' | 'JavaScript' | 'MongoDb' | 'NextJs' | 'Node' | 'React' | 'Sequelize' | 'SQL' | 'TailwindCss' | 'TypeScript' | 'Dart' | 'Flutter' | 'Express'
 
 interface ReturnType {
   projects: React.ReactNode[]
