@@ -1,6 +1,6 @@
-import { Sections } from '../components/sections'
-import { Project } from '../components/pages/project'
-import type { TechTypes } from '../components/pages/components/tech'
+import { Sections } from '@/components/sections'
+import { Project } from '@/components/pages/project'
+import type { TechTypes } from '@/components/pages/components/tech'
 import { useCallback, useEffect, useState } from 'react'
 
 interface ReturnType {
