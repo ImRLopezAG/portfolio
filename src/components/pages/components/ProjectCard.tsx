@@ -3,7 +3,7 @@ import { Divider } from '@nextui-org/divider'
 import { Link } from '@nextui-org/link'
 import NextLink from 'next/link'
 import CardModal from './CardModal'
-import { Tech, type TechTypes } from './Tech'
+import { Tech, type TechTypes } from '.'
 
 interface ProjectCardProps {
   title: string
@@ -25,7 +25,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   return (
     <Card className='min-w-[22rem] flex-col items-center'>
       <CardHeader className='flex gap-3'>
-        <div className='h-16 w-16 flex justify-center'>{Tech[tech]}</div>
+        <div className='h-16 w-16 flex justify-center'>
+          <Tech tech={tech} />
+        </div>
         <p className='text-md'>{title}</p>
       </CardHeader>
       <Divider />

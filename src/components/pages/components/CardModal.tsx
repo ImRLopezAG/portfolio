@@ -8,7 +8,7 @@ import {
   ModalHeader,
   useDisclosure
 } from '@nextui-org/modal'
-import { Tech, type TechTypes } from './Tech'
+import { Tech, type TechTypes } from '.'
 
 interface CardModalProps {
   title: string
@@ -59,7 +59,7 @@ const CardModal: React.FC<CardModalProps> = ({ title, techs, images }) => {
                         key={tech}
                         className='bg-slate-700/40 p-2 rounded-md h-16 w-16 flex justify-center'
                       >
-                        {Tech[tech]}
+                        <Tech tech={tech} />
                       </span>
                     ))}
                   </div>
