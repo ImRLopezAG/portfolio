@@ -3,7 +3,9 @@ import { Divider } from '@nextui-org/divider'
 import { Link } from '@nextui-org/link'
 import NextLink from 'next/link'
 import CardModal from './CardModal'
-import { Tech, type TechTypes } from '.'
+import { AspIcon, BootstrapIcon, CsharpIcon, CssIcon, DartIcon, DotNetIcon, ExpressIcon, FlutterIcon, GitIcon, HTMLIcon, JSIcon, MongoDbIcon, NextJsIcon, NodeIcon, ReactIcon, SequelizeIcon, SqlIcon, TSIcon, TailwindIcon } from '@/components/icon'
+
+type TechTypes = '.Net' | 'Asp.Net' | 'Bootstrap' | 'C-Sharp' | 'CSS' | 'Git' | 'HTML' | 'JavaScript' | 'MongoDb' | 'NextJs' | 'Node' | 'React' | 'Sequelize' | 'SQL' | 'TailwindCss' | 'TypeScript' | 'Dart' | 'Flutter' | 'Express'
 
 interface ProjectCardProps {
   title: string
@@ -15,11 +17,32 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, repo, tech, techs, images }) => {
+  const technologies: Record<TechTypes, JSX.Element> = {
+    '.Net': <DotNetIcon />,
+    'Asp.Net': <AspIcon />,
+    Bootstrap: <BootstrapIcon />,
+    'C-Sharp': <CsharpIcon />,
+    CSS: <CssIcon />,
+    Git: <GitIcon />,
+    HTML: <HTMLIcon />,
+    JavaScript: <JSIcon />,
+    MongoDb: <MongoDbIcon />,
+    NextJs: <NextJsIcon />,
+    Node: <NodeIcon />,
+    React: <ReactIcon />,
+    Sequelize: <SequelizeIcon />,
+    SQL: <SqlIcon />,
+    TailwindCss: <TailwindIcon />,
+    TypeScript: <TSIcon />,
+    Dart: <DartIcon />,
+    Flutter: <FlutterIcon />,
+    Express: <ExpressIcon />
+  }
   return (
     <Card className='min-w-[22rem] flex-col items-center'>
       <CardHeader className='flex gap-3'>
         <div className='h-16 w-16 flex justify-center'>
-          <Tech tech={tech} />
+          {technologies[tech]}
         </div>
         <p className='text-md'>{title}</p>
       </CardHeader>

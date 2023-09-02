@@ -1,5 +1,5 @@
 import { ProjectCard } from './components/ProjectCard'
-import type { TechTypes } from './components/Tech'
+type TechTypes = '.Net' | 'Asp.Net' | 'Bootstrap' | 'C-Sharp' | 'CSS' | 'Git' | 'HTML' | 'JavaScript' | 'MongoDb' | 'NextJs' | 'Node' | 'React' | 'Sequelize' | 'SQL' | 'TailwindCss' | 'TypeScript' | 'Dart' | 'Flutter' | 'Express'
 interface Projects {
   title: string
   tech: TechTypes
