@@ -14,14 +14,7 @@ interface ProjectCardProps {
   images?: string[]
 }
 
-export const ProjectCard: React.FC<ProjectCardProps> = ({
-  title,
-  description,
-  repo,
-  tech,
-  techs,
-  images
-}) => {
+export const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, repo, tech, techs, images }) => {
   return (
     <Card className='min-w-[22rem] flex-col items-center'>
       <CardHeader className='flex gap-3'>

@@ -1,14 +1,7 @@
 'use client'
 import { Button } from '@nextui-org/button'
-import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure
-} from '@nextui-org/modal'
-import { Tech, type TechTypes } from './Tech'
+import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/modal'
+import { AspIcon, BootstrapIcon, CsharpIcon, CssIcon, DartIcon, DotNetIcon, ExpressIcon, FlutterIcon, GitIcon, HTMLIcon, JSIcon, MongoDbIcon, NextJsIcon, NodeIcon, ReactIcon, SequelizeIcon, SqlIcon, TSIcon, TailwindIcon } from '@/components/icon'
 
 interface CardModalProps {
   title: string
@@ -16,8 +9,31 @@ interface CardModalProps {
   images?: string[]
 }
 
+type TechTypes = '.Net' | 'Asp.Net' | 'Bootstrap' | 'C-Sharp' | 'CSS' | 'Git' | 'HTML' | 'JavaScript' | 'MongoDb' | 'NextJs' | 'Node' | 'React' | 'Sequelize' | 'SQL' | 'TailwindCss' | 'TypeScript' | 'Dart' | 'Flutter' | 'Express'
+
 const CardModal: React.FC<CardModalProps> = ({ title, techs, images }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const Technologies: Record<TechTypes, JSX.Element> = {
+    '.Net': <DotNetIcon />,
+    'Asp.Net': <AspIcon />,
+    Bootstrap: <BootstrapIcon />,
+    'C-Sharp': <CsharpIcon />,
+    CSS: <CssIcon />,
+    Git: <GitIcon />,
+    HTML: <HTMLIcon />,
+    JavaScript: <JSIcon />,
+    MongoDb: <MongoDbIcon />,
+    NextJs: <NextJsIcon />,
+    Node: <NodeIcon />,
+    React: <ReactIcon />,
+    Sequelize: <SequelizeIcon />,
+    SQL: <SqlIcon />,
+    TailwindCss: <TailwindIcon />,
+    TypeScript: <TSIcon />,
+    Dart: <DartIcon />,
+    Flutter: <FlutterIcon />,
+    Express: <ExpressIcon />
+  }
   return (
     <>
       <Button onPress={onOpen} color='primary' variant='ghost'>
@@ -59,7 +75,7 @@ const CardModal: React.FC<CardModalProps> = ({ title, techs, images }) => {
                         key={tech}
                         className='bg-slate-700/40 p-2 rounded-md h-16 w-16 flex justify-center'
                       >
-                        <Tech tech={tech} />
+                        { Technologies[tech] }
                       </span>
                     ))}
                   </div>
