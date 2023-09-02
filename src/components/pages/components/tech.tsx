@@ -27,5 +27,5 @@ export const Tech: React.FC<TechProps> = ({ tech }) => {
     Flutter: <FlutterIcon />,
     Express: <ExpressIcon />
   }
-  return Technologies[tech]
+  return <>{ Technologies[tech] }</>
 }
