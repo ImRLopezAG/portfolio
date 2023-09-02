@@ -1,5 +1,5 @@
 import { ProjectCard } from './components/ProjectCard'
-import type { TechTypes } from './components/tech'
+import type { TechTypes } from './components/Tech'
 interface Projects {
   title: string
   tech: TechTypes

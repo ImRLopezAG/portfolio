@@ -3,7 +3,7 @@ import { Divider } from '@nextui-org/divider'
 import { Link } from '@nextui-org/link'
 import NextLink from 'next/link'
 import CardModal from './CardModal'
-import { Tech, type TechTypes } from './tech'
+import { Tech, type TechTypes } from './Tech'
 
 interface ProjectCardProps {
   title: string

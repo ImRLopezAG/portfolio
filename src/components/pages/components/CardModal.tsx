@@ -8,7 +8,7 @@ import {
   ModalHeader,
   useDisclosure
 } from '@nextui-org/modal'
-import { Tech, type TechTypes } from './tech'
+import { Tech, type TechTypes } from './Tech'
 
 interface CardModalProps {
   title: string

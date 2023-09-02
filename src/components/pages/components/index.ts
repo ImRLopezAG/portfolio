@@ -1,11 +1,11 @@
 export { default as Badged } from './Badged'
 export { default as CardModal } from './CardModal'
+export { default as ProfileTab } from './ProfileTab'
 export * from './DiscordCard'
 export * from './Experience'
 export * from './Experiences'
 export * from './Icon'
-export { default as ProfileTab } from './ProfileTab'
 export * from './Role'
-export * from './SLetter
+export * from './SLetter'
 export * from './Tech'
 export * from './Technologies'

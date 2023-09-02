@@ -1,5 +1,5 @@
 import { Tooltip } from '@nextui-org/tooltip'
-import { Tech } from './tech'
+import { Tech } from './Tech'
 
 export const Technologies = (): JSX.Element => {
   return (
