@@ -1,2 +1,2 @@
-export { default as LandingHeader } from './landing-header'
-export * from './sections'
+export { default as LandingHeader } from './LandingHeader'
+export * from './Sections'

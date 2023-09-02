@@ -4,8 +4,8 @@ import { ScrollShadow } from '@nextui-org/scroll-shadow'
 import { Tab, Tabs } from '@nextui-org/tabs'
 import type { Key } from 'react'
 import { useCallback, useState } from 'react'
-import { Experiences } from './experiences'
-import { Technologies } from './technologies'
+import { Experiences } from './Experiences'
+import { Technologies } from './Technologies'
 
 const ProfileTab = (): JSX.Element => {
   const [selection, setSelection] = useState<Key>('Experiences')
@@ -58,13 +58,11 @@ const ProfileTab = (): JSX.Element => {
             <DevFolder className='w-8' />
             <span className='text-3xl font-bold '>
               Technologies
-              {
-                selection === 'Technologies'
-                  ? (
-                    <span className='text-blue-500'>.</span>
-                    )
-                  : null
-              }
+              {selection === 'Technologies'
+                ? (
+                <span className='text-blue-500'>.</span>
+                  )
+                : null}
             </span>
           </div>
         }
