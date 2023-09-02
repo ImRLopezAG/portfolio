@@ -2,8 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+::-webkit-scrollbar{
+  width: 8px
+}
+::-webkit-scrollbar-thumb{
+  background: linear-gradient(transparent, #3b82f6);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-track{
+  background: transparent
 }
 
 .scale-up-top-left {
@@ -38,8 +50,8 @@
   border-right: 0.15em solid #3b82f6;
   overflow: hidden;
   white-space: nowrap;
-  width: 15ch;
-  animation: typing 1s steps(15), blink-caret 0.5s infinite step-end alternate;
+  width: 20ch;
+  animation: typing 1s steps(20), blink-caret 0.5s infinite step-end alternate;
 }
 
 @keyframes typing {
@@ -67,6 +79,8 @@
     transform-origin: center top;
   }
 }
+
+.slide-right{animation:slide-right 0.4s linear both}@keyframes slide-right{0%{transform:translateX(0)}100%{transform:translateX(100px)}}
 
 @font-face {
   font-family: 'Gotham SSm A';

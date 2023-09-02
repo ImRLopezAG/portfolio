@@ -1,9 +1,8 @@
-import { useEffect, useCallback } from 'react'
+import { useEffect } from 'react'
 import { useObserver } from './'
 
 interface ReturnObserver {
   header: HTMLHeadElement | null
-  handleScroll: (link: string) => void
 }
 
 export function useHeader (): ReturnObserver {
@@ -11,6 +10,7 @@ export function useHeader (): ReturnObserver {
     typeof document !== 'undefined'
       ? document.getElementById('landing-header')
       : null
+
   const listItem: NodeListOf<HTMLLIElement> | undefined =
     header?.querySelectorAll('li')
   const menuBackdrop = header?.querySelector('#menu-backdrop') as HTMLDivElement
@@ -46,17 +46,7 @@ export function useHeader (): ReturnObserver {
     return () => observer?.current?.disconnect()
   }, [entries])
 
-  const handleScroll = useCallback((link: string) => {
-    const element = document.getElementById(link)
-    if (element !== null) {
-      element.classList.add('scroll-behavior-smooth')
-      element.scrollIntoView({ behavior: 'smooth' })
-      element.classList.remove('scroll-behavior-smooth')
-    }
-  }, [])
-
   return {
-    header,
-    handleScroll
+    header
   }
 }

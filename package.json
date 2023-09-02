@@ -1,5 +1,5 @@
 {
-  "name": "nx-portfolio",
+  "name": "portfolio",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,8 +10,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nextui-org/button": "^2.0.16",
     "@nextui-org/card": "^2.0.11",
+    "@nextui-org/divider": "^2.0.15",
+    "@nextui-org/link": "^2.0.17",
+    "@nextui-org/modal": "^2.0.18",
     "@nextui-org/react": "^2.0.22",
+    "@nextui-org/scroll-shadow": "^2.1.4",
     "@nextui-org/tabs": "^2.0.14",
     "@nextui-org/tooltip": "^2.0.13",
     "framer-motion": "^10.16.0",

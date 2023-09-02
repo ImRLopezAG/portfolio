@@ -5,6 +5,7 @@ import Link from 'next/link'
 
 const LandingHeader = (): JSX.Element => {
   useHeader()
+
   return (
     <header
       id='landing-header'

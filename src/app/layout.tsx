@@ -5,10 +5,7 @@ import { LandingHeader } from '@/components'
 export const metadata: Metadata = {
   title: 'ImRLopezAG',
   description: 'This is Angel Gabriel Lopez\'s portfolio',
-  creator: 'Angel Gabriel Lopez',
-  icons: {
-    icon: '/favicon.tsx'
-  }
+  creator: 'Angel Gabriel Lopez'
 }
 
 export default function RootLayout ({

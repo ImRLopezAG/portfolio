@@ -1,5 +1,5 @@
 import { Sections } from '@/components'
-import { Profile } from '@/components/pages'
+import { Profile, ProjectServer } from '@/components/pages'
 
 export default function Home (): JSX.Element {
   return (
@@ -7,6 +7,7 @@ export default function Home (): JSX.Element {
       <Sections title='Home' color='black'>
         <Profile />
       </Sections>
+      <ProjectServer />
     </main>
   )
 }

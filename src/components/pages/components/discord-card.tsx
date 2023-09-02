@@ -1,9 +1,12 @@
 import { DeveloperIcon } from '@/components/icon'
-import { Badged, Icons, Role, SLetter } from './'
+import { Badged, Icons, Role, SLetter } from '.'
 
 export const DiscordCard = (): JSX.Element => {
   return (
-    <article className='flex flex-col h-fit w-full rounded-2xl bg-[#232428] gap-2 text-white' aria-label='Discord Card'>
+    <article
+      className='flex flex-col h-fit w-full rounded-2xl bg-[#232428] gap-2 text-white'
+      aria-label='Discord Card'
+    >
       <span className='w-full h-[5em] bg-blue-600 rounded-t-2xl' />
       <header className='flex flex-col relative justify-center items-center z-10 w-24 h-24 -mt-14 left-4 rounded-full bg-[#232428]'>
         <img

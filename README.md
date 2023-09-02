@@ -1,27 +1,31 @@
-## Personal Portfolio
+# Personal Portfolio
 
 This is my personal portfolio. It uses next.js and is deployed on Vercel.
 
 ## 🛠️ Tools
+
   [![Next.js](https://img.shields.io/badge/Next.js-000000?logo=next.js&logoColor=white)](https://nextjs.org/)
   [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
   [![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel&logoColor=white)](https://vercel.com/)
-  [![pnpm](https://img.shields.io/badge/pnpm-FF6C37?logo=pnpm&logoColor=white)](https://pnpm.io/)
-  [![ESLint](https://img.shields.io/badge/ESLint-4B32C3?logo=eslint&logoColor=white)](https://eslint.org/)
-  [![Prettier](https://img.shields.io/badge/Prettier-1A2B34?logo=prettier&logoColor=white)](https://prettier.io/)
   [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/ImRLopezAG)
 
+### 🎨 Code Style
 
-## Getting Started
+[![Prettier](https://img.shields.io/badge/Prettier-F7B93E?logo=prettier&logoColor=black)](https://prettier.io/)
+[![Eslint](https://img.shields.io/badge/Eslint-4B32C3?logo=eslint&logoColor=white)](https://eslint.org/)
+[![Ts-standard](https://img.shields.io/badge/Ts-standard-3178C6?logo=typescript&logoColor=white)](https://typescript-eslint.io/)
 
-First, run the development server:
+### 🖼️ Icons
 
-```bash
-pnpm run dev
-# or
-yarn dev
-```
+[![Svg Repo](https://img.shields.io/badge/SvgRepo-0175C2?logo=svg&logoColor=white)](https://www.svgrepo.com/)
+[![ReactSymbols](https://img.shields.io/badge/ReactSymbols-61DAFB?logo=react&logoColor=white)](https://react-symbols.vercel.app/)
+
+## Style libraries
+
+[![NextUi](https://img.shields.io/badge/NextUi-000000?logo=next.js&logoColor=white)](https://nextui.org/)
+[![Tailwind](https://img.shields.io/badge/Tailwind-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![FlowBite](https://img.shields.io/badge/FlowBite-000000?logo=flowbite&logoColor=white)](https://flowbite.com/)
 
 ## Authors
 
