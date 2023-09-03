@@ -1,20 +1,9 @@
 import { Sections } from '@/components/Sections'
 import { Project } from '@/components/pages/Project'
 import { useCallback, useEffect, useState } from 'react'
-
-type TechTypes = '.Net' | 'Asp.Net' | 'Bootstrap' | 'C-Sharp' | 'CSS' | 'Git' | 'HTML' | 'JavaScript' | 'MongoDb' | 'NextJs' | 'Node' | 'React' | 'Sequelize' | 'SQL' | 'TailwindCss' | 'TypeScript' | 'Dart' | 'Flutter' | 'Express'
-
+import type { Projects } from '@/types'
 interface ReturnType {
   projects: React.ReactNode[]
-}
-
-interface Projects {
-  title: string
-  tech: TechTypes
-  description: string
-  repo: string
-  techs: TechTypes[]
-  images?: string[]
 }
 
 export const useProject = (): ReturnType => {

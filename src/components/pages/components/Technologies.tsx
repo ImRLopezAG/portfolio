@@ -1,7 +1,7 @@
-import { Tooltip } from '@nextui-org/tooltip'
 import { AspIcon, BootstrapIcon, CsharpIcon, CssIcon, DartIcon, DotNetIcon, ExpressIcon, FlutterIcon, GitIcon, HTMLIcon, JSIcon, MongoDbIcon, NextJsIcon, NodeIcon, ReactIcon, SequelizeIcon, SqlIcon, TSIcon, TailwindIcon } from '@/components/icon'
+import { Tooltip } from '@nextui-org/tooltip'
 
-type TechTypes = '.Net' | 'Asp.Net' | 'Bootstrap' | 'C-Sharp' | 'CSS' | 'Git' | 'HTML' | 'JavaScript' | 'MongoDb' | 'NextJs' | 'Node' | 'React' | 'Sequelize' | 'SQL' | 'TailwindCss' | 'TypeScript' | 'Dart' | 'Flutter' | 'Express'
+import type { TechTypes } from '@/types'
 
 export const Technologies = (): JSX.Element => {
   const technologies: Record<TechTypes, JSX.Element> = {
