@@ -14,7 +14,7 @@ const CardModal: React.FC<CardModalProps> = ({ title, techs, images }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   return (
     <>
-      <Button onPress={onOpen} color='primary' variant='ghost'>
+      <Button onPress={onOpen} variant='ghost'>
         More information
       </Button>
       <Modal

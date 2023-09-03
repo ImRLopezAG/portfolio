@@ -15,7 +15,7 @@ export default function RootLayout ({
 }): JSX.Element {
   return (
     <html lang='en' className='dark'>
-      <body>
+      <body className='gutter'>
         <LandingHeader />
         {children}
       </body>

@@ -2,17 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
+.gutter {
+  scrollbar-gutter: stable;
 }
 
 ::-webkit-scrollbar{
-  width: 8px
+  max-width: 8px;
 }
 ::-webkit-scrollbar-thumb{
-  background: linear-gradient(transparent, #3b82f6);
-  border-radius: 6px;
+  background: #3b82f6;
+  border-radius: 2rem;
 }
 ::-webkit-scrollbar-track{
   background: transparent
@@ -50,8 +49,8 @@
   border-right: 0.15em solid #3b82f6;
   overflow: hidden;
   white-space: nowrap;
-  width: 20ch;
-  animation: typing 1s steps(20), blink-caret 0.5s infinite step-end alternate;
+  width: 21ch;
+  animation: typing 1s steps(21), blink-caret 0.5s infinite step-end alternate;
 }
 
 @keyframes typing {

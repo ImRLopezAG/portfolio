@@ -14,7 +14,6 @@ export const DiscordCard = (): JSX.Element => {
           className='w-[85%] h-[85%] rounded-full bg-blue-400'
           width={100}
           height={100}
-          loading='lazy'
           alt='Image of Angel Gabriel Lopez'
           aria-label='Image of Angel Gabriel Lopez'
         />

@@ -6,7 +6,7 @@ export const Profile = (): JSX.Element => {
       <section className='w-1/2 flex max-[420px]:hidden'>
           <h2 className='text-3xl type-blinking'>Angel <span className='text-blue-500'>Gabriel</span> Lopez.</h2>
         <p className='text-lg'>
-          Software Engineer a{' '}
+        <span className='text-blue-500'>Software Engineer</span> and{' '}
           <span className='text-blue-500'>polyglot developer</span> with +2
           years of personal projects,{' '}
           <span className='text-blue-500'>building applications</span> and

@@ -1,4 +1,4 @@
-import { EmailIcon, GithubIcon, LinkedInIcon, ResumeIcon, TwitterIcon } from '@/components/icon/icons'
+import { GithubIcon, LinkedInIcon, ResumeIcon, TwitterIcon } from '@/components/icon/icons'
 import { Tooltip } from '@nextui-org/tooltip'
 import Link from 'next/link'
 
@@ -7,16 +7,14 @@ export const Icons = (): JSX.Element => {
     Linkedin: <LinkedInIcon />,
     Resume: <ResumeIcon />,
     Github: <GithubIcon />,
-    Twitter: <TwitterIcon />,
-    Email: <EmailIcon />
+    Twitter: <TwitterIcon />
   }
 
   const Urls: Record<string, string> = {
     Linkedin: 'linkedin.com/in/angel-gabriel-lopez',
     Resume: 'docs.google.com/document/d/176L3kfuVECauW3vadR9yKZREDEfgXDadVGqQ3zm51wc',
     Github: 'github.com/imrlopezag',
-    Twitter: 'twitter.com/imr_lopez',
-    Email: 'angelg00lopez@gmail.com'
+    Twitter: 'twitter.com/imr_lopez'
   }
 
   return (
@@ -28,12 +26,11 @@ export const Icons = (): JSX.Element => {
           color='primary'
         >
           <Link
-            href={
-              icon === 'email' ? `mailto:${Urls[icon]}` : `https://${Urls[icon]}`
-            }
+            href={`https://${Urls[icon]}`}
             target='_blank'
             className='flex items-center justify-center cursor-pointer w-6 h-6'
             rel='noreferrer'
+            title={icon}
           >
               {Icon[icon]}
           </Link>

@@ -10,7 +10,7 @@ export const Sections: React.FC<SectionProps> = ({ title, color, children }) => 
       id={title}
       data-header-color={color}
       className={
-        'snap-center landing-section flex flex-col pt-9 pb-4 px-3 h-screen ' +
+        'snap-center landing-section flex flex-col pt-9 pb-4 px-3 mx-2 h-screen ' +
         (color === 'white' ? 'bg-white text-black' : 'bg-black text-white')
       }
     >
