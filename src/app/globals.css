@@ -49,8 +49,8 @@
   border-right: 0.15em solid #3b82f6;
   overflow: hidden;
   white-space: nowrap;
-  width: 21ch;
-  animation: typing 1s steps(21), blink-caret 0.5s infinite step-end alternate;
+  width: 20ch;
+  animation: typing 1s steps(20), blink-caret 0.5s infinite step-end alternate;
 }
 
 @keyframes typing {
