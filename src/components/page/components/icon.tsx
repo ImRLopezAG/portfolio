@@ -1,6 +1,6 @@
 import { GithubIcon, LinkedInIcon, ResumeIcon, TwitterIcon } from '@/components/icon/icons'
 import { Tooltip } from '@nextui-org/tooltip'
-import Link from 'next/link'
+import { Link } from '@nextui-org/link'
 
 export const Icons = (): JSX.Element => {
   const Icon: Record<string, JSX.Element> = {

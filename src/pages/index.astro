@@ -1,0 +1,13 @@
+---
+import { ProjectsLoad } from '@/components/page/project-load'
+import Profile from '@/components/page/profile.astro'
+import Layout from '../layouts/Layout.astro'
+import Section from '@/components/section.astro'
+---
+
+<Layout title='ImRLopezAg'>
+  <Section title='Home' color='black'>
+    <Profile />
+  </Section>
+  <ProjectsLoad client:idle />
+</Layout>

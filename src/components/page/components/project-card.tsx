@@ -1,9 +1,8 @@
+import type { TechTypes } from '@/types'
 import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card'
 import { Divider } from '@nextui-org/divider'
 import { Link } from '@nextui-org/link'
-import NextLink from 'next/link'
-import CardModal from './CardModal'
-import type { TechTypes } from '@/types'
+import CardModal from './card-modal'
 import { Map } from '@/components/icon/map'
 
 interface ProjectCardProps {
@@ -33,7 +32,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, re
           isExternal
           showAnchorIcon
           href={`https://github.com/ImRLopezAG/${repo}`}
-          as={NextLink}
         >
           open on GitHub.
         </Link>

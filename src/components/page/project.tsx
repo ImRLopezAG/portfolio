@@ -1,5 +1,5 @@
 import type { Projects } from '@/types'
-import { ProjectCard } from './components/ProjectCard'
+import { ProjectCard } from './components/project-card'
 
 interface ProjectProps {
   isFirst: boolean
@@ -16,17 +16,20 @@ export const Project: React.FC<ProjectProps> = ({ projects, isFirst }) => {
         </h1>
       )}
       <div className='grid grid-cols-[repeat(auto-fit,minmax(22rem,1fr))] gap-2 max-w-full'>
-        {projects.map((project, index) => (
-          <ProjectCard
-            key={index}
-            title={project.title}
-            tech={project.tech}
-            description={project.description}
-            repo={project.repo}
-            techs={project.techs}
-            images={project.images}
-          />
-        ))}
+        {projects.map((project, index) => {
+          const { title, tech, description, repo, techs, images } = project
+          return (
+            <ProjectCard
+              key={index}
+              title={title}
+              tech={tech}
+              description={description}
+              repo={repo}
+              techs={techs}
+              images={images}
+            />
+          )
+        })}
       </div>
     </section>
   )

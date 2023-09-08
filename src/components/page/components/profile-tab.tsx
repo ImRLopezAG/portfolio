@@ -1,13 +1,12 @@
-'use client'
 import { DevFolder, ExperienceIcon } from '@/components/icon'
 import { ScrollShadow } from '@nextui-org/scroll-shadow'
 import { Tab, Tabs } from '@nextui-org/tabs'
 import type { Key } from 'react'
 import { useCallback, useState } from 'react'
-import { Experiences } from './Experiences'
-import { Technologies } from './Technologies'
+import { Experiences } from './experiences'
+import { Technologies } from './technologies'
 
-const ProfileTab = (): JSX.Element => {
+export const ProfileTab = (): JSX.Element => {
   const [selection, setSelection] = useState<Key>('Experiences')
 
   const handleSelection = useCallback((selected: Key) => {
@@ -72,5 +71,3 @@ const ProfileTab = (): JSX.Element => {
     </Tabs>
   )
 }
-
-export default ProfileTab

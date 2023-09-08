@@ -1,0 +1,35 @@
+---
+import  DiscordCard  from './components/discord.astro'
+import  { ProfileTab }  from './components/profile-tab'
+---
+
+<div
+  class='flex max-[420px]:flex-col gap-20 items-start min-[420px]:mt-4 [&>section]:flex-col [&>section>h2]:font-bold [&>section>h2]:my-4 [&>section]:max-[420px]:w-full '
+>
+  <section class='w-1/2 flex max-[420px]:hidden'>
+    <h2 class='text-3xl type-blinking'>
+      Angel <span class='text-blue-500'>Gabriel</span> Lopez
+    </h2>
+    <p class='text-lg'>
+      <span class='text-blue-500'>Software Engineer</span> and{' '}
+      <span class='text-blue-500'>polyglot developer</span> with +2 years of
+      personal projects,{' '}
+      <span class='text-blue-500'>building applications</span> and
+      automating the boring stuff.
+    </p>
+    <p class='text-lg my-4 max-[420px]:hidden'>
+      I have experience with{' '}
+      <span class='text-blue-500'>a wide range of technologies</span>, from <span
+        class='text-blue-500'>Back-end</span
+      > to{' '}
+      <span class='text-blue-500'>Front-end</span> and looking forward to
+      learn more.
+    </p>
+    <section class='flex flex-col '>
+      <ProfileTab client:visible/>
+    </section>
+  </section>
+  <section class='w-1/2 flex h-full'>
+    <DiscordCard />
+  </section>
+</div>

@@ -1,0 +1,54 @@
+---
+import { Link } from '@nextui-org/link'
+import { Logo } from '@/components/icon'
+---
+
+<header
+  id='landing-header'
+  class='flex items-center justify-between fixed top-0 w-full p-2 mb-3 z-10 max-[420px]:p-0'
+>
+  <div class='flex flex-grow basis-0'>
+    <Logo className='h-5 text-current hover:text-blue-500' />
+  </div>
+  <nav class='flex flex-grow justify-start'>
+    <ul
+      class='flex text-sm [&>li>a]:font-medium [&>li>a]:text-current [&>li>a]:inline-block [&>li>a]:px-4 [&>li>a]:py-2'
+    >
+      <li class='text-current hover:text-blue-400'>
+        <Link href='#Home'>Home</Link>
+      </li>
+      <li class='text-current hover:text-blue-400'>
+        <Link href='#Projects'>Projects</Link>
+      </li>
+    </ul>
+  </nav>
+  <div
+    id='menu-backdrop'
+    class='bg-slate-300/50 absolute backdrop-blur-lg rounded translate-x-[var(--left)] translate-y-[var(--top)] left-0 top-0 w-[var(--width)] h-[var(--height)] transition-all duration-500 ease-in-out opacity-0 -z-10'
+  >
+  </div>
+</header>
+
+<script>
+  const listItem = document.querySelectorAll('#landing-header li')
+  const menuBackDrop = document.querySelector('#menu-backdrop') as HTMLElement
+
+  listItem.forEach((item) => {
+    item.addEventListener('mouseenter', () => {
+      const { left, top, width, height } = item.getBoundingClientRect()
+
+      menuBackDrop.style.setProperty('--left', `${left}px`)
+      menuBackDrop.style.setProperty('--top', `${top}px`)
+      menuBackDrop.style.setProperty('--width', `${width}px`)
+      menuBackDrop.style.setProperty('--height', `${height}px`)
+
+      menuBackDrop.style.opacity = '1'
+      menuBackDrop.style.visibility = 'visible'
+    })
+
+    item.addEventListener('mouseleave', () => {
+      menuBackDrop.style.opacity = '0'
+      menuBackDrop.style.visibility = 'hidden'
+    })
+  })
+</script>

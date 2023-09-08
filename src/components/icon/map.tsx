@@ -1,5 +1,5 @@
+import type { TechTypes } from '@/types'
 import { AspIcon, BootstrapIcon, CsharpIcon, CssIcon, DartIcon, DotNetIcon, ExpressIcon, FlutterIcon, GitIcon, HTMLIcon, JSIcon, MongoDbIcon, NextJsIcon, NodeIcon, ReactIcon, SequelizeIcon, SqlIcon, TSIcon, TailwindIcon } from './'
-import { type TechTypes } from '@/types'
 
 interface MapProps {
   tech: TechTypes

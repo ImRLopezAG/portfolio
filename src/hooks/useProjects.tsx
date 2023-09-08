@@ -1,12 +1,31 @@
-import { Sections } from '@/components/Sections'
-import { Project } from '@/components/pages/Project'
-import { useCallback, useEffect, useState } from 'react'
+import { Project } from '@/components/page/project'
+import { Sections } from '@/components/section'
 import type { Projects } from '@/types'
+import { useCallback, useEffect, useState } from 'react'
+import { useObserver } from '.'
 interface ReturnType {
   projects: React.ReactNode[]
 }
 
 export const useProject = (): ReturnType => {
+  const header: HTMLHeadElement | null =
+    typeof document !== 'undefined'
+      ? document.getElementById('landing-header')
+      : null
+
+  const [entries, observer] = useObserver()
+
+  useEffect(() => {
+    entries?.forEach((entry) => {
+      const { isIntersecting } = entry
+      if (isIntersecting && header !== null) {
+        const color = entry.target.getAttribute('data-header-color') ?? 'white'
+        header.style.color = color === 'white' ? 'black' : 'white'
+      }
+    })
+    return () => observer?.current?.disconnect()
+  }, [entries])
+
   const project: Projects[] = [
     {
       title: 'Pokedex',
@@ -40,12 +59,18 @@ export const useProject = (): ReturnType => {
         'A social network that allows you to create posts, comments and add friends.',
       repo: 'SocialNetworkApp-ASP.Net',
       techs: ['.Net', 'SQL', 'C-Sharp', 'Bootstrap'],
-      images: ['/web/social.jpg', '/web/social-1.jpg', '/web/social-2.jpg', '/web/social-3.jpg']
+      images: [
+        '/web/social.jpg',
+        '/web/social-1.jpg',
+        '/web/social-2.jpg',
+        '/web/social-3.jpg'
+      ]
     },
     {
       title: 'Movies app',
       tech: 'Flutter',
-      description: 'A simple movies app using the TMDB API to show the recent movies and shows',
+      description:
+        'A simple movies app using the TMDB API to show the recent movies and shows',
       repo: 'movies_app',
       techs: ['Dart', 'Flutter'],
       images: ['/mobile/movie.jpg', '/mobile/movie-1.jpg']
@@ -135,7 +160,12 @@ export const useProject = (): ReturnType => {
         'Express',
         'Node'
       ],
-      images: ['/web/forget.png', '/web/forget-1.png', '/web/forget-2.png', '/web/forget-3.png']
+      images: [
+        '/web/forget.png',
+        '/web/forget-1.png',
+        '/web/forget-2.png',
+        '/web/forget-3.png'
+      ]
     }
   ]
 
@@ -145,16 +175,14 @@ export const useProject = (): ReturnType => {
 
   const handleResize = useCallback((): React.ReactNode[] => {
     const size = screen <= 420 ? 2 : 6
-    const numSections = Math.ceil(
-      project.length / (size)
-    )
+    const numSections = Math.ceil(project.length / size)
     const sections = Array.from({ length: numSections }, (_, i) => {
-      const start = i * (size)
-      const end = start + (size)
+      const start = i * size
+      const end = start + size
       return (
         <Sections
           key={i}
-          title={i === 0 ? 'Projects' : ''}
+          title={i === 0 ? 'Projects' : `Projects ${start + 1} - ${end}`}
           color={i % 2 === 0 ? 'white' : 'black'}
         >
           <Project isFirst={i === 0} projects={project.slice(start, end)} />

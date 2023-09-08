@@ -1,4 +1,4 @@
-import { Experience } from './Experience'
+import { Experience } from './experience'
 
 export const Experiences = (): JSX.Element => {
   return (

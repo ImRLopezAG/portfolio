@@ -1,10 +1,11 @@
 # Personal Portfolio
 
-This is my personal portfolio. It uses next.js and is deployed on Vercel.
+This is my personal portfolio. It uses Astro and React to render the components and Tailwind CSS for the styles.
 
 ## 🛠️ Tools
 
-  [![Next.js](https://img.shields.io/badge/Next.js-000000?logo=next.js&logoColor=white)](https://nextjs.org/)
+  [![Astral](https://img.shields.io/badge/Astro-000000?logo=astro&logoColor=white)](https://astro.build/)
+  [![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=white)](https://reactjs.org/)
   [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
   [![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel&logoColor=white)](https://vercel.com/)
@@ -25,7 +26,6 @@ This is my personal portfolio. It uses next.js and is deployed on Vercel.
 
 [![NextUi](https://img.shields.io/badge/NextUi-000000?logo=next.js&logoColor=white)](https://nextui.org/)
 [![Tailwind](https://img.shields.io/badge/Tailwind-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![FlowBite](https://img.shields.io/badge/FlowBite-000000?logo=flowbite&logoColor=white)](https://flowbite.com/)
 
 ## Authors
 
