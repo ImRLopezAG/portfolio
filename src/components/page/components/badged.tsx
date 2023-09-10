@@ -15,7 +15,7 @@ export const Badged = (): JSX.Element => {
           key={badge}
           content={display[badge]}
           classNames={{
-            base: 'p-2 rounded-md  flex justify-center scale-up-top mb-3 right-4'
+            base: 'p-2 rounded-md  flex justify-center animate-scale-up-top mb-3 right-4'
           }}
         >
           <img

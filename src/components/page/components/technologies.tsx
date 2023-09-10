@@ -28,7 +28,7 @@ export const Technologies = (): JSX.Element => {
     <div className='flex gap-3 min-[420px]:flex-wrap overflow-auto max-[420px]:flex-row hide-scrollbar'>
       {technologies.map((tech) => (
         <Tooltip key={tech} color='primary' content={tech}>
-        <div className='bg-slate-700/40 p-2 rounded-md h-16 w-16 flex justify-center scale-up-top-left'>
+        <div className='bg-slate-700/40 p-2 rounded-md h-16 w-16 flex justify-center animate-scale-up-top-left'>
           <Map tech={tech} />
         </div>
       </Tooltip>

@@ -9,11 +9,13 @@ const { title, color } = Astro.props
 <section
   id={title}
   data-header-color={color}
-  class:list={{
-    'landing-section snap-center flex flex-col pt-9 pb-4 px-3 h-screen': true,
-    'bg-white text-black': color === 'white',
-    'bg-black text-white': color === 'black',
-  }}
+  class:list={[
+    'landing-section snap-center flex flex-col pt-9 pb-4 px-3 h-screen',
+    {
+      'bg-white text-black': color === 'white',
+      'bg-black text-white': color === 'black'
+    }
+  ]}
 >
   <slot />
 </section>

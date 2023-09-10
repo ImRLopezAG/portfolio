@@ -22,6 +22,7 @@
     "@nextui-org/tabs": "^2.0.18",
     "@nextui-org/tooltip": "^2.0.21",
     "astro": "^3.0.10",
+    "atropos": "^2.0.2",
     "framer-motion": "^10.16.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"

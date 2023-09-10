@@ -1,14 +1,14 @@
 ---
+import Atorpos from './components/atropos-wrapper.astro';
 import  DiscordCard  from './components/discord.astro'
 import  { ProfileTab }  from './components/profile-tab'
 ---
 
-<div
-  class='flex max-[420px]:flex-col gap-20 items-start min-[420px]:mt-4 [&>section]:flex-col [&>section>h2]:font-bold [&>section>h2]:my-4 [&>section]:max-[420px]:w-full '
+<section
+  class='flex sm gap-5 items-start min-[420px]:mt-4 [&>section]:flex-col [&>section>h2]:font-bold [&>section>h2]:my-4 [&>section]:max-sm:w-full '
 >
-  <section class='w-1/2 flex max-[420px]:hidden'>
-    <h2 class='text-3xl type-blinking'>
-      Angel <span class='text-blue-500'>Gabriel</span> Lopez
+  <section class='w-1/2 flex max-sm:hidden'>
+    <h2 class='text-3xl type-blinking'>Angel <span class='text-blue-500'>Gabriel</span> Lopez
     </h2>
     <p class='text-lg'>
       <span class='text-blue-500'>Software Engineer</span> and{' '}
@@ -17,7 +17,7 @@ import  { ProfileTab }  from './components/profile-tab'
       <span class='text-blue-500'>building applications</span> and
       automating the boring stuff.
     </p>
-    <p class='text-lg my-4 max-[420px]:hidden'>
+    <p class='text-lg my-4 max-sm:hidden'>
       I have experience with{' '}
       <span class='text-blue-500'>a wide range of technologies</span>, from <span
         class='text-blue-500'>Back-end</span
@@ -29,7 +29,9 @@ import  { ProfileTab }  from './components/profile-tab'
       <ProfileTab client:visible/>
     </section>
   </section>
-  <section class='w-1/2 flex h-full'>
-    <DiscordCard />
+  <section class='w-1/2 flex h-full px-8'>
+    <Atorpos>
+      <DiscordCard />
+    </Atorpos>
   </section>
-</div>
+</section>

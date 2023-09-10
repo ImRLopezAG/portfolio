@@ -1,7 +1,7 @@
 ---
 import { DeveloperIcon } from '@/components/icon/icons'
-import  { Badged }  from './badged'
-import  { Icons }   from './icon'
+import { Badged } from './badged'
+import { Icons } from './icon'
 import Role from './role.astro'
 ---
 
@@ -24,7 +24,7 @@ import Role from './role.astro'
   </header>
   <div class='flex flex-col pb-4 px-5 gap-3 -mt-12'>
     <section class='flex justify-end mb-2'>
-      <span />
+      <span></span>
       <div class='flex rounded-lg bg-black p-1'>
         <Badged client:visible />
       </div>
@@ -40,14 +40,17 @@ import Role from './role.astro'
         <div class='[&>span]: flex flex-col min-[420px]:hidden'>
           <span class='text-sm font-bold my-1'>ABOUT ME</span>
           <p class='text-lg'>
-            A polyglot developer with a passion for build applications that
-            improve the lives of others, and automating the boring stuff.
+            <span class='text-blue-500'>Software Engineer</span> and{' '}
+            <span class='text-blue-500'>polyglot developer</span> with +2 years
+            of personal projects,{' '}
+            <span class='text-blue-500'>building applications</span> and
+            automating the boring stuff.
           </p>
         </div>
         <div class='[&>span]: flex flex-col'>
           <span class='text-sm font-bold my-1'>CONTACT</span>
           <div class='flex flex-row gap-2'>
-            <Icons client:visible/>
+            <Icons client:visible />
           </div>
         </div>
         <div class='flex flex-col'>
