@@ -14,7 +14,7 @@ export function useObserver (): ReturnObserver {
   const obsOptions = {
     root: null,
     rootMargin: '0px',
-    threshold: 0.8
+    threshold: 0.9
   }
 
   const observer = useRef<IntersectionObserver>()

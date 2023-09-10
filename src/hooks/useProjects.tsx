@@ -21,6 +21,7 @@ export const useProject = (): ReturnType => {
       if (isIntersecting && header !== null) {
         const color = entry.target.getAttribute('data-header-color') ?? 'white'
         header.style.color = color === 'white' ? 'black' : 'white'
+        document.documentElement.style.setProperty('--scroll', color)
       }
     })
     return () => observer?.current?.disconnect()

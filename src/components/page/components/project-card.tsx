@@ -2,7 +2,7 @@ import type { TechTypes } from '@/types'
 import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card'
 import { Divider } from '@nextui-org/divider'
 import { Link } from '@nextui-org/link'
-import CardModal from './card-modal'
+import { CardModal } from './card-modal'
 import { Map } from '@/components/icon/map'
 
 interface ProjectCardProps {
@@ -16,7 +16,7 @@ interface ProjectCardProps {
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, repo, tech, techs, images }) => {
   return (
-    <Card className='min-w-[22rem] flex-col items-center'>
+    <Card className='min-w-[22rem] max-w-[28rem] flex-col items-center'>
       <CardHeader className='flex gap-3'>
         <div className='h-16 w-16 flex justify-center'>
           <Map tech={tech} />

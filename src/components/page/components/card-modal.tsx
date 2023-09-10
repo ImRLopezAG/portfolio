@@ -1,7 +1,7 @@
+import { Map } from '@/components/icon/map'
+import type { TechTypes } from '@/types'
 import { Button } from '@nextui-org/button'
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/modal'
-import type { TechTypes } from '@/types'
-import { Map } from '@/components/icon/map'
 
 interface CardModalProps {
   title: string
@@ -9,7 +9,7 @@ interface CardModalProps {
   images?: string[]
 }
 
-const CardModal: React.FC<CardModalProps> = ({ title, techs, images }) => {
+export const CardModal: React.FC<CardModalProps> = ({ title, techs, images }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   return (
     <>
@@ -21,17 +21,22 @@ const CardModal: React.FC<CardModalProps> = ({ title, techs, images }) => {
         onOpenChange={onOpenChange}
         backdrop='blur'
         size='xl'
+        classNames={{
+          footer: 'py-2 px-4'
+        }}
       >
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className='flex flex-col gap-1'>{title}</ModalHeader>
+              <ModalHeader className='flex flex-col gap-1'>
+                {title}
+              </ModalHeader>
               <ModalBody>
                 {images !== undefined && (
-                  <section className='flex flex-col gap-3'>
-                    <article>
-                      Screenshots:
-                      <div className='flex gap-2'>
+                  <section className='flex flex-col gap-2'>
+                    <span>Screenshots</span>
+                    <article className='gap-2'>
+                      <div className='flex gap-2 overflow-x-auto mb-2 rounded-lg'>
                         {images?.map((image) => (
                           <img
                             key={title + image}
@@ -44,8 +49,8 @@ const CardModal: React.FC<CardModalProps> = ({ title, techs, images }) => {
                     </article>
                   </section>
                 )}
-                <article className='flex-col gap-3'>
-                  Technologies:
+                <section className='flex flex-col gap-2'>
+                  <span>Technologies</span>
                   <div className='flex gap-2'>
                     {techs.map((tech) => (
                       <span
@@ -56,7 +61,7 @@ const CardModal: React.FC<CardModalProps> = ({ title, techs, images }) => {
                       </span>
                     ))}
                   </div>
-                </article>
+                </section>
               </ModalBody>
               <ModalFooter>
                 <Button color='danger' variant='light' onPress={onClose}>
@@ -70,5 +75,3 @@ const CardModal: React.FC<CardModalProps> = ({ title, techs, images }) => {
     </>
   )
 }
-
-export default CardModal
