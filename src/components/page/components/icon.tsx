@@ -20,20 +20,20 @@ export const Icons = (): JSX.Element => {
   return (
     <>
       {Array.from(Object.keys(Icon)).map((icon) => (
-      <Tooltip
-          key={icon}
-          content={icon}
-          color='primary'
-        >
-          <Link
-            href={`https://${Urls[icon]}`}
-            target='_blank'
-            className='flex items-center justify-center cursor-pointer w-6 h-6'
-            rel='noreferrer'
-            title={icon}
+        <Tooltip
+            key={icon}
+            content={icon}
+            color='primary'
           >
+            <Link
+              href={`https://${Urls[icon]}`}
+              target='_blank'
+              className='flex items-center justify-center cursor-pointer w-6 h-6'
+              rel='noreferrer'
+              title={icon}
+            >
               {Icon[icon]}
-          </Link>
+            </Link>
         </Tooltip>
       ))}
     </>
