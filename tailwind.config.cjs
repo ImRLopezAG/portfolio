@@ -13,7 +13,8 @@ module.exports = {
       animation: {
         cascade: 'cascade 0.2s linear',
         'scale-up-top-left': 'scale-up-top-left 0.4s',
-        'scale-up-top': 'scale-up-top 0.4s'
+        'scale-up-top': 'scale-up-top 0.4s',
+        typing: 'typing 1s steps(20), blink-caret 0.3s infinite alternate step-end'
       },
       keyframes: {
         cascade: {
@@ -44,6 +45,19 @@ module.exports = {
           '100%': {
             transform: 'scale(1)',
             'transform-origin': 'top center'
+          }
+        },
+        typing: {
+          '0%': {
+            width: '0ch'
+          },
+          '100%': {
+            width: '20ch'
+          }
+        },
+        'blink-caret': {
+          '50%': {
+            'border-color': 'transparent'
           }
         }
       }
