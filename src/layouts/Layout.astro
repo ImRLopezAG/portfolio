@@ -26,30 +26,21 @@ const { title } = Astro.props
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body>
+  <body class='scroll-mt-12'>
     <LandingHeader />
-		<main class='snap-y snap-mandatory relative h-screen overflow-auto'>
+		<main class='lg:px-[18rem] px-4 w-full flex flex-col gap-12'>
 			<slot />
     </main>
   </body>
 </html>
 
 <style is:global>
-  ::root{
-    --scroll: black;
-  }
-  .landing-section.landing-header {
-    scrollbar-gutter: stable;
-  }
   ::-webkit-scrollbar {
     max-width: 8px;
   }
   ::-webkit-scrollbar-thumb {
     background: #3b82f6;
     border-radius: 2rem;
-  }
-  ::-webkit-scrollbar-track {
-    background: var(--scroll);
   }
 
   .type-blinking {
@@ -69,18 +60,6 @@ const { title } = Astro.props
     100% {
       transform: scaleY(1);
       transform-origin: center top;
-    }
-  }
-
-  .slide-right {
-    animation: slide-right 0.4s linear both;
-  }
-  @keyframes slide-right {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(100px);
     }
   }
 </style>

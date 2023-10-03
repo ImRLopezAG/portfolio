@@ -3,6 +3,7 @@ import { DeveloperIcon } from '@/components/icon/icons'
 import { Badged } from './badged'
 import { Icons } from './icon'
 import Role from './role.astro'
+import { Image } from 'astro:assets';
 ---
 
 <article
@@ -13,7 +14,7 @@ import Role from './role.astro'
   <header
     class='flex flex-col relative justify-center items-center z-10 w-24 h-24 -mt-14 left-4 rounded-full bg-[#232428]'
   >
-    <img
+    <Image
       src='/me.jpg'
       class='w-[85%] h-[85%] rounded-full bg-blue-400'
       width={100}
@@ -33,18 +34,26 @@ import Role from './role.astro'
       class='flex flex-col gap-2 bg-black rounded-lg p-3 divide-y-2 divide-[#2e2f34]'
     >
       <section class='flex flex-col h-full'>
-        <span class='text-base font-bold'>{'<ImRLopezAg />'}</span>
-        <span class='text-sm font-bold'>@imrlopez</span>
+        <h2 class='text-2xl font-bold animate-typing type-blinking'>Angel <span class='text-blue-500'>Gabriel </span>Lopez<span class='text-blue-500'>.</span></h2>
+        <span class='text-base font-bold text-white/50'>{'<ImRLopezAg />'}</span>
       </section>
       <section class='flex flex-col h-full max-[420px]:gap-2 gap-4'>
-        <div class='[&>span]: flex flex-col min-[420px]:hidden'>
+        <div class='flex flex-col'>
           <span class='text-sm font-bold my-1'>ABOUT ME</span>
           <p class='text-lg'>
             <span class='text-blue-500'>Software Engineer</span> and{' '}
-            <span class='text-blue-500'>polyglot developer</span> with +2 years
-            of personal projects,{' '}
+            <span class='text-blue-500'>polyglot developer</span> with +2 years of
+            personal projects,{' '}
             <span class='text-blue-500'>building applications</span> and
             automating the boring stuff.
+          </p>
+          <p class='text-lg'>
+            I have experience with{' '}
+            <span class='text-blue-500'>a wide range of technologies</span>, from <span
+              class='text-blue-500'>Back-end</span
+            > to{' '}
+            <span class='text-blue-500'>Front-end</span> and looking forward to
+            learn more.
           </p>
         </div>
         <div class='[&>span]: flex flex-col'>

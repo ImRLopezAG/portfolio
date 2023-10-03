@@ -33,7 +33,7 @@ export const ProfileTab = (): JSX.Element => {
         title={
           <div className='flex items-center gap-2'>
             <ExperienceIcon className='w-8' />
-            <span className='text-3xl font-bold '>
+            <span className='text-base lg:text-3xl font-bold '>
               Experiences
               {selection === 'Experiences'
                 ? (
@@ -55,7 +55,7 @@ export const ProfileTab = (): JSX.Element => {
         title={
           <div className='flex items-center gap-2'>
             <DevFolder className='w-8' />
-            <span className='text-3xl font-bold '>
+            <span className='text-base lg:text-3xl font-bold '>
               Technologies
               {selection === 'Technologies'
                 ? (

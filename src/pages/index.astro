@@ -1,13 +1,21 @@
 ---
-import { ProjectsLoad } from '@/components/page/project-load'
-import Profile from '@/components/page/profile.astro'
+import AtorposWrapper from '@/components/page/components/atropos-wrapper.astro'
+import DiscordCard from '@/components/page/components/discord.astro'
 import Layout from '../layouts/Layout.astro'
-import Section from '@/components/section.astro'
+import { ProfileTab } from '@/components/page/components/profile-tab'
+import Project from '@/components/page/project.astro'
 ---
 
 <Layout title='ImRLopezAg'>
-  <Section title='Home' color='black'>
-    <Profile />
-  </Section>
-  <ProjectsLoad client:idle />
+  <aritcle id='Home' class='flex flex-col gap-4'>
+    <AtorposWrapper>
+      <DiscordCard />
+    </AtorposWrapper>
+    <section class='flex flex-col'>
+      <ProfileTab client:visible />
+    </section>
+  </aritcle>
+  <aritcle id='Projects'>
+    <Project />
+  </aritcle>
 </Layout>
