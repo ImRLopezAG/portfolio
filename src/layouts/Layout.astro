@@ -26,9 +26,9 @@ const { title } = Astro.props
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class='scroll-mt-12'>
+  <body>
     <LandingHeader />
-		<main class='lg:px-[18rem] px-4 w-full flex flex-col gap-12'>
+		<main class='lg:px-[18rem] px-4 w-full flex flex-col gap-5'>
 			<slot />
     </main>
   </body>
@@ -39,12 +39,12 @@ const { title } = Astro.props
     max-width: 8px;
   }
   ::-webkit-scrollbar-thumb {
-    background: #3b82f6;
+    background: #a3e635;
     border-radius: 2rem;
   }
 
   .type-blinking {
-    border-right: 2px solid #3b82f6;
+    border-right: 2px solid #a3e635;
     overflow: hidden;
     white-space: nowrap;
     width:15ch;

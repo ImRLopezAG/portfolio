@@ -31,6 +31,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, re
         <Link
           isExternal
           showAnchorIcon
+          className='text-lime-400'
           href={`https://github.com/ImRLopezAG/${repo}`}
         >
           open on GitHub.

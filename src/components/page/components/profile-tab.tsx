@@ -17,13 +17,13 @@ export const ProfileTab = (): JSX.Element => {
     <Tabs
       variant='underlined'
       aria-label='about me'
-      color='primary'
+      color='success'
       selectedKey={selection}
       onSelectionChange={handleSelection}
       classNames={{
         tabList:
           'gap-6 w-full relative rounded-none p-0 border-b border-divider',
-        cursor: 'w-full bg-blue-500',
+        cursor: 'w-full bg-lime-400',
         tab: 'max-w-fit px-0 h-12 tex-white',
         tabContent: 'group-data-[selected=true]:text-white'
       }}
@@ -37,7 +37,7 @@ export const ProfileTab = (): JSX.Element => {
               Experiences
               {selection === 'Experiences'
                 ? (
-                <span className='text-blue-500'>.</span>
+                <span className='text-lime-400'>.</span>
                   )
                 : null}
             </span>
@@ -59,7 +59,7 @@ export const ProfileTab = (): JSX.Element => {
               Technologies
               {selection === 'Technologies'
                 ? (
-                <span className='text-blue-500'>.</span>
+                <span className='text-lime-400'>.</span>
                   )
                 : null}
             </span>

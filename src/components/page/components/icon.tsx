@@ -23,7 +23,7 @@ export const Icons = (): JSX.Element => {
         <Tooltip
             key={icon}
             content={icon}
-            color='primary'
+            color='success'
           >
             <Link
               href={`https://${Urls[icon]}`}

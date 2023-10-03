@@ -24,7 +24,7 @@ export const Experience: React.FC<ExperienceProps> = ({ title, date, description
         <h3 className='mb-1 text-lg font-semibold text-white'>
           {title}
         </h3>
-        <time className='block mb-2 text-sm font-normal leading-none text-blue-500'>
+        <time className='block mb-2 text-sm font-normal leading-none text-lime-400'>
           {date}
         </time>
         <p className='text-base font-normal'>

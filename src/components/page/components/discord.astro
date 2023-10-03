@@ -3,14 +3,14 @@ import { DeveloperIcon } from '@/components/icon/icons'
 import { Badged } from './badged'
 import { Icons } from './icon'
 import Role from './role.astro'
-import { Image } from 'astro:assets';
+import { Image } from 'astro:assets'
 ---
 
 <article
   class='flex flex-col h-fit w-full rounded-2xl bg-[#232428] gap-2 text-white'
   aria-label='Discord Card'
 >
-  <span class='w-full h-[5em] bg-blue-600 rounded-t-2xl'></span>
+  <canvas id='bg-canvas' class='w-full h-[5em] rounded-t-2xl block'></canvas>
   <header
     class='flex flex-col relative justify-center items-center z-10 w-24 h-24 -mt-14 left-4 rounded-full bg-[#232428]'
   >
@@ -34,25 +34,28 @@ import { Image } from 'astro:assets';
       class='flex flex-col gap-2 bg-black rounded-lg p-3 divide-y-2 divide-[#2e2f34]'
     >
       <section class='flex flex-col h-full'>
-        <h2 class='text-2xl font-bold animate-typing type-blinking'>Angel <span class='text-blue-500'>Gabriel </span>Lopez<span class='text-blue-500'>.</span></h2>
-        <span class='text-base font-bold text-white/50'>{'<ImRLopezAg />'}</span>
+        <h2 class='text-2xl font-bold animate-typing type-blinking'>
+          Angel <span class='text-lime-400'>Gabriel </span>Lopez<span
+            class='text-lime-400'>.</span>
+        </h2>
+        <span class='text-base font-bold text-white/50'>{'<ImRLopezAg />'}</span
+        >
       </section>
       <section class='flex flex-col h-full max-[420px]:gap-2 gap-4'>
         <div class='flex flex-col'>
           <span class='text-sm font-bold my-1'>ABOUT ME</span>
           <p class='text-lg'>
-            <span class='text-blue-500'>Software Engineer</span> and{' '}
-            <span class='text-blue-500'>polyglot developer</span> with +2 years of
-            personal projects,{' '}
-            <span class='text-blue-500'>building applications</span> and
+            <span class='text-lime-400'>Software Engineer</span> and{' '}
+            <span class='text-lime-400'>polyglot developer</span> with +2 years
+            of personal projects,{' '}
+            <span class='text-lime-400'>building applications</span> and
             automating the boring stuff.
           </p>
           <p class='text-lg'>
             I have experience with{' '}
-            <span class='text-blue-500'>a wide range of technologies</span>, from <span
-              class='text-blue-500'>Back-end</span
-            > to{' '}
-            <span class='text-blue-500'>Front-end</span> and looking forward to
+            <span class='text-lime-400'>a wide range of technologies</span>,
+            from <span class='text-lime-400'>Back-end</span> to{' '}
+            <span class='text-lime-400'>Front-end</span> and looking forward to
             learn more.
           </p>
         </div>
@@ -99,3 +102,40 @@ import { Image } from 'astro:assets';
     </main>
   </div>
 </article>
+
+<script>
+const $canvas = document.getElementById('bg-canvas') as HTMLCanvasElement
+const $canvasCTX = $canvas.getContext('2d')
+
+$canvas.height = window.innerHeight
+$canvas.width = window.innerWidth
+
+const MATRIX =
+  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}'.split('')
+const FONT_SIZE = 10
+const columns = $canvas.width / FONT_SIZE
+const drops: number[] = []
+
+for (let x = 0; x < columns; x++) drops[x] = 1
+
+function draw() {
+  if (!$canvasCTX) return
+  $canvasCTX.fillStyle = 'rgba(0, 0, 0, 0.04)'
+  $canvasCTX.fillRect(0, 0, $canvas.width, $canvas.height)
+
+  $canvasCTX.fillStyle = '#bef264'
+  $canvasCTX.font = FONT_SIZE + 'px arial'
+  for (let i = 0; i < drops.length; i++) {
+    const text = MATRIX[Math.floor(Math.random() * MATRIX.length)]
+    $canvasCTX.fillText(text, i * FONT_SIZE, drops[i] * FONT_SIZE)
+
+    if (drops[i] * FONT_SIZE > $canvas.height && Math.random() > 0.975) drops[i] = 0
+
+    drops[i]++
+  }
+
+  requestAnimationFrame(draw)
+}
+
+requestAnimationFrame(draw)
+</script>
