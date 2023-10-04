@@ -4,13 +4,14 @@ import { Badged } from './badged'
 import { Icons } from './icon'
 import Role from './role.astro'
 import { Image } from 'astro:assets'
+import { MatrixBackground } from './matrix-bg'
 ---
 
 <article
   class='flex flex-col h-fit w-full rounded-2xl bg-[#232428] gap-2 text-white'
   aria-label='Discord Card'
 >
-  <canvas id='bg-canvas' class='w-full h-[5em] rounded-t-2xl block'></canvas>
+  <MatrixBackground client:load />
   <header
     class='flex flex-col relative justify-center items-center z-10 w-24 h-24 -mt-14 left-4 rounded-full bg-[#232428]'
   >
@@ -102,40 +103,3 @@ import { Image } from 'astro:assets'
     </main>
   </div>
 </article>
-
-<script>
-const $canvas = document.getElementById('bg-canvas') as HTMLCanvasElement
-const $canvasCTX = $canvas.getContext('2d')
-
-$canvas.height = window.innerHeight
-$canvas.width = window.innerWidth
-
-const MATRIX =
-  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}'.split('')
-const FONT_SIZE = 10
-const columns = $canvas.width / FONT_SIZE
-const drops: number[] = []
-
-for (let x = 0; x < columns; x++) drops[x] = 1
-
-function draw() {
-  if (!$canvasCTX) return
-  $canvasCTX.fillStyle = 'rgba(0, 0, 0, 0.04)'
-  $canvasCTX.fillRect(0, 0, $canvas.width, $canvas.height)
-
-  $canvasCTX.fillStyle = '#bef264'
-  $canvasCTX.font = FONT_SIZE + 'px arial'
-  for (let i = 0; i < drops.length; i++) {
-    const text = MATRIX[Math.floor(Math.random() * MATRIX.length)]
-    $canvasCTX.fillText(text, i * FONT_SIZE, drops[i] * FONT_SIZE)
-
-    if (drops[i] * FONT_SIZE > $canvas.height && Math.random() > 0.975) drops[i] = 0
-
-    drops[i]++
-  }
-
-  requestAnimationFrame(draw)
-}
-
-requestAnimationFrame(draw)
-</script>
