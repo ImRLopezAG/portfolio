@@ -1,0 +1,40 @@
+---
+
+---
+
+<canvas id='bg-canvas' class='w-full h-[5em] rounded-t-2xl block'></canvas>
+
+<script>
+  import { FONT_SIZE, MATRIX } from '@/constants'
+  const $canvas = document.getElementById('bg-canvas') as HTMLCanvasElement
+  const $canvasCTX = $canvas.getContext('2d')
+  
+  $canvas.height = window.innerHeight
+  $canvas.width = window.innerWidth
+  
+  const columns = $canvas.width / FONT_SIZE
+  const drops: number[] = []
+  
+  for (let x = 0; x < columns; x++) drops[x] = 1
+  
+  function draw() {
+    if (!$canvasCTX) return
+    $canvasCTX.fillStyle = 'rgba(0, 0, 0, 0.04)'
+    $canvasCTX.fillRect(0, 0, $canvas.width, $canvas.height)
+  
+    $canvasCTX.fillStyle = '#bef264'
+    $canvasCTX.font = FONT_SIZE + 'px arial'
+    for (let i = 0; i < drops.length; i++) {
+      const text = MATRIX[Math.floor(Math.random() * MATRIX.length)]
+      $canvasCTX.fillText(text, i * FONT_SIZE, drops[i] * FONT_SIZE)
+  
+      if (drops[i] * FONT_SIZE > $canvas.height && Math.random() > 0.975) drops[i] = 0
+  
+      drops[i]++
+    }
+  
+    requestAnimationFrame(draw)
+  }
+  
+  requestAnimationFrame(draw)
+  </script>

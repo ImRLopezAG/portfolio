@@ -4,14 +4,14 @@ import { Badged } from './badged'
 import { Icons } from './icon'
 import Role from './role.astro'
 import { Image } from 'astro:assets'
-import { MatrixBackground } from './matrix-bg'
+import  MatrixBackground  from './matrix-bg.astro'
 ---
 
 <article
   class='flex flex-col h-fit w-full rounded-2xl bg-[#232428] gap-2 text-white'
   aria-label='Discord Card'
 >
-  <MatrixBackground client:load />
+  <MatrixBackground />
   <header
     class='flex flex-col relative justify-center items-center z-10 w-24 h-24 -mt-14 left-4 rounded-full bg-[#232428]'
   >
