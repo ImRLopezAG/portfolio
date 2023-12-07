@@ -1,5 +1,5 @@
 import { GithubIcon, LinkedInIcon, ResumeIcon, TwitterIcon } from '@/components/icon/icons'
-import { Tooltip } from '@nextui-org/tooltip'
+import { Tooltip } from '@nextui-org/react'
 import { Link } from '@nextui-org/link'
 
 export const Icons = (): JSX.Element => {
@@ -24,6 +24,7 @@ export const Icons = (): JSX.Element => {
             key={icon}
             content={icon}
             color='success'
+            className='px-3 p-y-2'
           >
             <Link
               href={`https://${Urls[icon]}`}

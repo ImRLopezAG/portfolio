@@ -17,6 +17,7 @@ export const Badged = (): JSX.Element => {
           classNames={{
             base: 'p-2 rounded-md  flex justify-center animate-scale-up-top mb-3 right-4'
           }}
+          className='px-3 p-y-2'
         >
           <img
             src={`/${badge}.webp`}
