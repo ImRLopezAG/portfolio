@@ -11,9 +11,17 @@ import Project from '@/components/page/project.astro'
     <AtorposWrapper>
       <DiscordCard />
     </AtorposWrapper>
-      <ProfileTab client:visible />
+    <ProfileTab client:idle />
   </aritcle>
   <aritcle id='Projects'>
+    <div />
     <Project />
   </aritcle>
 </Layout>
+
+<script>
+  window.addEventListener('hashchange', ({ newURL }) => {
+    const match = newURL.match(/home/i) ? 70 : 38
+    window.scrollTo(window.scrollX, window.scrollY - match)
+  })
+</script>

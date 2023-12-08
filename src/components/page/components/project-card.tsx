@@ -18,13 +18,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, re
   return (
     <Card className='min-w-[22rem] max-w-[28rem] flex-col items-center'>
       <CardHeader className='flex gap-3'>
-        <div className='h-16 w-16 flex justify-center'>
+        <figure className='h-16 w-16 flex justify-center'>
           <Map tech={tech} />
-        </div>
-        <p className='text-md'>{title}</p>
+        </figure>
+        <span className='text-md'>{title}</span>
       </CardHeader>
       <Divider />
-      <CardBody>
+      <CardBody className='p-3'>
         <p>{description}</p>
       </CardBody>
       <CardFooter className='justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden before:rounded-xl rounded-large w-[calc(100%_-_8px)] shadow-small mb-1'>
