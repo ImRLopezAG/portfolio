@@ -4,6 +4,12 @@ export const Experiences = (): JSX.Element => {
   return (
     <ol className='relative border-l border-gray-200 dark:border-gray-700'>
       <Experience
+        title='MDA - Dextra'
+        date='Oct-2023 / Current'
+        description='Here I am working as software developer, ddeveloping solutions in microsoft business central.'
+        duration={0.30}
+      />
+      <Experience
         title='Tech Path'
         date='Aug-2023 / Current'
         description='This is a platform which upgrade the performance of the principal web pages of ITLA which is the university where I study.'
