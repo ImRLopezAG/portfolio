@@ -14,7 +14,8 @@ module.exports = {
         cascade: 'cascade 0.2s linear',
         'scale-up-top-left': 'scale-up-top-left 0.4s',
         'scale-up-top': 'scale-up-top 0.4s',
-        typing: 'typing 1s steps(20), blink-caret 0.3s infinite alternate step-end'
+        typing: 'typing 1s steps(20), blink-caret 0.3s infinite alternate step-end',
+        'blink-caret': 'blink-caret 1s step-end infinite',
       },
       keyframes: {
         cascade: {
