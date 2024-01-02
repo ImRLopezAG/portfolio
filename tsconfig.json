@@ -5,7 +5,18 @@
     "jsxImportSource": "react",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@layouts/*": [
+        "src/layouts/*"
+      ],
+      "@page-components/*": [
+        "src/components/page/components/*"
+      ],
     }
   }
 }
