@@ -1,0 +1,13 @@
+---
+import Atropos from 'atropos/react'
+import 'atropos/atropos.css'
+---
+
+<Atropos className='rounded-2xl' client:idle
+  rotateTouch={false}
+  rotateXMax={7}
+  rotateYMax={7}
+  shadow={false}
+  highlight={false}>
+    <slot />
+</Atropos>

@@ -1,0 +1,19 @@
+---
+interface Props {
+  name: string
+  color: string
+}
+
+const { name, color } = Astro.props
+---
+
+<div
+  class='bg-zinc-700/70 flex flex-row items-center align-baseline gap-2 py-1 px-2 rounded-md hover:bg-zinc-700/100 animate-scale-up-top'
+>
+  <span
+    class:list={{
+      'h-3 w-3 rounded-full': true,
+      [`${color}`]: true
+    }}></span>
+  <span class='text-sm font-bold'>{name}</span>
+</div>
