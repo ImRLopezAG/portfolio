@@ -2,23 +2,6 @@ import type { Projects } from '@/types'
 
 export const PROJECTS: Projects[] = [
   {
-    title: 'Pokedex',
-    tech: 'JavaScript',
-    description:
-      'A simple website that allows you manage CRUD operations on your Pokedex and has some pokemons by default.',
-    repo: 'Pokedex-Manager',
-    techs: ['JavaScript', 'SQL', 'Sequelize', 'Node', 'Express', 'Bootstrap'],
-    images: ['/web/pokedex.png']
-  },
-  {
-    title: 'Gifts App',
-    tech: 'React',
-    description: 'An app to search for gifts using the Giphy API.',
-    repo: 'Gif-expert-app',
-    techs: ['React', 'TailwindCss'],
-    images: ['/web/gif.png']
-  },
-  {
     title: 'Medical Manager',
     tech: '.Net',
     description:
@@ -67,23 +50,6 @@ export const PROJECTS: Projects[] = [
     images: ['/web/ts-api.jpg', '/web/ts-api-1.jpg']
   },
   {
-    title: 'Todo app',
-    tech: 'Flutter',
-    description: 'A simple todo app using sqlite to manage the data',
-    repo: 'todo_app',
-    techs: ['Dart', 'Flutter', 'SQL'],
-    images: ['/mobile/todo.jpg', '/mobile/todo-1.jpg', '/mobile/todo-2.jpg']
-  },
-  {
-    title: 'Clients App',
-    tech: 'Flutter',
-    description:
-      'This app allows you to manage your clients and its contact information using a php server.',
-    repo: 'Clients-app',
-    techs: ['Dart', 'Flutter', 'SQL'],
-    images: ['/mobile/client.jpg', '/mobile/client-1.jpg']
-  },
-  {
     title: 'Scientific Calculator',
     tech: 'Flutter',
     description: 'A simple scientific calculator',
@@ -113,9 +79,10 @@ export const PROJECTS: Projects[] = [
     title: 'Tech Path',
     tech: 'NextJs',
     description:
-      'This project was created to upgrade the performance of students scores web page of the university where I study, in the backend I used Apollo Server with GraphQL.',
+      'This project was created to upgrade the performance of students scores web page of the university where I study, using NextJs with TRPC and TailwindCss.',
     repo: 'tech-path',
-    techs: ['NextJs', 'React', 'TailwindCss', 'Express', 'TypeScript']
+    techs: ['NextJs', 'React', 'TailwindCss', 'TypeScript'],
+    images: ['/web/tech-path.png', '/web/tech-path-1.png']
   },
   {
     title: 'Forget',
@@ -140,5 +107,13 @@ export const PROJECTS: Projects[] = [
       '/web/forget-2.png',
       '/web/forget-3.png'
     ]
+  },
+  {
+    title: 'Task AI',
+    tech: 'NextJs',
+    description: 'Task manager app using next.js with Oauth2 authentication, and a AI to generate reports.',
+    repo: 'Task-Manager',
+    techs: ['NextJs', 'React', 'TailwindCss', 'TypeScript'],
+    images: ['/web/task.png', '/web/task-1.png']
   }
 ]
