@@ -1,0 +1,320 @@
+{
+  "basics": {
+    "name": "Angel Gabriel Lopez Solano",
+    "label": "Full-Stack developer with +2 years of experience & basketball player",
+    "image": "https://avatars.githubusercontent.com/u/88790737?v=4",
+    "email": "angelg00lopez@gmail.com",
+    "phone": "+1 8492679236",
+    "url": "https://imrlopez.vercel.app/",
+    "summary": "A highly skilled and versatile polyglot software developer with over 2 years of experience, proficient in a wide range of programming languages and frameworks. With a strong foundation in software development, data structures, and web technologies. A basketball enthusiast with a passion for continuous learning and growth, combining technical expertise with a keen ability to work effectively in both collaborative and independent environments.",
+    "location": {
+      "address": "",
+      "postalCode": "08820",
+      "city": "Dominican Republic",
+      "countryCode": "DOM",
+      "region": "Santo Domingo"
+    },
+    "profiles": [
+      {
+        "network": "LinkedIn",
+        "username": "Angel Gabriel Lopez",
+        "url": "https://www.linkedin.com/in/angel-gabriel-lopez/"
+      },
+      {
+        "network": "GitHub",
+        "username": "ImRLopezAG",
+        "url": "https://github.com/ImRLopezAG"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "Dextra",
+      "position": "Development consultant",
+      "url": "https://dextra.com.do/",
+      "startDate": "2023-09-17",
+      "summary": "I work as a consultant in the development of business central applications, creating and maintaining business solutions for clients",
+      "highlights": [
+        "Development of business central applications",
+        "Creation and maintenance of business solutions for clients",
+        "Collaboration with the development team"
+      ]
+    },
+    {
+      "name": "Villacampa - School of Technology",
+      "position": "Tech Professor",
+      "url": "https://www.instagram.com/villacampast/",
+      "startDate": "2019-03-01",
+      "endDate": "2020-12-15",
+      "summary": "I taught programming and web development to students of all ages. I also created and maintained the school's website.",
+      "highlights": [
+        "Taught programming and web development",
+        "Created and maintained the school's website",
+        "Collaborated with the school's development team"
+      ]
+    }
+  ],
+  "volunteer": [],
+  "education": [
+    {
+      "institution": "Intituto Tecnologico de las Americas (ITLA)",
+      "url": "https://itla.edu.do/",
+      "area": "Software Engineer",
+      "studyType": "Bachelor",
+      "startDate": "2022-01-01",
+      "endDate": "2024-04-01",
+      "score": "3.7",
+      "courses": [
+        "Data structures",
+        "Database management",
+        "Process optimization",
+        "Web development"
+      ]
+    },
+    {
+      "institution": "Mescyt - English Immersion Program",
+      "area": "Foreign languages",
+      "studyType": "Certificate",
+      "startDate": "2023-01-01",
+      "endDate": "2023-12-01",
+      "score": "B2",
+      "courses": [
+        "Intensive English program for one year provided by the Ministry of Education"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": "HTML",
+      "level": "Advanced",
+      "keywords": ["Web development", "Frontend"]
+    },
+    {
+      "name": "CSS",
+      "level": "Advanced",
+      "keywords": ["Web development", "Frontend", "Responsive design"]
+    },
+    {
+      "name": "JavaScript",
+      "level": "Mid",
+      "keywords": ["Web development", "Frontend", "Backend", "Fullstack"]
+    },
+    {
+      "name": "Tailwind",
+      "level": "Mid",
+      "keywords": [
+        "Web development",
+        "Frontend",
+        "CSS Framework",
+        "Responsive design"
+      ]
+    },
+    {
+      "name": "TypeScript",
+      "level": "Mid",
+      "keywords": [
+        "Web development",
+        "Frontend",
+        "Backend",
+        "JavaScript Superset"
+      ]
+    },
+    {
+      "name": "Node",
+      "level": "Mid",
+      "keywords": ["Web development", "Backend", "JavaScript", "Server"]
+    },
+    {
+      "name": "React",
+      "level": "Mid",
+      "keywords": [
+        "Web development",
+        "Frontend",
+        "JavaScript Framework",
+        "Frontend"
+      ]
+    },
+    {
+      "name": "Next.js",
+      "level": "Mid",
+      "keywords": [
+        "Web development",
+        "Frontend",
+        "JavaScript Framework",
+        "Fullstack"
+      ]
+    },
+    {
+      "name": "SQL",
+      "level": "Beginner",
+      "keywords": ["Web development", "Backend", "Database", "SQL"]
+    },
+    {
+      "name": "OOP",
+      "level": "Advanced",
+      "keywords": ["Web development", "Backend", "Object Oriented Programming"]
+    },
+    {
+      "name": "Clean Architecture",
+      "level": "Mid",
+      "keywords": ["Web development", "Backend", "Architecture", "Clean Code"]
+    },
+    {
+      "name": "SOLID",
+      "level": "Advanced",
+      "keywords": [
+        "Web development",
+        "Backend",
+        "Architecture",
+        "Design Patterns"
+      ]
+    },
+    {
+      "name": "SCRUM",
+      "level": "Mid",
+      "keywords": ["Web development", "Backend", "Agile", "Methodology"]
+    },
+    {
+      "name": "Flutter",
+      "level": "Beginner",
+      "keywords": ["Web development", "Frontend", "Mobile development", "Dart"]
+    },
+    {
+      "name": "Dart",
+      "level": "Beginner",
+      "keywords": [
+        "Web development",
+        "Frontend",
+        "Mobile development",
+        "Flutter"
+      ]
+    },
+    {
+      "name": "GraphQL",
+      "level": "Beginner",
+      "keywords": ["Web development", "Backend", "API", "Query Language"]
+    },
+    {
+      "name": "CSharp",
+      "level": "Mid",
+      "keywords": ["Web development", "Backend", "Object Oriented Programming"]
+    },
+    {
+      "name": "DotNet",
+      "level": "Mid",
+      "keywords": ["Web development", "Backend", "Framework", "CSharp"]
+    },
+    {
+      "name": "Git",
+      "level": "Mid",
+      "keywords": ["Web development", "Version Control", "Collaboration"]
+    },
+    {
+      "name": "GitHub",
+      "level": "Mid",
+      "keywords": ["Web development", "Version Control", "Collaboration"]
+    }
+  ],
+  "languages": [
+    {
+      "language": "Spanish",
+      "fluency": "Native speaker"
+    },
+    {
+      "language": "English",
+      "fluency": "Advanced"
+    }
+  ],
+  "interests": [
+    {
+      "name": "Basketball",
+      "keywords": ["NBA"]
+    }
+  ],
+  "projects": [
+    {
+      "name": "EMP (English Immersion Program)",
+      "isActive": true,
+      "description": "A web made for admin attendance, scores, quizzes and activities and homeworks",
+      "highlights": ["NextJs", "TRPC", "TailwindCss", "postgres", "drizzle"],
+      "url": "",
+      "github": ""
+    },
+    {
+      "name": "Crime App",
+      "isActive": true,
+      "description": "CrimeTrackRD is an innovative platform with the primary goal of enhancing citizen security in the Dominican Republic.",
+      "highlights": ["NextJs", "TRPC", "TailwindCss", "postgres", "drizzle"],
+      "url": "",
+      "github": ""
+    },
+    {
+      "name": "Tech Path",
+      "isActive": true,
+      "description": "An optimized alternative to the ITLA student page, which is the university where I studied.",
+      "highlights": ["NextJs", "TRPC", "TailwindCss"],
+      "url": "",
+      "github": ""
+    },
+    {
+      "name": "GNX/utilities",
+      "isActive": true,
+      "description": "A set of utility libraries made in TypeScript, which serve to develop a backend in a straightforward manner and all  with generics",
+      "highlights": ["Typescript", "Node", "Express"],
+      "url": "",
+      "github": ""
+    },
+    {
+      "name": "Real Estate",
+      "isActive": true,
+      "description": "A real estate application with session management to handle properties you like as a client. The administrator can manage the properties and clients.",
+      "highlights": [
+        ".Net",
+        "TailwindCss",
+        "Bosstrap",
+        "Identity",
+        "SQL database"
+      ],
+      "url": "",
+      "github": ""
+    },
+    {
+      "name": "Internet Banking",
+      "isActive": true,
+      "description": "A banking administrator with user management, where clients can manage their accounts, make payments, and request loans. The administrator can manage the clients, accounts, and loans.",
+      "highlights": [
+        ".Net",
+        "TailwindCss",
+        "Identity",
+        "React",
+        "Flutter",
+        "SQL and NoSQL database"
+      ],
+      "url": "",
+      "github": ""
+    },
+    {
+      "name": "Task Manager",
+      "isActive": true,
+      "description": "A task manager I developed for my personal use, where I can manage my tasks, projects, and goals.",
+      "highlights": [
+        "NextJs",
+        "TailwindCss",
+        "TRPC",
+        "NextAuth",
+        "Google Gemini AI",
+        "SQL database"
+      ],
+      "url": "",
+      "github": ""
+    },
+    {
+      "name": "Chat Bot",
+      "isActive": true,
+      "description": "Chatbot using Google Gemini AI with chat persistence in local storage using zustand.",
+      "highlights": ["NextJs", "TailwindCss", "Google Gemini AI", "Zustand"],
+      "url": "",
+      "github": ""
+    }
+  ]
+}
