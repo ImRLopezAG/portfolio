@@ -5,7 +5,7 @@ import { education } from '@shared/cv.json'
 ---
 
 <Section title='Education'>
-  <ul class='flex flex-col gap-8'>
+  <ol class='flex flex-col gap-8'>
     {
       education.map(({ institution, startDate, endDate, area, courses }) => {
         const startYear = new Date(startDate).getFullYear()
@@ -14,7 +14,7 @@ import { education } from '@shared/cv.json'
         const years = `${startYear} - ${endYear}`
 
         return (
-          <li>
+          <li class="ms-3">
             <article>
               <header class='flex flex-row justify-between items-start mb-1'>
                 <div>
@@ -40,5 +40,5 @@ import { education } from '@shared/cv.json'
         )
       })
     }
-  </ul>
+  </o>
 </Section>

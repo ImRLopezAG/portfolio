@@ -1,20 +1,21 @@
 ---
-import Section from '@ui/section.astro';
+import Section from '@ui/section.astro'
 
-import { work } from '@shared/cv.json';
+import { work } from '@shared/cv.json'
 ---
 
 <Section title='Experience'>
-  <ul class='flex flex-col gap-8'>
+  <ol class='flex flex-col gap-8 relative'>
     {
       work.map(
         ({ name, startDate, endDate, position, summary, highlights, url }) => {
-          const startYear = new Date(startDate).getFullYear();
+          const startYear = new Date(startDate).getFullYear()
           const endYear =
-            endDate != null ? new Date(endDate).getFullYear() : 'Actual';
+            endDate != null ? new Date(endDate).getFullYear() : 'Actual'
 
           return (
-            <li>
+            <li class='ms-3' data-title={name}>
+              <span class='absolute -start-[6.5px] mt-2 h-3 w-3 rounded-full border border-zinc-900 bg-zinc-900' />
               <article>
                 <header class='flex flex-row justify-between items-start mb-1'>
                   <div>
@@ -55,15 +56,21 @@ import { work } from '@shared/cv.json';
                   <ul class='list-disc list-inside'>
                     {highlights &&
                       highlights.map((highlight) => {
-                        return <li>{highlight}</li>;
+                        return <li>{highlight}</li>
                       })}
                   </ul>
                 </footer>
               </article>
             </li>
-          );
+          )
         }
       )
     }
-  </ul>
+  </ol>
 </Section>
+
+<style>
+  ol {
+    border-left: 1px solid #18181b;
+  }
+</style>
