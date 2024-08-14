@@ -61,12 +61,6 @@ const { image, summary, url } = basics
     text-decoration: none;
   }
 
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
   *,
   *::before,
   *::after {
@@ -119,6 +113,9 @@ const { image, summary, url } = basics
 
     article {
       break-inside: avoid;
+    }
+    ol {
+      border-left: 0 !important;
     }
   }
 </style>
