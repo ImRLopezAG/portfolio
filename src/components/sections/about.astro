@@ -1,0 +1,12 @@
+---
+import Section from '@ui/section.astro'
+
+import { basics } from '@shared/cv.json'
+const { summary } = basics
+---
+
+<Section title='About Me'>
+  <p class='text-pretty'>
+    {summary}
+  </p>
+</Section>

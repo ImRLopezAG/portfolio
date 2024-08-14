@@ -1,0 +1,69 @@
+---
+import Section from '@ui/section.astro';
+
+import { work } from '@shared/cv.json';
+---
+
+<Section title='Experience'>
+  <ul class='flex flex-col gap-8'>
+    {
+      work.map(
+        ({ name, startDate, endDate, position, summary, highlights, url }) => {
+          const startYear = new Date(startDate).getFullYear();
+          const endYear =
+            endDate != null ? new Date(endDate).getFullYear() : 'Actual';
+
+          return (
+            <li>
+              <article>
+                <header class='flex flex-row justify-between items-start mb-1'>
+                  <div>
+                    <h3 class='text-lg font-semibold' data-title={name}>
+                      <a
+                        href={url}
+                        title={`Ver ${name}`}
+                        target='_blank'
+                        class='hover:underline'
+                      >
+                        {name}
+                      </a>
+                    </h3>
+                    <h4 class='text-sm font-normal'>{position}</h4>
+                  </div>
+
+                  <div>
+                    <time
+                      datetime={startDate}
+                      data-title={startDate}
+                      class='text-gray-500 text-sm sm:text-right'
+                    >
+                      {startYear}
+                    </time>
+                    -
+                    <time
+                      datetime={endDate}
+                      data-title={endDate}
+                      class='text-gray-500 text-sm sm:text-right'
+                    >
+                      {endYear}
+                    </time>
+                  </div>
+                </header>
+
+                <footer>
+                  <p>{summary}</p>
+                  <ul class='list-disc list-inside'>
+                    {highlights &&
+                      highlights.map((highlight) => {
+                        return <li>{highlight}</li>;
+                      })}
+                  </ul>
+                </footer>
+              </article>
+            </li>
+          );
+        }
+      )
+    }
+  </ul>
+</Section>
