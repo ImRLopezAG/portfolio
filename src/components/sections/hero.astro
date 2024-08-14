@@ -77,9 +77,10 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(' • ')
                 title={`Go to ${name}'s profile on ${network}`}
                 target='_blank'
                 rel='noopener noreferrer'
-                class='text-gray-400 hover:text-gray-800'
+                class='text-zinc-400 hover:text-zinc-800'
               >
                 <Icon />
+                <span class='sr-only'>{network}</span>
               </a>
             )
           })
