@@ -1,26 +1,26 @@
 ---
-import AtorposWrapper from '@components/astro/atropos-wrapper.astro'
-import DiscordCard from '@components/astro/discord.astro'
-import Project from '@components/section/project.astro'
-import Layout from '@layouts/Layout.astro'
-import { ProfileTab } from '@components/react'
+import Layout from '@layouts/Layout.astro';
+
+import About from '@components/sections/about.astro';
+import Education from '@components/sections/education.astro';
+import Experience from '@components/sections/experience.astro';
+import Hero from '@components/sections/hero.astro';
+import Projects from '@components/sections/projects.astro';
+import Skills from '@components/sections/skills.astro';
+import KeyboardManager from '@components/ui/keyboard-manager.astro';
+
+import { basics } from '@shared/cv.json';
+const { name } = basics;
 ---
 
-<Layout title='ImRLopezAg'>
-  <aritcle id='Home' class='flex flex-col gap-8'>
-    <AtorposWrapper>
-      <DiscordCard />
-    </AtorposWrapper>
-    <ProfileTab client:idle />
-  </aritcle>
-  <aritcle id='Projects'>
-    <Project />
-  </aritcle>
+<Layout title={`${name}'s Portfolio`}>
+  <main class='container mx-auto px-4 py-5 my-5'>
+    <Hero />
+    <About />
+    <Experience />
+    <Education />
+    <Projects />
+    <Skills />
+  </main>
+  <KeyboardManager />
 </Layout>
-
-<script>
-  window.addEventListener('hashchange', ({ newURL }) => {
-    const match = newURL.match(/home/i) ? 70 : 38
-    window.scrollTo(window.scrollX, window.scrollY - match)
-  })
-</script>
