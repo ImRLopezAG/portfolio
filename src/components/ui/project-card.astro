@@ -1,19 +1,23 @@
 ---
-import Card from '@ui/card/card.astro';
-import CardTitle from '@ui/card/card-title.astro';
-import CardContent from '@ui/card/card-content.astro';
-import CardFooter from '@ui/card/card-footer.astro';
-import { projects } from '@shared/cv.json';
+import Card from '@ui/card/card.astro'
+import CardTitle from '@ui/card/card-title.astro'
+import CardContent from '@ui/card/card-content.astro'
+import CardFooter from '@ui/card/card-footer.astro'
+import { projects } from '@shared/cv.json'
 
-type Project = (typeof projects)[number];
-type Props = Project;
+type Project = (typeof projects)[number]
+type Props = Project
 
-const { name, description, highlights } = Astro.props;
+const { name, description, highlights } = Astro.props
 ---
 
 <Card className='hover:bg-none'>
   <CardTitle>{name}</CardTitle>
-  <CardContent>{description}</CardContent>
+  <CardContent className='py-2'>
+    <p class='text-pretty'>
+      {description}
+    </p>
+  </CardContent>
   {
     highlights && (
       <CardFooter className='flex flex-wrap gap-2 items-end sticky bottom-0'>
