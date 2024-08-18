@@ -1,7 +1,7 @@
 ---
-import Section from '@ui/section.astro';
-import { projects } from '@shared/cv.json';
-import ProjectCard from '@ui/project-card.astro';
+import Section from '@ui/section.astro'
+import { projects } from '@shared/cv.json'
+import ProjectCard from '@ui/project-card.astro'
 ---
 
 <Section title='Projects' className='relative'>
@@ -10,32 +10,18 @@ import ProjectCard from '@ui/project-card.astro';
     id='projects-wrap'
   >
     {
-      projects.map((item) => {
-        const { github, url } = item;
-        return (
-          <>
-            {(github || url) && (
-              <a
-                data-card={item.name}
-                href={url || github}
-                target='_blank'
-                rel='noopener noreferrer'
-                class='relative group  block p-2 h-full w-full hover:backdrop-blur-lg hover:backdrop-filter hover:bg-blue-400/40 rounded-2xl transition-all duration-500 ease-in-out transform hover:scale-105'
-              >
-                <ProjectCard {...item} />
-              </a>
-            )}
-            {!github && !url && (
-              <div
-                data-card={item.name}
-                class='relative group  block p-2 h-full w-full hover:backdrop-blur-lg hover:backdrop-filter hover:bg-zinc-900/40 rounded-2xl transition-all duration-500 ease-in-out transform hover:scale-105'
-              >
-                <ProjectCard {...item} />
-              </div>
-            )}
-          </>
-        );
-      })
+      projects.map((item) => (
+        <div
+          data-card={item.name}
+          class:list={[
+            'relative group block p-2 h-full w-full hover:backdrop-blur-lg hover:backdrop-filter  rounded-2xl',
+            (item.url || item.github) && 'hover:bg-blue-400/40',
+            !(item.url || item.github) && 'hover:bg-zinc-900/40'
+          ]}
+        >
+          <ProjectCard {...item} />
+        </div>
+      ))
     }
   </div>
 </Section>
