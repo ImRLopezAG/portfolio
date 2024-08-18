@@ -279,8 +279,6 @@
       "highlights": [
         ".Net",
         "TailwindCss",
-        "Bosstrap",
-        "Identity",
         "SQL database"
       ],
       "url": "",
@@ -289,7 +287,7 @@
     {
       "name": "Internet Banking",
       "isActive": true,
-      "description": "A banking administrator with user management, where clients can manage their accounts, make payments, and request loans. The administrator can manage the clients, accounts, and loans.",
+      "description": "Banking administrator, where clients can manage their accounts, payments, loans. The administrator can manage the clients, accounts, and loans.",
       "highlights": [
         ".Net",
         "TailwindCss",
