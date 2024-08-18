@@ -236,7 +236,7 @@
       "name": "Image Optimizer",
       "isActive": true,
       "description": "Image Optimizer, a web application that allows you to optimize images in a simple way",
-      "highlights": ["NextJs", "TRPC", "TailwindCss", "postgres", "drizzle"],
+      "highlights": ["NextJs", "TRPC", "TailwindCss"],
       "url": "https://img-opt.vercel.app/",
       "github": ""
     },
