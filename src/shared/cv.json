@@ -273,6 +273,22 @@
       "github": "https://github.com/ImRLopezAG/gnx-core"
     },
     {
+      "name": "cy-utilities",
+      "isActive": true,
+      "description": "A set of utility libraries made in TypeScript, which serve to develop a backend in a straightforward manner and all  with generics",
+      "highlights": ["Typescript", "Node", "Cypress"],
+      "url": "https://gnx-udocs.vercel.app/",
+      "github": "https://github.com/ImRLopezAG/gnx-core"
+    },
+    {
+      "name": "try-handler",
+      "isActive": true,
+      "description": "Try handler is a powerful utility that wraps try-catch blocks in a function, allowing you to handle errors in a more elegant way.",
+      "highlights": ["Typescript", "Node", "Error handling", "Safe code"],
+      "url": "https://www.npmjs.com/package/try-handler",
+      "github": "https://github.com/ImRLopezAG/try-handler"
+    },
+    {
       "name": "Real Estate",
       "isActive": true,
       "description": "Real estate application where you can manage properties, clients, and sales.",
