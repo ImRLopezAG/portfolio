@@ -233,6 +233,14 @@
   ],
   "projects": [
     {
+      "name": "Image Optimizer",
+      "isActive": true,
+      "description": "Image Optimizer, a web application that allows you to optimize images in a simple way",
+      "highlights": ["NextJs", "TRPC", "TailwindCss", "postgres", "drizzle"],
+      "url": "https://img-opt.vercel.app/",
+      "github": ""
+    },
+    {
       "name": "EMP (English Immersion Program)",
       "isActive": true,
       "description": "A web made for admin attendance, scores, quizzes and activities and homeworks",
