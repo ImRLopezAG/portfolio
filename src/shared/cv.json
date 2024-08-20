@@ -277,7 +277,7 @@
       "isActive": true,
       "description": "A set of utility out of the box for cypress but it provides a way to extend it and make the tests easier to write",
       "highlights": ["Typescript", "Node", "Cypress"],
-      "url": "https://github.com/ImRLopezAG/cy-utilities#readme",
+      "url": "https://www.npmjs.com/package/cy-utilities",
       "github": "https://github.com/ImRLopezAG/cy-utilities"
     },
     {
@@ -285,7 +285,7 @@
       "isActive": true,
       "description": "Try handler is a powerful utility that wraps try-catch blocks in a function, allowing you to handle errors in a more elegant way.",
       "highlights": ["Typescript", "Node", "Error handling", "Safe code"],
-      "url": "https://www.npmjs.com/package/try-handler#readme",
+      "url": "https://www.npmjs.com/package/try-handler",
       "github": "https://github.com/ImRLopezAG/try-handler"
     },
     {
