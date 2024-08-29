@@ -218,6 +218,11 @@
       "name": "Docker",
       "level": "Beginner",
       "keywords": ["Web development", "Containerization", "Deployment"]
+    },
+    {
+      "name": "Cypress",
+      "level": "Mid",
+      "keywords": ["Web development", "Testing", "End-to-end testing"]
     }
   ],
   "languages": [
