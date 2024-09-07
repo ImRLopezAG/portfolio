@@ -243,6 +243,14 @@
   ],
   "projects": [
     {
+      "name": "SHurl",
+      "isActive": true,
+      "description": "SHurl is a URL shortener and also have a image optimizer api, which allows you to optimize images in a simple way",
+      "highlights": ["NextJs", "postgres"],
+      "url": "https://shurl-links.vercel.app/",
+      "github": "https://github.com/ImRLopezAG/links-shorter"
+    },
+    {
       "name": "Image Optimizer",
       "isActive": true,
       "description": "Image Optimizer, a web application that allows you to optimize images in a simple way",
@@ -302,11 +310,7 @@
       "name": "Real Estate",
       "isActive": true,
       "description": "Real estate application where you can manage properties, clients, and sales.",
-      "highlights": [
-        ".Net",
-        "TailwindCss",
-        "SQL database"
-      ],
+      "highlights": [".Net", "TailwindCss", "SQL database"],
       "url": "",
       "github": ""
     },
