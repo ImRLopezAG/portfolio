@@ -15,7 +15,7 @@ const { city, region } = location
 const SOCIAL_ICONS: Record<string, any> = {
   GitHub,
   LinkedIn,
-  X,
+  X
 }
 
 const linkedInfo = profiles.find(({ network }) => network === 'LinkedIn')
@@ -51,6 +51,7 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(' • ')
               class='text-gray-400 hover:text-gray-800'
             >
               <Mail />
+              <span class='sr-only'>Email</span>
             </a>
           )
         }
@@ -64,6 +65,7 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(' • ')
               class='text-gray-400 hover:text-gray-800'
             >
               <Phone />
+              <span class='sr-only'>Phone</span>
             </a>
           )
         }
@@ -87,14 +89,13 @@ const printInfo = [email, phone, linkedUrl].filter(Boolean).join(' • ')
         }
       </footer>
     </div>
-    <figure>
-      <Image
-        src={image}
-        alt={name}
-        width={100}
-        height={100}
-        class='rounded-lg aspect-square object-cover w-32 sm:m-[0 auto]'
-      />
-    </figure>
+    <Image
+      src={image}
+      alt={name}
+      width={100}
+      height={100}
+      class='rounded-lg aspect-square object-cover w-32 sm:m-[0 auto]'
+      loading="eager"
+    />
   </div>
 </Section>
