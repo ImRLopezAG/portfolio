@@ -105,12 +105,18 @@ const { image, summary, url } = basics
     margin: 0;
     text-wrap: pretty;
   }
-
+ 
   .print {
     display: none !important;
   }
 
   @media print {
+    .project-card {
+      page-break-inside: avoid !important;
+      padding: 0px !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
     .no-print {
       display: none !important;
     }

@@ -13,7 +13,7 @@ type Props = Project
 const { name, description, highlights, github, url } = Astro.props
 ---
 
-<Card>
+<Card className='project-card'>
   <CardTitle className='flex items-center gap-2'
     >
     {!url && name}
