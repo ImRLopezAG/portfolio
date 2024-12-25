@@ -243,6 +243,14 @@
   ],
   "projects": [
     {
+      "name": "RNC Contributors",
+      "isActive": true,
+      "description": "RNC Contributors is an open-source api that allows users to view the contributors of `Registro Nacional de Contribuyentes` (RNC) in the Dominican Republic. ",
+      "highlights": ["NextJs", "sqlite", "Hono", "Turso"],
+      "url": "https://rnc-contributors.vercel.app/api",
+      "github": "https://github.com/ImRLopezAG/rnc-contributors"
+    },
+    {
       "name": "SHurl",
       "isActive": true,
       "description": "SHurl is a URL shortener and also have a image optimizer api, which allows you to optimize images in a simple way",
