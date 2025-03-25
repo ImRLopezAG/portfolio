@@ -1,5 +1,5 @@
 import { ExperienceCard } from '@components/experience-card'
-import { education, work } from '@shared/cv.json'
+import { education, work } from '@shared/cv'
 import { Briefcase, GraduationCap } from 'lucide-react'
 import { AnimatedSection } from './section'
 export async function Experience() {

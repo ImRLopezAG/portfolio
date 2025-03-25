@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { skills } from '@shared/cv.json'
+import { skills } from '@shared/cv'
 import { AnimatedSection } from './section'
 export async function Skills() {
 	const skillCategories = new Set<string>()

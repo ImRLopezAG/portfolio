@@ -4,7 +4,7 @@ import { Experience } from '@components/sections/experience'
 import { Hero } from '@components/sections/hero'
 import { Projects } from '@components/sections/projects'
 import { Skills } from '@components/sections/skills'
-import { projects } from '@shared/cv.json'
+import { projects } from '@shared/cv'
 export default async function Home() {
 	'use cache'
 	return (

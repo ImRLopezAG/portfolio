@@ -8,7 +8,7 @@ import {
 	skills,
 	volunteer,
 	work,
-} from '@shared/cv.json'
+} from '@shared/cv'
 
 export const cvRouter = createTRPCRouter({
 	getBasics: publicProcedure.query(() => {

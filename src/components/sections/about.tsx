@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card'
-import { basics } from '@shared/cv.json'
+import { basics } from '@shared/cv'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { AnimatedSection } from './section'
 export async function About() {

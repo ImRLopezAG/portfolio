@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
 import { AlbumIcon, ArrowDown, Github, Instagram, Linkedin } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef } from 'react'
 export function Hero() {
@@ -117,10 +118,14 @@ export function Hero() {
 					className='relative flex aspect-square items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-purple-600/20'
 				>
 					<div className='absolute inset-4 flex items-center justify-center overflow-hidden rounded-full bg-muted'>
-						<img
+						<Image
 							src='/me.jpeg'
 							alt='Angel Gabriel Lopez'
 							className='h-full w-full object-cover'
+							priority
+							quality={80}
+							width={400}
+							height={400}
 						/>
 					</div>
 				</motion.div>

@@ -8,7 +8,7 @@ import type {
 	skills,
 	volunteer,
 	work,
-} from '@shared/cv.json'
+} from '@shared/cv'
 import type { NextMiddleware } from 'next/server'
 import type { z } from 'zod'
 declare global {
