@@ -2,7 +2,6 @@
 import {
 	COLOR_WEIGHT,
 	type Color_Weight,
-	type ContentLayout,
 	type FontFamily,
 	themeSettings,
 	useThemeSettingsStore,
@@ -39,14 +38,12 @@ export function ThemeCustomizerPanel() {
 		setFontFamily,
 		roundedCorner,
 		setRoundedCorner,
-		contentLayout,
-		setContentLayout,
 		setColorWeight,
 	} = useThemeSettingsStore((state) => state)
 
 	function resetThemeHandle() {
 		resetTheme()
-		setTheme('light')
+		setTheme('system')
 	}
 
 	return (
@@ -226,7 +223,6 @@ export function ThemeCustomizerPanel() {
 								</div>
 							</RadioGroup>
 						</div>
-
 					</div>
 				</div>
 				<Button

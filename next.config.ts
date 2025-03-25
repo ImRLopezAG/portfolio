@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
 	experimental: {
 		useCache: true,
 		reactCompiler: true,
+		viewTransition: true,
+		mdxRs: true,
 	},
 }
 

@@ -74,9 +74,7 @@ async function getMDXData(dir: string) {
 }
 
 export async function uncached_post() {
-	return getMDXData(
-		path.join(process.cwd(), 'src', 'server', 'posts'),
-	)
+	return getMDXData(path.join(process.cwd(), 'src', 'server', 'posts'))
 }
 
 export const getPosts = cache(async () => {

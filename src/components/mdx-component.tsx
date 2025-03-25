@@ -15,7 +15,7 @@ type PreProps = ComponentPropsWithoutRef<'pre'> & {
 	'data-filename'?: string
 }
 
-const components = cache( () => ({
+const components = cache(() => ({
 	h1: ({ className, ...props }: HeadingProps) => (
 		<h1 className={cn('mb-0 pt-12 font-bold text-3xl', className)} {...props} />
 	),

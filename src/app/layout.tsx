@@ -2,11 +2,12 @@ import { Providers } from '@components/providers'
 import type React from 'react'
 import './globals.css'
 
-import { getThemeScript } from '@/lib/utils'
 import { Footer } from '@components/footer'
 import { Navbar } from '@components/navbar'
+import { getThemeScript } from '@lib/utils'
 import { basics } from '@shared/cv'
 import Script from 'next/script'
+
 export const metadata = {
 	title: `${basics.name} | ${basics.label}`,
 	description: basics.summary,
