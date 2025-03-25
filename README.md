@@ -1,10 +1,12 @@
 # Personal Portfolio
 
-This is my personal portfolio. It uses Astro and React to render the components and Tailwind CSS for the styles.
+This is my personal portfolio. It uses Next.js, TypeScript, and Tailwind CSS. The portfolio is designed to showcase my skills, projects, and experiences as a developer.
 
 ## 🛠️ Tools
 
-  [![Astral](https://img.shields.io/badge/Astro-000000?logo=astro&logoColor=white)](https://astro.build/)
+  [![Next.js](https://img.shields.io/badge/Next.js-000000?logo=next.js&logoColor=white)](https://nextjs.org/)
+  [![Resend](https://img.shields.io/badge/Resend-000000?logo=resend&logoColor=white)](https://resend.com/)
+  [![Shadcn](https://img.shields.io/badge/Shadcn-000000?logo=shadcn&logoColor=white)](https://shadcn.com/)
   [![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=white)](https://reactjs.org/)
   [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -13,14 +15,12 @@ This is my personal portfolio. It uses Astro and React to render the components 
 
 ### 🎨 Code Style
 
-[![Prettier](https://img.shields.io/badge/Prettier-F7B93E?logo=prettier&logoColor=black)](https://prettier.io/)
-[![Eslint](https://img.shields.io/badge/Eslint-4B32C3?logo=eslint&logoColor=white)](https://eslint.org/)
-[![Ts-standard](https://img.shields.io/badge/Ts-standard-3178C6?logo=typescript&logoColor=white)](https://typescript-eslint.io/)
+[![Biome](https://img.shields.io/badge/Biome-000000?logo=biome&logoColor=white)](https://biome.dev/)
 
 ### 🖼️ Icons
 
-[![Svg Repo](https://img.shields.io/badge/SvgRepo-0175C2?logo=svg&logoColor=white)](https://www.svgrepo.com/)
-[![ReactSymbols](https://img.shields.io/badge/ReactSymbols-61DAFB?logo=react&logoColor=white)](https://react-symbols.vercel.app/)
+[![Lucide](https://img.shields.io/badge/Lucide-000000?logo=lucide&logoColor=white)](https://lucide.dev/)
+
 
 ## Style libraries
 

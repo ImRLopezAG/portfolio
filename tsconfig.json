@@ -1,25 +1,47 @@
 {
-  "extends": "astro/tsconfigs/strict",
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@components/*": [
-        "src/components/*"
-      ],
-      "@ui/*": [
-        "src/components/ui/*"
-      ],
-      "@shared/*": [
-        "src/shared/*"
-      ],
-      "@layouts/*": [
-        "src/layouts/*"
-      ]
-    }
-  }
+	"compilerOptions": {
+		"target": "ES2017",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"noEmit": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"incremental": true,
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"paths": {
+			"@/*": ["./src/*"],
+			"@components/*": ["./src/components/*"],
+			"@ui/*": ["./src/components/ui/*"],
+			"@hooks/*": ["./src/hooks/*"],
+			"@stores/*": ["./src/stores/*"],
+			"@lib/*": ["./src/lib/*"],
+			"@mdx": ["./mdx-components.tsx"],
+			"@shared/*": ["./src/lib/*"],
+			"@server/*": ["./src/server/*"],
+			"@actions/*": ["./src/app/_actions/*"],
+			"@api/*": [
+				// just the files tha include server and trpc on the same file
+				"./src/lib/trpc/*",
+				"./src/components/providers/*"
+			]
+		}
+	},
+	"include": [
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		".next/types/**/*.ts",
+		"src/app/blog/[slug]/page.tsx"
+	],
+	"exclude": ["node_modules"]
 }
