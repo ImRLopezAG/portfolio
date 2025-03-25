@@ -75,7 +75,7 @@ async function getMDXData(dir: string) {
 
 export async function uncached_post() {
 	return getMDXData(
-		path.join(process.cwd(), 'src', 'app', 'blog', '[slug]', '_content'),
+		path.join(process.cwd(), 'src', 'server', 'posts'),
 	)
 }
 
