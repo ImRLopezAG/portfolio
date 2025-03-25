@@ -5,7 +5,7 @@ import { ExternalLink, Github } from 'lucide-react'
 import Link from 'next/link'
 
 interface ProjectCardProps {
-	project: CVProjects
+	project: Projects
 	footerDetails?: React.ReactNode
 }
 

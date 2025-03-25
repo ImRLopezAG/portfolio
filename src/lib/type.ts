@@ -24,13 +24,5 @@ declare global {
 	type BlogMetadata = z.infer<typeof schema.metadataSchema>
 	type Email = z.infer<typeof schema.emailSchema>
 	type MiddlewareFactory = (middleware: NextMiddleware) => NextMiddleware
-
-	type CVBasics = typeof basics
-	type CVEducation = (typeof education)[number]
-	type CVInterests = (typeof interests)[number]
-	type CVLanguages = (typeof languages)[number]
-	type CVProjects = (typeof projects)[number]
-	type CVSkills = (typeof skills)[number]
-	type CVVolunteer = typeof volunteer
-	type CVWork = (typeof work)[number]
+	type Projects = (typeof projects)[number]
 }

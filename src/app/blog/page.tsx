@@ -63,7 +63,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 						<Card key={post.slug} className='overflow-hidden'>
 							<CardHeader className='pb-2'>
 								<div className='flex items-start justify-between'>
-									<Badge variant='outline' className='mb-2'>
+									<Badge variant='outline' className='mb-2 border border-primary'>
 										{post.metadata.category}
 									</Badge>
 									<span className='text-muted-foreground text-sm'>
@@ -87,7 +87,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 									Read more →
 								</Link>
 								{post.metadata.tags && (
-									<div className='mt-2 flex flex-wrap gap-2'>
+									<div className='mt-2 flex w-4/5 flex-wrap justify-end gap-2'>
 										{post.metadata.tags.map((tag) => (
 											<Badge key={tag} variant='outline'>
 												{tag}

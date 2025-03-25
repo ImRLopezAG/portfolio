@@ -119,7 +119,7 @@ export function Hero() {
 				>
 					<div className='absolute inset-4 flex items-center justify-center overflow-hidden rounded-full bg-muted'>
 						<Image
-							src='/me.jpeg'
+							src='/me.webp'
 							alt='Angel Gabriel Lopez'
 							className='h-full w-full object-cover'
 							priority

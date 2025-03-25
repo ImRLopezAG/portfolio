@@ -10,20 +10,19 @@ import {
 	DialogTitle,
 } from '@/components/ui/dialog'
 import { ProjectCard } from '@components/project-card'
+import { cn } from '@shared/utils'
 import { motion, useInView } from 'framer-motion'
 import { ExternalLink, Github, Search } from 'lucide-react'
 import Link from 'next/link'
 import { useRef, useState } from 'react'
 
 interface ProjectsProps {
-	projects: CVProjects[]
+	projects: Projects[]
 }
 export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
 	const ref = useRef<HTMLElement>(null)
 	const isInView = useInView(ref, { once: true, amount: 0.1 })
-	const [selectedProject, setSelectedProject] = useState<CVProjects | null>(
-		null,
-	)
+	const [selectedProject, setSelectedProject] = useState<Projects | null>(null)
 	const [filter, setFilter] = useState('all')
 
 	const filteredProjects =
@@ -38,7 +37,7 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
 	const technologies = [
 		...new Set(projects.flatMap((p) => p.highlights)),
 	].sort()
-
+	const isAll = filter === 'all'
 	return (
 		<section id='projects' ref={ref} className='scroll-mt-20 py-20'>
 			<motion.div
@@ -59,7 +58,11 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
 
 				<div className='flex flex-wrap justify-center gap-2'>
 					<Badge
-						className={`cursor-pointer ${filter === 'all' ? 'bg-primary' : 'bg-muted'}`}
+						className={cn(
+							'cursor-pointer text-black dark:text-white',
+							{ 'bg-primary': isAll },
+							{ 'bg-muted': !isAll },
+						)}
 						onClick={() => setFilter('all')}
 					>
 						All
@@ -67,7 +70,11 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
 					{technologies.map((tech) => (
 						<Badge
 							key={tech}
-							className={`cursor-pointer ${filter === tech ? 'bg-primary' : 'bg-muted'}`}
+							className={cn(
+								'cursor-pointer text-black dark:text-white',
+								{ 'bg-primary': filter === tech },
+								{ 'bg-muted': filter !== tech },
+							)}
 							onClick={() => setFilter(tech)}
 						>
 							{tech}

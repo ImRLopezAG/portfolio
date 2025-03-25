@@ -5,11 +5,13 @@ import './globals.css'
 import { getThemeScript } from '@/lib/utils'
 import { Footer } from '@components/footer'
 import { Navbar } from '@components/navbar'
+import { basics } from '@shared/cv'
 import Script from 'next/script'
 export const metadata = {
-	title: 'Angel Gabriel Lopez Solano | Full-Stack Developer',
-	description:
-		'Full-Stack developer with +2 years of experience & basketball player',
+	title: `${basics.name} | ${basics.label}`,
+	description: basics.summary,
+	image: basics.image,
+	url: basics.url,
 }
 
 export default function RootLayout({

@@ -6,13 +6,13 @@ interface AnimatedSectionProps {
 	children: React.ReactNode
 	id: string
 }
+
 export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
 	children,
 	id,
 }) => {
 	const ref = useRef<HTMLElement>(null)
 	const isInView = useInView(ref, { once: true, amount: 0.2 })
-
 	return (
 		<section id={id} ref={ref} className='scroll-mt-20 py-20'>
 			<motion.div

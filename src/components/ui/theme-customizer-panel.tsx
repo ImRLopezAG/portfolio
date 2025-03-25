@@ -227,46 +227,6 @@ export function ThemeCustomizerPanel() {
 							</RadioGroup>
 						</div>
 
-						{/*Content layout…*/}
-						<div className='hidden flex-col gap-4 lg:flex'>
-							<Label>Content layout</Label>
-							<RadioGroup
-								value={contentLayout}
-								onValueChange={(value: ContentLayout) =>
-									setContentLayout(value)
-								}
-								className='grid grid-cols-2 gap-4'
-							>
-								<div>
-									<RadioGroupItem
-										value='full'
-										id='full'
-										className='peer sr-only'
-										aria-label='full'
-									/>
-									<Label
-										htmlFor='full'
-										className='flex flex-col items-center justify-between rounded-md border bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary'
-									>
-										Full
-									</Label>
-								</div>
-								<div>
-									<RadioGroupItem
-										value='centered'
-										id='centered'
-										className='peer sr-only'
-										aria-label='centered'
-									/>
-									<Label
-										htmlFor='centered'
-										className='flex flex-col items-center justify-between rounded-md border bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary'
-									>
-										Centered
-									</Label>
-								</div>
-							</RadioGroup>
-						</div>
 					</div>
 				</div>
 				<Button

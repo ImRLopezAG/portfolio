@@ -67,7 +67,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
 				<div className='mb-6'>
 					<Button asChild variant='ghost' className='mb-4'>
 						<Link href='/blog'>
-							<ArrowLeft className='mr-2 h-4 w-4' />
+							<ArrowLeft className='mr-2 h-4 w-4 text-primary' />
 							Back to all posts
 						</Link>
 					</Button>
@@ -78,12 +78,12 @@ export default async function BlogPage({ params }: BlogPageProps) {
 
 					<div className='mb-6 flex flex-wrap gap-4 text-muted-foreground'>
 						<div className='flex items-center'>
-							<Calendar className='mr-2 h-4 w-4' />
+							<Calendar className='mr-2 h-4 w-4 text-primary' />
 							{post.metadata.date}
 						</div>
 						<div className='flex items-center'>
-							<Tag className='mr-2 h-4 w-4' />
-							<Badge variant='outline'>{post.metadata.category}</Badge>
+							<Tag className='mr-2 h-4 w-4 text-primary' />
+							<Badge variant='outline' className='border border-primary'>{post.metadata.category}</Badge>
 						</div>
 					</div>
 				</div>

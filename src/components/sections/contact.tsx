@@ -6,8 +6,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@ui/card'
-import { Mail, MapPin, Phone } from 'lucide-react'
-import { Github, Linkedin } from 'lucide-react'
+import { Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
 import { AnimatedSection } from './section'
 
 export function Contact() {
