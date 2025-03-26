@@ -1,5 +1,6 @@
 import { createTRPCRouter, publicProcedure } from '@server/api/trpc'
 import { getPosts } from '@server/services/post'
+import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 export const postRouter = createTRPCRouter({
@@ -14,10 +15,13 @@ export const postRouter = createTRPCRouter({
 			const post = posts.find((post) => post.slug === input.slug)
 
 			if (!post) {
-				throw new Error('Post not found')
+				new TRPCError({
+					code: 'NOT_FOUND',
+					message: 'Post not found',
+				})
 			}
 
-			return post
+			return post as typeof posts[number]
 		}),
 	getPostMetadata: publicProcedure
 		.input(z.object({ slug: z.string() }))

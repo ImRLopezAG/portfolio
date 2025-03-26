@@ -1,7 +1,6 @@
-// this script is used to test the `Glob` and `file` APIs in Bun runtime as they are not suported in `Turbopack` yet 
-import { metadataSchema } from '@server/schemas'
-import { Glob, file } from 'bun'
 import { basename } from 'node:path'
+// this script is used to test the `Glob` and `file` APIs in Bun runtime as they are not supported in `TurboPack` yet
+import { metadataSchema } from '@server/schemas'
 function parseFrontmatter(fileContent: string) {
 	const frontmatterRegex = /---\s*([\s\S]*?)\s*---/
 	const match = frontmatterRegex.exec(fileContent)
@@ -47,24 +46,26 @@ function parseFrontmatter(fileContent: string) {
 }
 
 export async function uncached_post() {
-	const glob = new Glob('**/*.mdx')
-
+	const glob = new Bun.Glob('**/*.mdx')
 	const files = await Array.fromAsync(glob.scan({}))
-	for await (const mdx of files) {
-		const data = file(mdx)
-		const text = await data.text()
-		const { content, metadata } = parseFrontmatter(text)
-		const slug = basename(data.name ?? '').replace(/\.mdx$/, '')
-		return {
-      slug,
-      metadata,
-      content,
-    }
-	}
+	const posts = await Promise.all(
+		files.map(async (mdx) => {
+			const data = Bun.file(mdx)
+			const text = await data.text()
+			const { content, metadata } = parseFrontmatter(text)
+			const slug = basename(data.name ?? '').replace(/\.mdx$/, '')
+			return {
+				slug,
+				metadata,
+				content,
+			}
+		}),
+	)
+	return posts
 }
 
 async function main() {
-  const posts = await uncached_post()
-  console.log(posts)
+	const posts = await uncached_post()
+	console.log(posts)
 }
 main()

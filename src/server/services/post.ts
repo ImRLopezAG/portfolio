@@ -1,6 +1,6 @@
 'use cache'
-import { promises as fs } from 'node:fs'
-import path from 'node:path'
+import { readFile, readdir } from 'node:fs/promises'
+import { basename, extname, join } from 'node:path'
 import { metadataSchema } from '@server/schemas'
 import { cache } from 'react'
 
@@ -48,12 +48,12 @@ function parseFrontmatter(fileContent: string) {
 	return { metadata: metadataSchema.parse(metadata), content }
 }
 async function getMDXFiles(dir: string) {
-	const files = await fs.readdir(dir)
-	return files.filter((file) => path.extname(file) === '.mdx')
+	const files = await readdir(dir)
+	return files.filter((file) => extname(file) === '.mdx')
 }
 
 async function readMDXFile(filePath: string) {
-	const rawContent = await fs.readFile(filePath, 'utf-8')
+	const rawContent = await readFile(filePath, 'utf-8')
 	return parseFrontmatter(rawContent)
 }
 
@@ -61,8 +61,8 @@ async function getMDXData(dir: string) {
 	const mdxFiles = await getMDXFiles(dir)
 	const filesData = await Promise.all(
 		mdxFiles.map(async (file) => {
-			const { metadata, content } = await readMDXFile(path.join(dir, file))
-			const slug = path.basename(file, path.extname(file))
+			const { metadata, content } = await readMDXFile(join(dir, file))
+			const slug = basename(file, extname(file))
 
 			return {
 				metadata,
@@ -75,7 +75,28 @@ async function getMDXData(dir: string) {
 }
 
 export async function uncached_post() {
-	return getMDXData(path.join(process.cwd(), 'src', 'server', 'posts'))
+	try {
+		const glob = new Bun.Glob('**/*.mdx')
+
+		const files = await Array.fromAsync(glob.scan({}))
+		const posts = await Promise.all(
+			files.map(async (mdx) => {
+				const data = Bun.file(mdx)
+				const text = await data.text()
+				const { content, metadata } = parseFrontmatter(text)
+				const slug = basename(data.name ?? '').replace(/\.mdx$/, '')
+				return {
+					slug,
+					metadata,
+					content,
+				}
+			}),
+		)
+		return posts
+	} catch (error) {
+		console.log('Error reading files:', error)
+		return getMDXData(join(process.cwd(), 'src', 'server', 'posts'))
+	}
 }
 
 export const getPosts = cache(async () => {
