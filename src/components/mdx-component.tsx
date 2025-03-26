@@ -1,5 +1,7 @@
 import { cn } from '@/lib/utils'
 import { CodeBlock } from '@components/code-block'
+import { FileTree } from '@components/file-tree'
+import { Icon } from '@ui/icon'
 import Link from 'next/link'
 import type { ComponentPropsWithoutRef } from 'react'
 import { cache } from 'react'
@@ -42,7 +44,7 @@ const components = cache(() => ({
 	),
 	p: ({ className, ...props }: ParagraphProps) => (
 		<p
-			className={cn('text-gray-800 leading-snug dark:text-zinc-300', className)}
+			className={cn('space-y-2 text-pretty text-gray-800 leading-snug dark:text-zinc-300', className)}
 			{...props}
 		/>
 	),
@@ -72,6 +74,15 @@ const components = cache(() => ({
 	),
 	strong: ({ className, ...props }: ComponentPropsWithoutRef<'strong'>) => (
 		<strong className={cn('font-medium', className)} {...props} />
+	),
+	hr: ({ className, ...props }: ComponentPropsWithoutRef<'hr'>) => (
+		<hr
+			className={cn(
+				'my-4 border-gray-300 dark:border-zinc-600',
+				className,
+			)}
+			{...props}
+		/>
 	),
 	a: ({ href, children, className, ...props }: AnchorProps) => {
 		const linkClass =
@@ -165,6 +176,8 @@ const components = cache(() => ({
 			{...props}
 		/>
 	),
+	Icon,
+	FileTree
 }))
 declare global {
 	type MDXProvidedComponents = typeof components

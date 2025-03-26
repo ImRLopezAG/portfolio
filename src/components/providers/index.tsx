@@ -17,9 +17,9 @@ export const Providers: React.FC<Props> = ({ children }) => {
 				<FontProvider>
 					<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 						<NextTopLoader
-							color='hsl(var(--primary))'
+							color='oklch(var(--primary))'
 							showSpinner={false}
-							height={2}
+							height={4}
 							shadow='none'
 						/>
 						{children}

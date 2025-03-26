@@ -13,10 +13,11 @@ import rehypePrettyCode, { type Options } from 'rehype-pretty-code'
 interface BlogPageProps {
 	params: Promise<{ slug: string }>
 }
+
 export async function generateMetadata({ params }: BlogPageProps) {
 	const { slug } = await params
-	const doc = await api.post.getPostMetadata({ slug })
-
+	const post = await api.post.getPost({ slug })
+	const doc = post.metadata
 	if (!doc) {
 		return {}
 	}
@@ -28,12 +29,12 @@ export async function generateMetadata({ params }: BlogPageProps) {
 			title: doc.title,
 			description: doc.description,
 			type: 'article',
-			url: absoluteUrl(doc.slug),
+			url: absoluteUrl(post.slug),
 			images: [
 				{
 					url: `/og?title=${encodeURIComponent(
 						doc.title,
-					)}&description=${encodeURIComponent(doc.description)}`,
+					)}&description=${encodeURIComponent(doc.description ?? '')}`,
 				},
 			],
 		},
@@ -45,7 +46,7 @@ export async function generateMetadata({ params }: BlogPageProps) {
 				{
 					url: `/og?title=${encodeURIComponent(
 						doc.title,
-					)}&description=${encodeURIComponent(doc.description)}`,
+					)}&description=${encodeURIComponent(doc.description ?? '')}`,
 				},
 			],
 			creator: '@ImRLopezAG',
@@ -98,37 +99,39 @@ export default async function BlogPage({ params }: BlogPageProps) {
 					</div>
 
 					<ViewTransition name={`blog-content-${post.slug}`}>
-						<MDXRemote
-							source={post.content}
-							components={useMDXComponents()}
-							options={{
-								mdxOptions: {
-									rehypePlugins: [
-										[
-											rehypePrettyCode,
-											{
-												theme: 'one-dark-pro',
-												keepBackground: false,
-												onVisitLine(node) {
-													// Prevent the line from being collapsed
-													if (node.children.length === 0) {
-														node.children = [{ type: 'text', value: ' ' }]
-													}
-												},
-												// Add this to ensure line numbers are properly displayed
-												onVisitHighlightedLine(node) {
-													node.properties.className = ['highlighted']
-												},
+						<article className='prose prose-invert max-w-none'>
+							<MDXRemote
+								source={post.content}
+								components={useMDXComponents()}
+								options={{
+									mdxOptions: {
+										rehypePlugins: [
+											[
+												rehypePrettyCode,
+												{
+													theme: 'material-theme',
+													keepBackground: false,
+													onVisitLine(node) {
+														// Prevent the line from being collapsed
+														if (node.children.length === 0) {
+															node.children = [{ type: 'text', value: ' ' }]
+														}
+													},
+													// Add this to ensure line numbers are properly displayed
+													onVisitHighlightedLine(node) {
+														node.properties.className = ['']
+													},
 
-												transformers: [],
-											} as Options,
+													transformers: [],
+												} as Options,
+											],
+											rehypeExtractFilename,
 										],
-										rehypeExtractFilename,
-									],
-									format: 'mdx',
-								},
-							}}
-						/>
+										format: 'mdx',
+									},
+								}}
+							/>
+						</article>
 					</ViewTransition>
 				</div>
 			</div>

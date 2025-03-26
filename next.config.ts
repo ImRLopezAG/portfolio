@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
 		useCache: true,
 		reactCompiler: true,
 		viewTransition: true,
-		mdxRs: true,
+		mdxRs: true
 	},
 }
 

@@ -3,7 +3,6 @@ import { education, work } from '@shared/cv'
 import { Briefcase, GraduationCap } from 'lucide-react'
 import { AnimatedSection } from './section'
 export async function Experience() {
-	'use cache'
 	return (
 		<AnimatedSection id='experience'>
 			<div className='space-y-4 text-center'>

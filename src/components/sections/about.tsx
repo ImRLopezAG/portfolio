@@ -3,7 +3,6 @@ import { basics } from '@shared/cv'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { AnimatedSection } from './section'
 export async function About() {
-	'use cache'
 	return (
 		<AnimatedSection id='about'>
 			<div className='space-y-4 text-center'>
