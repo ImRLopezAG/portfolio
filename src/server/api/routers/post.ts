@@ -1,14 +1,14 @@
-import { createTRPCRouter, publicProcedure } from '@server/api/trpc'
+import { createTRPCRouter, publicProcedure, cachedPublicProcedure } from '@server/api/trpc'
 import { getPosts } from '@server/services/post'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 export const postRouter = createTRPCRouter({
-	getPosts: publicProcedure.query(async () => {
+	getPosts: cachedPublicProcedure().query(async () => {
 		const posts = await getPosts()
 		return posts
 	}),
-	getPost: publicProcedure
+	getPost: cachedPublicProcedure()
 		.input(z.object({ slug: z.string() }))
 		.query(async ({ input }) => {
 			const posts = await getPosts()
@@ -23,7 +23,7 @@ export const postRouter = createTRPCRouter({
 
 			return post as typeof posts[number]
 		}),
-	getPostMetadata: publicProcedure
+	getPostMetadata: cachedPublicProcedure()
 		.input(z.object({ slug: z.string() }))
 		.query(async ({ input }) => {
 			const posts = await getPosts()
@@ -39,7 +39,7 @@ export const postRouter = createTRPCRouter({
 				description: post.metadata.description || '',
 			}
 		}),
-	getSlugs: publicProcedure.query(async () => {
+	getSlugs: cachedPublicProcedure().query(async () => {
 		const posts = await getPosts()
 		return posts.map((post) => ({
 			slug: post.slug,

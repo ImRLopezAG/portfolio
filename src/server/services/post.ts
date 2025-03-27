@@ -92,6 +92,7 @@ export async function uncached_post() {
 				}
 			}),
 		)
+		console.log('Handling files with Bun:')
 		return posts
 	} catch (error) {
 		console.log('Error reading files:', error)

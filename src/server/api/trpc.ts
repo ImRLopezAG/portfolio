@@ -7,9 +7,9 @@
  * need to use are documented accordingly near the end.
  */
 import { initTRPC } from '@trpc/server'
+import { cache } from 'react'
 import superjson from 'superjson'
 import { ZodError } from 'zod'
-
 /**
  * 1. CONTEXT
  *
@@ -101,3 +101,5 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * are logged in.
  */
 export const publicProcedure = t.procedure.use(timingMiddleware)
+
+export const cachedPublicProcedure = cache(() => publicProcedure)

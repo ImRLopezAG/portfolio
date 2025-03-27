@@ -99,39 +99,37 @@ export default async function BlogPage({ params }: BlogPageProps) {
 					</div>
 
 					<ViewTransition name={`blog-content-${post.slug}`}>
-						<article className='prose prose-invert max-w-none'>
-							<MDXRemote
-								source={post.content}
-								components={useMDXComponents()}
-								options={{
-									mdxOptions: {
-										rehypePlugins: [
-											[
-												rehypePrettyCode,
-												{
-													theme: 'material-theme',
-													keepBackground: false,
-													onVisitLine(node) {
-														// Prevent the line from being collapsed
-														if (node.children.length === 0) {
-															node.children = [{ type: 'text', value: ' ' }]
-														}
-													},
-													// Add this to ensure line numbers are properly displayed
-													onVisitHighlightedLine(node) {
-														node.properties.className = ['']
-													},
+						<MDXRemote
+							source={post.content}
+							components={useMDXComponents()}
+							options={{
+								mdxOptions: {
+									rehypePlugins: [
+										[
+											rehypePrettyCode,
+											{
+												theme: 'material-theme',
+												keepBackground: false,
+												onVisitLine(node) {
+													// Prevent the line from being collapsed
+													if (node.children.length === 0) {
+														node.children = [{ type: 'text', value: ' ' }]
+													}
+												},
+												// Add this to ensure line numbers are properly displayed
+												onVisitHighlightedLine(node) {
+													node.properties.className = ['']
+												},
 
-													transformers: [],
-												} as Options,
-											],
-											rehypeExtractFilename,
+												transformers: [],
+											} as Options,
 										],
-										format: 'mdx',
-									},
-								}}
-							/>
-						</article>
+										rehypeExtractFilename,
+									],
+									format: 'mdx',
+								},
+							}}
+						/>
 					</ViewTransition>
 				</div>
 			</div>

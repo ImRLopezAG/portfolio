@@ -13,6 +13,11 @@ interface BlogPageProps {
 	searchParams: Promise<{ category: string }>
 }
 
+export const metadata = {
+	title: 'Blog',
+	description: 'Thoughts, ideas, and insights on web development and programming',
+}
+
 export default async function BlogPage({ searchParams }: BlogPageProps) {
 	const { category } = await searchParams
 	const posts = await api.post.getPosts()

@@ -1,5 +1,5 @@
-import { basename } from 'node:path'
 // this script is used to test the `Glob` and `file` APIs in Bun runtime as they are not supported in `TurboPack` yet
+import { basename } from 'node:path'
 import { metadataSchema } from '@server/schemas'
 function parseFrontmatter(fileContent: string) {
 	const frontmatterRegex = /---\s*([\s\S]*?)\s*---/
