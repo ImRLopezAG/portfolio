@@ -163,3 +163,54 @@ html {
 	scroll-behavior: smooth;
 }
 
+@keyframes appear {
+	from {
+		opacity: 0;
+		scale: 0.5;
+	}
+	to {
+		opacity: 1;
+		scale: 1;
+	}
+}
+
+@keyframes project-appear {
+	from {
+		opacity: 0;
+		clip-path: inset(100% 100% 0 0);
+	}
+	to {
+		opacity: 1;
+		clip-path: inset(0 0 0 0);
+	}
+}
+
+.animate-view {
+	animation: appear 0.5s linear;
+	animation-timeline: view();
+	animation-range: entry 0% cover 40%;
+}
+
+.animate-view-projects {
+	animation: project-appear 0.5s linear;
+	animation-timeline: view();
+	animation-range: entry 0% cover 40%;
+}
+
+.nav-header {
+	animation: blur linear;
+	animation-timeline: scroll();
+	animation-range-start: 5%;
+}
+
+@keyframes blur {
+	to {
+		/* @apply bg-background/80 py-2 shadow-md backdrop-blur-md; */
+		background-color: color-mix(in oklab, var(--background) 80%, transparent);	
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px
+			rgba(0, 0, 0, 0.06);
+		backdrop-filter: blur(0.5rem);
+	}
+}

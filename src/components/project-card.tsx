@@ -1,3 +1,4 @@
+import { cn } from '@shared/utils'
 import { Badge } from '@ui/badge'
 import { Button } from '@ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@ui/card'
@@ -7,14 +8,20 @@ import Link from 'next/link'
 interface ProjectCardProps {
 	project: Projects
 	footerDetails?: React.ReactNode
+	applyAnimation?: boolean
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
 	project,
 	footerDetails,
+	applyAnimation,
 }) => {
 	return (
-		<Card className='group flex h-full flex-col overflow-hidden'>
+		<Card
+			className={cn('group flex h-full flex-col overflow-hidden', {
+				'animate-view-projects': applyAnimation,
+			})}
+		>
 			<CardHeader className='pb-2'>
 				<CardTitle className='flex items-center justify-between'>
 					<span>{project.name}</span>
