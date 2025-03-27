@@ -1,5 +1,9 @@
-import { createTRPCRouter, publicProcedure, cachedPublicProcedure } from '@server/api/trpc'
-import { getPosts } from '@server/services/post'
+import {
+	cachedPublicProcedure,
+	createTRPCRouter,
+	publicProcedure,
+} from '@server/api/trpc'
+import { getPost, getPosts } from '@server/services/post'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
@@ -11,33 +15,15 @@ export const postRouter = createTRPCRouter({
 	getPost: cachedPublicProcedure()
 		.input(z.object({ slug: z.string() }))
 		.query(async ({ input }) => {
-			const posts = await getPosts()
-			const post = posts.find((post) => post.slug === input.slug)
-
-			if (!post) {
+			const post = await getPost({ slug: input.slug })
+			const not_exist = post === null || post === undefined
+			if (not_exist) {
 				new TRPCError({
 					code: 'NOT_FOUND',
 					message: 'Post not found',
 				})
 			}
-
-			return post as typeof posts[number]
-		}),
-	getPostMetadata: cachedPublicProcedure()
-		.input(z.object({ slug: z.string() }))
-		.query(async ({ input }) => {
-			const posts = await getPosts()
-			const post = posts.find((post) => post.slug === input.slug)
-
-			if (!post) {
-				throw new Error('Post not found')
-			}
-
-			return {
-				...post.metadata,
-				slug: post.slug,
-				description: post.metadata.description || '',
-			}
+			return post as NonNullable<typeof post>
 		}),
 	getSlugs: cachedPublicProcedure().query(async () => {
 		const posts = await getPosts()

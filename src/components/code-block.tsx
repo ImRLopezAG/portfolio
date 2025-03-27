@@ -70,25 +70,26 @@ export function CodeBlock({
 					<File className='h-4 w-4' />
 					<span>{extractedFilename}</span>
 				</div>
-				<div className='text-muted-foreground text-sm'>{language}</div>
+				<div className='flex items-center gap-2'>
+					<div className='text-muted-foreground text-sm'>{language}</div>
+					<button
+						type='button'
+						onClick={copyToClipboard}
+						className='rounded-md p-1.5 text-muted-foreground hover:bg-[#1E1E1E] focus:outline-none'
+						aria-label='Copy code'
+					>
+						{copied ? (
+							<Check className='h-4 w-4' />
+						) : (
+							<Copy className='h-4 w-4' />
+						)}
+						<span className='sr-only'>Copy code</span>
+					</button>
+				</div>
 			</div>
 
 			{/* Code content with line numbers */}
 			<div className='relative'>
-				{/* Copy button */}
-				<button
-					type='button'
-					onClick={copyToClipboard}
-					className='absolute top-3 right-3 rounded-md p-1.5 text-muted-foreground hover:bg-[#1E1E1E] focus:outline-none'
-					aria-label='Copy code'
-				>
-					{copied ? (
-						<Check className='h-4 w-4' />
-					) : (
-						<Copy className='h-4 w-4' />
-					)}
-					<span className='sr-only'>Copy code</span>
-				</button>
 
 				<div className='flex'>
 					{/* Line numbers */}

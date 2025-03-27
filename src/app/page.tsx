@@ -6,7 +6,6 @@ import { Projects } from '@components/sections/projects'
 import { Skills } from '@components/sections/skills'
 import { projects } from '@shared/cv'
 export default async function Home() {
-	'use cache'
 	return (
 		<div className='container mx-auto px-4'>
 			<Hero />
