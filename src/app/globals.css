@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
+@plugin "tailwindcss-motion";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -123,28 +124,44 @@
 }
 
 @theme {
-	--font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
-		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	--font-inter: "Inter", sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	--font-roboto: "Roboto", sans-serif, system-ui, sans-serif,
-		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	--font-montserrat: "Montserrat", sans-serif, system-ui, sans-serif,
-		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	--font-poppins: "Poppins", sans-serif, system-ui, sans-serif,
-		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	--font-overpass-mono: "Overpass Mono", sans-serif, system-ui, sans-serif,
-		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	--font-geist: "Geist", sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	--font-geist-mono: "Geist Mono", sans-serif, system-ui, sans-serif,
-		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	--font-geist-sans: "Geist Sans", sans-serif, system-ui, sans-serif,
-		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	/* Fonts */
+	--font-sans: var(--font-geist-sans), ui-sans-serif, system-ui;
+	--font-inter: "Inter", sans-serif, system-ui, sans-serif;
+	--font-roboto: "Roboto", sans-serif, system-ui;
+	--font-montserrat: "Montserrat", sans-serif, system-ui;
+	--font-poppins: "Poppins", sans-serif, system-ui;
+	--font-overpass-mono: "Overpass Mono", sans-serif, system-ui;
+	--font-geist: "Geist", sans-serif, system-ui, sans-serif;
+	--font-geist-mono: "Geist Mono", sans-serif, system-ui;
+	--font-geist-sans: "Geist Sans", sans-serif, system-ui;
+
+	/* Animations */
+	--animate-fade-in: fadeIn 0.8s ease-in-out forwards;
+	--animate-fade-in-up: fadeIn 0.8s ease-out;
+	--animate-fade-in-scale: fadeInScale 0.8s ease-out 0.2s forwards;
 }
 
-.animate-fade-in {
-	animation: fadeIn 1s ease-in-out forwards;
+/* Smooth scrolling */
+html {
+	scroll-behavior: smooth;
+}
+
+@keyframes blur {
+	to {
+		/* @apply bg-background/80 py-2 shadow-md backdrop-blur-md; */
+		background-color: color-mix(in oklab, var(--background) 80%, transparent);
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px
+			rgba(0, 0, 0, 0.06);
+		backdrop-filter: blur(0.5rem);
+	}
+}
+
+.animate-blur {
+	animation: blur linear;
+	animation-timeline: scroll();
+	animation-range-start: 5%;
 }
 
 @keyframes fadeIn {
@@ -158,9 +175,15 @@
 	}
 }
 
-/* Smooth scrolling */
-html {
-	scroll-behavior: smooth;
+@keyframes fadeInScale {
+	from {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
 }
 
 @keyframes appear {
@@ -172,6 +195,11 @@ html {
 		opacity: 1;
 		scale: 1;
 	}
+}
+.animate-view {
+	animation: appear 0.5s linear;
+	animation-timeline: view();
+	animation-range: entry 0% cover 40%;
 }
 
 @keyframes project-appear {
@@ -185,32 +213,8 @@ html {
 	}
 }
 
-.animate-view {
-	animation: appear 0.5s linear;
-	animation-timeline: view();
-	animation-range: entry 0% cover 40%;
-}
-
 .animate-view-projects {
 	animation: project-appear 0.5s linear;
 	animation-timeline: view();
 	animation-range: entry 0% cover 40%;
-}
-
-.nav-header {
-	animation: blur linear;
-	animation-timeline: scroll();
-	animation-range-start: 5%;
-}
-
-@keyframes blur {
-	to {
-		/* @apply bg-background/80 py-2 shadow-md backdrop-blur-md; */
-		background-color: color-mix(in oklab, var(--background) 80%, transparent);	
-		padding-top: 0.5rem;
-		padding-bottom: 0.5rem;
-		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px
-			rgba(0, 0, 0, 0.06);
-		backdrop-filter: blur(0.5rem);
-	}
 }

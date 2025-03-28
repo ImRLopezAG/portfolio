@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
 	transpilePackages: ['next-mdx-remote'],
 	experimental: {
 		useCache: true,
+		optimizePackageImports: ['lucide-react'],
 		reactCompiler: true,
 		viewTransition: true,
 		mdxRs: true

@@ -1,7 +1,6 @@
 import { useMDXComponents } from '@components/mdx-component'
 import { ViewTransition } from '@components/view-transition'
 import { rehypeExtractFilename } from '@lib/rehype-extract-filename'
-import { api } from '@shared/trpc'
 import { absoluteUrl } from '@shared/utils'
 import { Badge } from '@ui/badge'
 import { Button } from '@ui/button'
@@ -10,17 +9,28 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import rehypePrettyCode, { type Options } from 'rehype-pretty-code'
+import { getPost, getPosts } from '@server/services/post'
 interface BlogPageProps {
 	params: Promise<{ slug: string }>
 }
 
+export async function generateStaticParams() {
+	const posts = await getPosts()
+	return posts.map((post) => ({
+		slug: post.slug,
+	}))
+}
+
 export async function generateMetadata({ params }: BlogPageProps) {
 	const { slug } = await params
-	const post = await api.post.getPost({ slug })
-	const doc = post.metadata
-	if (!doc) {
-		return {}
+	const post = await getPost({ slug })
+	if (!post) {
+		return {
+			title: 'Post not found',
+			description: 'The requested post was not found',
+		}
 	}
+	const doc = post.metadata
 
 	return {
 		title: doc.title,
@@ -57,7 +67,7 @@ export async function generateMetadata({ params }: BlogPageProps) {
 
 export default async function BlogPage({ params }: BlogPageProps) {
 	const { slug } = await params
-	const post = await api.post.getPost({ slug })
+	const post = await getPost({ slug })
 
 	if (!post) {
 		notFound()

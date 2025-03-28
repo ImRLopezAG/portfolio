@@ -1,6 +1,5 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { motion } from 'framer-motion'
 import { AlbumIcon, ArrowDown, Github, Instagram, Linkedin } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -38,12 +37,7 @@ export function Hero() {
 			className='flex min-h-screen flex-col justify-center pt-16 opacity-0'
 		>
 			<div className='grid items-center gap-8 lg:grid-cols-2'>
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.8 }}
-					className='space-y-6'
-				>
+				<div className='motion-preset-fade motion-duration-700 space-y-6 '>
 					<div className='space-y-2'>
 						<h1 className='font-bold text-4xl tracking-tight sm:text-5xl md:text-6xl lg:text-7xl'>
 							<span className='block'>Hi, I&apos;m</span>
@@ -110,13 +104,8 @@ export function Hero() {
 							</Link>
 						</Button>
 					</div>
-				</motion.div>
-				<motion.div
-					initial={{ opacity: 0, scale: 0.9 }}
-					animate={{ opacity: 1, scale: 1 }}
-					transition={{ duration: 0.8, delay: 0.2 }}
-					className='relative flex aspect-square items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-purple-600/20'
-				>
+				</div>
+				<div className='motion-preset-fade motion-delay-200 motion-duration-700 relative flex aspect-square items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-purple-600/20'>
 					<div className='absolute inset-4 flex items-center justify-center overflow-hidden rounded-full bg-muted'>
 						<Image
 							src='/me.webp'
@@ -128,7 +117,7 @@ export function Hero() {
 							height={400}
 						/>
 					</div>
-				</motion.div>
+				</div>
 			</div>
 			<div className='mt-16 flex justify-center'>
 				<Button

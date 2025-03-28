@@ -7,8 +7,8 @@ import {
 	CardTitle,
 } from '@/components/ui/card'
 import { ViewTransition } from '@components/view-transition'
-import { api } from '@shared/trpc'
 import Link from 'next/link'
+import { getPosts } from '@server/services/post'
 interface BlogPageProps {
 	searchParams: Promise<{ category: string }>
 }
@@ -20,7 +20,7 @@ export const metadata = {
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
 	const { category } = await searchParams
-	const posts = await api.post.getPosts()
+	const posts = await getPosts()
 	const categories = [...new Set(posts.map((post) => post.metadata.category))]
 	const filteredPosts = () => {
 		if (category) {

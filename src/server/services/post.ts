@@ -57,7 +57,7 @@ async function readMDXFile(filePath: string) {
 	return parseFrontmatter(rawContent)
 }
 
-async function getMDXData(dir: string) {
+const getMDXData = cache(async (dir: string) => {
 	const mdxFiles = await getMDXFiles(dir)
 	const filesData = await Promise.all(
 		mdxFiles.map(async (file) => {
@@ -72,59 +72,15 @@ async function getMDXData(dir: string) {
 		}),
 	)
 	return filesData
-}
+})
 
-async function uncached_posts() {
-	try {
-		const glob = new Bun.Glob('**/*.mdx')
-
-		const files = await Array.fromAsync(glob.scan({}))
-		const posts = await Promise.all(
-			files.map(async (mdx) => {
-				const data = Bun.file(mdx)
-				const text = await data.text()
-				const { content, metadata } = parseFrontmatter(text)
-				const slug = basename(data.name ?? '').replace(/\.mdx$/, '')
-				return {
-					slug,
-					metadata,
-					content,
-				}
-			}),
-		)
-		console.log('Handling files with Bun:')
-		return posts
-	} catch (error) {
-		console.log('Error reading files:', error)
-		return getMDXData(join(process.cwd(), 'src', 'server', 'posts'))
-	}
-}
 
 export const getPosts = cache(async () => {
-	const posts = await uncached_posts()
+	const posts = await getMDXData(join(process.cwd(), 'src', 'server', 'posts'))
 	return posts
 })
 
-async function uncached_post(slug: string) {
-	try {
-		const mdx = Bun.file(`src/server/posts/${slug}.mdx`)
-		const exists = await mdx.exists()
-		if (!exists) return null
-		const text = await mdx.text()
-		const { content, metadata } = parseFrontmatter(text)
-		return {
-			slug,
-			metadata,
-			content,
-		}
-	} catch (error) {
-		console.log('Error reading files:', error)
-		const posts = await getPosts()
-		return posts.find((post) => post.slug === slug)
-	}
-}
-
 export const getPost = cache(async ({ slug }: { slug: string }) => {
-	const post = await uncached_post(slug)
-	return post
+	const posts = await getPosts()
+	return posts.find((post) => post.slug === slug)
 })
