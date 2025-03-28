@@ -218,3 +218,13 @@ html {
 	animation-timeline: view();
 	animation-range: entry 0% cover 40%;
 }
+
+.animate-tm-scroll {
+	animation-timeline: scroll();
+	animation-range: start 0% end 100%;
+}
+
+.animate-tm-view {
+	animation-timeline: view();
+	animation-range: entry 0% cover 40%;
+}

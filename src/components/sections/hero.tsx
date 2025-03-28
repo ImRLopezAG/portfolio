@@ -1,43 +1,15 @@
-'use client'
 import { Button } from '@/components/ui/button'
-import { AlbumIcon, ArrowDown, Github, Instagram, Linkedin } from 'lucide-react'
+import { AlbumIcon, Github, Instagram, Linkedin } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useRef } from 'react'
+import { AnimatedSection } from './section'
+import { ScrollNext } from "@components/scroll-next"
 export function Hero() {
-	const heroRef = useRef<HTMLDivElement>(null)
-
-	useEffect(() => {
-		const observer = new IntersectionObserver(
-			(entries) => {
-				for (const entry of entries) {
-					if (entry.isIntersecting) {
-						entry.target.classList.add('animate-fade-in')
-					}
-				}
-			},
-			{ threshold: 0.1 },
-		)
-
-		if (heroRef.current) {
-			observer.observe(heroRef.current)
-		}
-
-		return () => {
-			if (heroRef.current) {
-				observer.unobserve(heroRef.current)
-			}
-		}
-	}, [])
 
 	return (
-		<section
-			id='home'
-			ref={heroRef}
-			className='flex min-h-screen flex-col justify-center pt-16 opacity-0'
-		>
+		<AnimatedSection id='home' className='flex min-h-screen flex-col justify-center pt-16'>
 			<div className='grid items-center gap-8 lg:grid-cols-2'>
-				<div className='motion-preset-fade motion-duration-700 space-y-6 '>
+				<div className='motion-preset-slide-right-lg motion-duration-700 motion-delay-500 motion-ease-bounce space-y-6'>
 					<div className='space-y-2'>
 						<h1 className='font-bold text-4xl tracking-tight sm:text-5xl md:text-6xl lg:text-7xl'>
 							<span className='block'>Hi, I&apos;m</span>
@@ -105,7 +77,7 @@ export function Hero() {
 						</Button>
 					</div>
 				</div>
-				<div className='motion-preset-fade motion-delay-200 motion-duration-700 relative flex aspect-square items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-purple-600/20'>
+				<div className='motion-translate-y-in-50 relative flex aspect-square items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-purple-600/20'>
 					<div className='absolute inset-4 flex items-center justify-center overflow-hidden rounded-full bg-muted'>
 						<Image
 							src='/me.webp'
@@ -120,20 +92,8 @@ export function Hero() {
 				</div>
 			</div>
 			<div className='mt-16 flex justify-center'>
-				<Button
-					variant='ghost'
-					size='icon'
-					className='animate-bounce'
-					onClick={() => {
-						document
-							.getElementById('about')
-							?.scrollIntoView({ behavior: 'smooth' })
-					}}
-				>
-					<ArrowDown className='h-6 w-6' />
-					<span className='sr-only'>Scroll down</span>
-				</Button>
+				<ScrollNext elementId='about' />
 			</div>
-		</section>
+		</AnimatedSection>
 	)
 }
