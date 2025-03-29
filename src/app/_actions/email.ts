@@ -13,6 +13,7 @@ export async function sendEmail(input: Email) {
 	const { data, error } = await resend.emails.send({
 		from: `Angel Lopez <${CONTACT_EMAIL}>`,
 		to: [email],
+		cc: [CONTACT_EMAIL],
 		subject,
 		react: ContactFormEmail({
 			name,
