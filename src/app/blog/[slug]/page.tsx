@@ -1,6 +1,7 @@
 import { useMDXComponents } from '@components/mdx-component'
 import { ViewTransition } from '@components/view-transition'
 import { rehypeExtractFilename } from '@lib/rehype-extract-filename'
+import { getPost, getPosts } from '@server/services/post'
 import { absoluteUrl } from '@shared/utils'
 import { Badge } from '@ui/badge'
 import { Button } from '@ui/button'
@@ -9,7 +10,6 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import rehypePrettyCode, { type Options } from 'rehype-pretty-code'
-import { getPost, getPosts } from '@server/services/post'
 interface BlogPageProps {
 	params: Promise<{ slug: string }>
 }

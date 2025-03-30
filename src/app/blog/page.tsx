@@ -7,15 +7,16 @@ import {
 	CardTitle,
 } from '@/components/ui/card'
 import { ViewTransition } from '@components/view-transition'
-import Link from 'next/link'
 import { getPosts } from '@server/services/post'
+import Link from 'next/link'
 interface BlogPageProps {
 	searchParams: Promise<{ category: string }>
 }
 
 export const metadata = {
 	title: 'Blog',
-	description: 'Thoughts, ideas, and insights on web development and programming',
+	description:
+		'Thoughts, ideas, and insights on web development and programming',
 }
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {

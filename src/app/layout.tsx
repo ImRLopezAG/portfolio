@@ -5,9 +5,9 @@ import './globals.css'
 import { Footer } from '@components/footer'
 import { Navbar } from '@components/navbar'
 import { getThemeScript } from '@lib/utils'
+import { absoluteUrl } from '@lib/utils'
 import { basics } from '@shared/cv'
 import Script from 'next/script'
-import { absoluteUrl } from '@lib/utils'
 
 export const metadata = {
 	title: {
@@ -23,10 +23,10 @@ export const metadata = {
 				url: '/favicon.ico',
 				type: 'image/x-icon',
 				sizes: '96x96',
-				rel: 'shortcut icon'
+				rel: 'shortcut icon',
 			},
 		],
-		apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }]
+		apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
 	},
 	appleWebApp: {
 		title: basics.name,
@@ -34,8 +34,8 @@ export const metadata = {
 	authors: [
 		{
 			name: 'Angel Gabriel Lopez Solano',
-			url: 'https://imrlopez.dev/'
-		}
+			url: 'https://imrlopez.dev/',
+		},
 	],
 	category: 'Personal',
 	generator: 'Next.js',
@@ -54,9 +54,9 @@ export const metadata = {
 				url: absoluteUrl('/me.webp'),
 				alt: basics.name,
 				width: 500,
-				height: 500
-			}
-		]
+				height: 500,
+			},
+		],
 	},
 	robots: {
 		index: true,
@@ -68,9 +68,15 @@ export const metadata = {
 			noimageindex: true,
 			'max-video-preview': -1,
 			'max-image-preview': 'large',
-			'max-snippet': -1
-		}
-	}
+			'max-snippet': -1,
+		},
+	},
+	twitter: {
+		card: 'summary_large_image',
+		title: basics.name,
+		description: basics.summary.map((s) => s).join(' '),
+		images: [absoluteUrl('/me.webp')],
+	},
 }
 
 export default function RootLayout({
