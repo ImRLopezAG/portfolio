@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
 		optimizePackageImports: ['lucide-react'],
 		reactCompiler: true,
 		viewTransition: true,
-		mdxRs: true
+		mdxRs: true,
 	},
 }
 

@@ -74,7 +74,6 @@ const getMDXData = cache(async (dir: string) => {
 	return filesData
 })
 
-
 export const getPosts = cache(async () => {
 	const posts = await getMDXData(join(process.cwd(), 'src', 'server', 'posts'))
 	return posts
