@@ -8,7 +8,7 @@ interface AnimatedSectionProps {
 export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
 	children,
 	id,
-	className
+	className,
 }) => {
 	return (
 		<section id={id} className={cn('animate-view py-20', className)}>

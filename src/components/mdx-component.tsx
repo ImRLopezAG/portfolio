@@ -44,7 +44,10 @@ const components = cache(() => ({
 	),
 	p: ({ className, ...props }: ParagraphProps) => (
 		<p
-			className={cn('space-y-2 text-pretty text-gray-800 leading-snug dark:text-zinc-300', className)}
+			className={cn(
+				'space-y-2 text-pretty text-gray-800 leading-snug dark:text-zinc-300',
+				className,
+			)}
 			{...props}
 		/>
 	),
@@ -77,10 +80,7 @@ const components = cache(() => ({
 	),
 	hr: ({ className, ...props }: ComponentPropsWithoutRef<'hr'>) => (
 		<hr
-			className={cn(
-				'my-4 border-gray-300 dark:border-zinc-600',
-				className,
-			)}
+			className={cn('my-4 border-gray-300 dark:border-zinc-600', className)}
 			{...props}
 		/>
 	),
@@ -177,7 +177,7 @@ const components = cache(() => ({
 		/>
 	),
 	Icon,
-	FileTree
+	FileTree,
 }))
 declare global {
 	type MDXProvidedComponents = typeof components

@@ -1,13 +1,15 @@
 import { Button } from '@/components/ui/button'
+import { ScrollNext } from '@components/scroll-next'
 import { AlbumIcon, Github, Instagram, Linkedin } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { AnimatedSection } from './section'
-import { ScrollNext } from "@components/scroll-next"
 export function Hero() {
-
 	return (
-		<AnimatedSection id='home' className='flex min-h-screen flex-col justify-center pt-16'>
+		<AnimatedSection
+			id='home'
+			className='flex min-h-screen flex-col justify-center pt-16'
+		>
 			<div className='grid items-center gap-8 lg:grid-cols-2'>
 				<div className='motion-preset-slide-right-lg motion-duration-700 motion-delay-500 motion-ease-bounce space-y-6'>
 					<div className='space-y-2'>

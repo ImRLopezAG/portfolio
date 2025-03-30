@@ -90,7 +90,6 @@ export function CodeBlock({
 
 			{/* Code content with line numbers */}
 			<div className='relative'>
-
 				<div className='flex'>
 					{/* Line numbers */}
 					<div className='select-none border-border border-r bg-[#151515] px-4 py-4 text-right text-muted-foreground text-sm'>

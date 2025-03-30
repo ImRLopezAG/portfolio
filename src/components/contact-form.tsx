@@ -36,17 +36,18 @@ export const ContactForm = () => {
 		},
 	})
 
-	const onSubmit = (email: Email) => startTransition(async () => {
-		const { success, data } = await sendEmail(email)
-		if (!success) {
-			toast.error('Error sending email')
-			return
-		}
-		if (data) {
-			toast.success('Email sent successfully')
-			form.reset()
-		}
-	})
+	const onSubmit = (email: Email) =>
+		startTransition(async () => {
+			const { success, data } = await sendEmail(email)
+			if (!success) {
+				toast.error('Error sending email')
+				return
+			}
+			if (data) {
+				toast.success('Email sent successfully')
+				form.reset()
+			}
+		})
 
 	return (
 		<Card className='w-full max-w-3xl'>
