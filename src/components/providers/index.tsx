@@ -11,7 +11,7 @@ type Props = Readonly<{
 export const Providers: React.FC<Props> = ({ children }) => {
 	return (
 		<FontProvider>
-			<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+			<ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
 				<NextTopLoader
 					color='var(--primary)'
 					showSpinner={false}

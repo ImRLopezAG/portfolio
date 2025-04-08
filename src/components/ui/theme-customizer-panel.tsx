@@ -26,6 +26,7 @@ import {
 } from '@ui/sheet'
 import { Slider } from '@ui/slider'
 import { useTheme } from 'next-themes'
+import { setServerTheme } from '@actions/themes'
 
 export function ThemeCustomizerPanel() {
 	const { theme, setTheme } = useTheme()
@@ -44,6 +45,7 @@ export function ThemeCustomizerPanel() {
 	function resetThemeHandle() {
 		resetTheme()
 		setTheme('system')
+		setServerTheme('system')
 	}
 
 	return (
@@ -162,7 +164,10 @@ export function ThemeCustomizerPanel() {
 						<div>
 							<RadioGroup
 								value={theme}
-								onValueChange={(value) => setTheme(value)}
+								onValueChange={(value) => {
+									setTheme(value)
+									setServerTheme(value)
+								}}
 								className='grid grid-cols-2 gap-4'
 							>
 								<div>

@@ -9,7 +9,9 @@ import { ArrowLeft, Calendar, Tag } from 'lucide-react'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { MdxRender } from './mdx-client'
+import { type Options, rehypePrettyCode } from 'rehype-pretty-code'
+import { getServerTheme } from '@actions/themes'
+
 interface BlogPageProps {
 	params: Promise<{ slug: string }>
 }
@@ -24,6 +26,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: BlogPageProps) {
 	const { slug } = await params
 	const post = await getPost({ slug })
+
 	if (!post) {
 		return {
 			title: 'Post not found',
@@ -72,6 +75,9 @@ export default async function BlogPage({ params }: BlogPageProps) {
 		notFound()
 	}
 
+	const serverTheme = await getServerTheme()
+
+
 	return (
 		<ViewTransition>
 			<div className='container mx-auto px-4 py-20'>
@@ -108,25 +114,25 @@ export default async function BlogPage({ params }: BlogPageProps) {
 					</div>
 
 					<ViewTransition name={`blog-content-${post.slug}`}>
-						<MdxRender
+						<MDXRemote
 							source={post.content}
-							// components={useMDXComponents()}
-							// options={{
-							// 	mdxOptions: {
-							// 		rehypePlugins: [
-							// 			[
-							// 				rehypePrettyCode,
-							// 				{
-							// 					theme: 'one-dark-pro',
-							// 					keepBackground: false
-							// 				} as Options,
-							// 			],
-							// 			rehypeExtractFilename,
-							// 		],
-							// 		remarkPlugins: [],
-							// 		format: 'mdx',
-							// 	},
-							// }}
+							components={useMDXComponents()}
+							options={{
+								mdxOptions: {
+									rehypePlugins: [
+										[
+											rehypePrettyCode,
+											{
+												theme: serverTheme === 'light' ? 'one-light' : 'one-dark-pro',
+												keepBackground: false
+											} as Options,
+										],
+										rehypeExtractFilename,
+									],
+									remarkPlugins: [],
+									format: 'mdx',
+								},
+							}}
 						/>
 					</ViewTransition>
 				</div>
