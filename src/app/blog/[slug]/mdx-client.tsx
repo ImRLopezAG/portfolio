@@ -21,7 +21,7 @@ export const MdxRender =({ source }: MdxRenderProps) => {
             [
               rehypePrettyCode,
               {
-                theme: theme === 'dark' ? 'one-dark-pro' : 'one-pro',
+                theme: theme === 'dark' ? 'one-dark-pro' : 'one-light',
                 keepBackground: false
               } as Options,
             ],
