@@ -3,8 +3,9 @@
 import type React from 'react'
 
 import { cn } from '@/lib/utils'
-import { Check, Copy, File } from 'lucide-react'
+import { Check, Copy } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import { CodeIcon } from './annotations/icons'
 
 type CodeBlockProps = React.HTMLAttributes<HTMLPreElement> & {
 	filename?: string
@@ -63,19 +64,21 @@ export function CodeBlock({
 	}
 
 	return (
-		<div className='not-prose my-6 overflow-hidden rounded-lg border border-border bg-[#0A0A0A] text-[#E5E5E5]'>
+		<div className='not-prose my-6 overflow-hidden rounded-lg border border-border bg-slate-200 text-white dark:bg-stone-900'>
 			{/* Header with filename and language */}
-			<div className='flex items-center justify-between border-border border-b bg-[#151515] px-4 py-2'>
-				<div className='flex items-center gap-2 text-muted-foreground text-sm'>
-					<File className='h-4 w-4' />
+			<div className='flex items-center justify-between border-border bg-gray-500 px-4 py-2 dark:bg-stone-700'>
+				<div className='flex items-center gap-6 text-sm text-white dark:text-muted-foreground '>
+					<CodeIcon title={extractedFilename} />
 					<span>{extractedFilename}</span>
 				</div>
 				<div className='flex items-center gap-2'>
-					<div className='text-muted-foreground text-sm'>{language}</div>
+					<div className='text-sm text-white dark:text-muted-foreground'>
+						{language}
+					</div>
 					<button
 						type='button'
 						onClick={copyToClipboard}
-						className='rounded-md p-1.5 text-muted-foreground hover:bg-[#1E1E1E] focus:outline-none'
+						className='rounded-md p-1.5 text-white hover:bg-gray-800 focus:outline-none dark:text-muted-foreground'
 						aria-label='Copy code'
 					>
 						{copied ? (
@@ -88,30 +91,26 @@ export function CodeBlock({
 				</div>
 			</div>
 
-			{/* Code content with line numbers */}
-			<div className='relative'>
-				<div className='flex'>
-					{/* Line numbers */}
-					<div className='select-none border-border border-r bg-[#151515] px-4 py-4 text-right text-muted-foreground text-sm'>
-						{Array.from({ length: lineCount }).map((_, i) => (
-							<div key={i} className='leading-relaxed'>
-								{i + 1}
-							</div>
-						))}
-					</div>
-
-					{/* Code content */}
-					<pre
-						ref={preRef}
-						className={cn(
-							'overflow-x-auto p-4 text-sm leading-relaxed',
-							className,
-						)}
-						{...props}
-					>
-						{children}
-					</pre>
+			<div className='flex'>
+				{/* Line numbers */}
+				<div className='select-none bg-slate-200 px-4 py-4 text-right text-black text-sm dark:bg-stone-900 dark:text-muted-foreground'>
+					{Array.from({ length: lineCount }).map((_, i) => (
+						<div key={i} className='leading-relaxed '>
+							{i + 1}
+						</div>
+					))}
 				</div>
+
+				<pre
+					ref={preRef}
+					className={cn(
+						'overflow-x-auto p-4 text-sm leading-relaxed',
+						className,
+					)}
+					{...props}
+				>
+					{children}
+				</pre>
 			</div>
 		</div>
 	)

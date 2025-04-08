@@ -9,7 +9,7 @@ import { ArrowLeft, Calendar, Tag } from 'lucide-react'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import rehypePrettyCode, { type Options } from 'rehype-pretty-code'
+import { MdxRender } from './mdx-client'
 interface BlogPageProps {
 	params: Promise<{ slug: string }>
 }
@@ -68,7 +68,6 @@ export async function generateMetadata({ params }: BlogPageProps) {
 export default async function BlogPage({ params }: BlogPageProps) {
 	const { slug } = await params
 	const post = await getPost({ slug })
-
 	if (!post) {
 		notFound()
 	}
@@ -109,36 +108,25 @@ export default async function BlogPage({ params }: BlogPageProps) {
 					</div>
 
 					<ViewTransition name={`blog-content-${post.slug}`}>
-						<MDXRemote
+						<MdxRender
 							source={post.content}
-							components={useMDXComponents()}
-							options={{
-								mdxOptions: {
-									rehypePlugins: [
-										[
-											rehypePrettyCode,
-											{
-												theme: 'material-theme',
-												keepBackground: false,
-												onVisitLine(node) {
-													// Prevent the line from being collapsed
-													if (node.children.length === 0) {
-														node.children = [{ type: 'text', value: ' ' }]
-													}
-												},
-												// Add this to ensure line numbers are properly displayed
-												onVisitHighlightedLine(node) {
-													node.properties.className = ['']
-												},
-
-												transformers: [],
-											} as Options,
-										],
-										rehypeExtractFilename,
-									],
-									format: 'mdx',
-								},
-							}}
+							// components={useMDXComponents()}
+							// options={{
+							// 	mdxOptions: {
+							// 		rehypePlugins: [
+							// 			[
+							// 				rehypePrettyCode,
+							// 				{
+							// 					theme: 'one-dark-pro',
+							// 					keepBackground: false
+							// 				} as Options,
+							// 			],
+							// 			rehypeExtractFilename,
+							// 		],
+							// 		remarkPlugins: [],
+							// 		format: 'mdx',
+							// 	},
+							// }}
 						/>
 					</ViewTransition>
 				</div>

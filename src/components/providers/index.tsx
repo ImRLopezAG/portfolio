@@ -13,7 +13,7 @@ export const Providers: React.FC<Props> = ({ children }) => {
 		<FontProvider>
 			<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 				<NextTopLoader
-					color='oklch(var(--primary))'
+					color='var(--primary)'
 					showSpinner={false}
 					height={4}
 					shadow='none'
@@ -22,7 +22,7 @@ export const Providers: React.FC<Props> = ({ children }) => {
 				<Suspense fallback={<div className='h-96' />}>
 					<ThemeCustomizerPanel />
 				</Suspense>
-				<Toaster position='top-right' closeButton />
+				<Toaster position='top-center' closeButton richColors  />
 			</ThemeProvider>
 		</FontProvider>
 	)

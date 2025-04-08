@@ -13,8 +13,10 @@ type ListItemProps = ComponentPropsWithoutRef<'li'>
 type AnchorProps = ComponentPropsWithoutRef<'a'>
 type BlockquoteProps = ComponentPropsWithoutRef<'blockquote'>
 type CodeProps = ComponentPropsWithoutRef<'code'>
+import { useTheme } from 'next-themes'
 type PreProps = ComponentPropsWithoutRef<'pre'> & {
 	'data-filename'?: string
+	'data-theme'?: string	
 }
 
 const components = cache(() => ({
@@ -137,6 +139,7 @@ const components = cache(() => ({
 	},
 	// Override pre to use our custom CodeBlock
 	pre: ({ className, children, ...props }: PreProps) => {
+		
 		return (
 			<CodeBlock
 				className={className}
