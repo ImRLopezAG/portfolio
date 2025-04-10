@@ -10,7 +10,6 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { type Options, rehypePrettyCode } from 'rehype-pretty-code'
-import { getServerTheme } from '@actions/themes'
 
 interface BlogPageProps {
 	params: Promise<{ slug: string }>
@@ -75,9 +74,6 @@ export default async function BlogPage({ params }: BlogPageProps) {
 		notFound()
 	}
 
-	const serverTheme = await getServerTheme()
-
-
 	return (
 		<ViewTransition>
 			<div className='container mx-auto px-4 py-20'>
@@ -123,7 +119,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
 										[
 											rehypePrettyCode,
 											{
-												theme: serverTheme === 'light' ? 'one-light' : 'one-dark-pro',
+												theme: 'one-dark-pro',
 												keepBackground: false
 											} as Options,
 										],

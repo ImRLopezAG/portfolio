@@ -1,4 +1,3 @@
-'use cache'
 import { readFile, readdir } from 'node:fs/promises'
 import { basename, extname, join } from 'node:path'
 import { metadataSchema } from '@server/schemas'

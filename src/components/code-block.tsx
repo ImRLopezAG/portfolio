@@ -60,25 +60,22 @@ export function CodeBlock({
 
 	// If still not found, use a default
 	if (!extractedFilename) {
-		extractedFilename = `main.${language}`
+		extractedFilename = `index.${language}`
 	}
 
 	return (
-		<div className='not-prose my-6 overflow-hidden rounded-lg border border-border bg-slate-200 text-white dark:bg-stone-900'>
+		<div className='not-prose my-6 overflow-hidden rounded-lg border bg-zinc-900 text-white'>
 			{/* Header with filename and language */}
-			<div className='flex items-center justify-between border-border bg-gray-500 px-4 py-2 dark:bg-stone-700'>
-				<div className='flex items-center gap-6 text-sm text-white dark:text-muted-foreground '>
+			<div className='flex items-center justify-between border-stone-700 border-b bg-stone-900 px-4 py-2'>
+				<div className='flex items-center gap-6 text-muted-foreground text-sm'>
 					<CodeIcon title={extractedFilename} />
 					<span>{extractedFilename}</span>
 				</div>
 				<div className='flex items-center gap-2'>
-					<div className='text-sm text-white dark:text-muted-foreground'>
-						{language}
-					</div>
 					<button
 						type='button'
 						onClick={copyToClipboard}
-						className='rounded-md p-1.5 text-white hover:bg-gray-800 focus:outline-none dark:text-muted-foreground'
+						className='rounded-md bg-stone-900 p-1.5 text-muted-foreground hover:bg-stone-800'
 						aria-label='Copy code'
 					>
 						{copied ? (
@@ -93,7 +90,7 @@ export function CodeBlock({
 
 			<div className='flex'>
 				{/* Line numbers */}
-				<div className='select-none bg-slate-200 px-4 py-4 text-right text-black text-sm dark:bg-stone-900 dark:text-muted-foreground'>
+				<div className='select-none bg-zinc-900 px-4 py-4 text-right text-muted-foreground text-sm'>
 					{Array.from({ length: lineCount }).map((_, i) => (
 						<div key={i} className='leading-relaxed '>
 							{i + 1}
