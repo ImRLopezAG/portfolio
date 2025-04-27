@@ -60,7 +60,7 @@ export function CodeBlock({
 
 	// If still not found, use a default
 	if (!extractedFilename) {
-		extractedFilename = `index.${language}`
+		extractedFilename = 'plain.txt'
 	}
 
 	return (
@@ -69,7 +69,7 @@ export function CodeBlock({
 			<div className='flex items-center justify-between border-stone-700 border-b bg-stone-900 px-4 py-2'>
 				<div className='flex items-center gap-6 text-muted-foreground text-sm'>
 					<CodeIcon title={extractedFilename} />
-					<span>{extractedFilename}</span>
+					<span>{!extractedFilename.includes('plain.txt') && extractedFilename}</span>
 				</div>
 				<div className='flex items-center gap-2'>
 					<button

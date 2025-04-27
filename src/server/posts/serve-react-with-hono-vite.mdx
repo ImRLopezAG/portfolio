@@ -1,0 +1,362 @@
+---
+slug: serve-react-with-hono-vite
+title: Serve React with Hono & Vite
+description: Learn how to serve React applications using Hono and Vite as server and build tools, respectively. This guide covers setup, configuration, and best practices for performance and scalability.
+category: Web Development
+date: April 25, 2025
+tags:
+  - React
+  - Web Development
+  - Hono
+  - Vite
+---
+
+# Serve React with Hono & Vite
+
+Serving React applications efficiently is crucial for performance and user experience. In this guide, we'll explore how to set up a React application using Hono as the server framework and Vite as the build tool. This combination provides a fast and modern development experience.
+
+This app will not support SSR (Server-Side Rendering) or SSG (Static Site Generation) out of the box, but you can implement it with some tweaks that hono provides. The app will be a simple counter app with a header and footer, and we will use Tailwind CSS for styling.
+
+## Prerequisites
+- Node.js installed (version 20 or higher)
+- Basic knowledge of React and JavaScript
+- Familiarity with command-line tools
+- A code editor (like Visual Studio Code)
+- Basic understanding of SSR (Server-Side Rendering) concepts adn SSG (Static Site Generation) concepts
+- Basic understanding of Hono and Vite
+- Basic understanding of React
+- Basic understanding of TypeScript
+
+## Setting Up the Project
+1. **Create a new hono project**:
+   ```bash
+    bun create hono@latest my-hono-app
+    ```
+    for the template, select `cloudflare-workers+vite`, this will create a new Hono project with Vite as development server and build tool to deploy with Cloudflare Workers.
+    You can also use `npm` or `yarn` to create the project, but `bun` is recommended for its speed and efficiency.
+    
+2. **Navigate to the project directory**:
+   ```bash
+   cd my-hono-app
+    ```
+3. **Open the project in your code editor**:
+   ```bash
+   code .
+    ```
+4. **Open the terminal to install the missing dependencies**:
+    ```bash
+    bun add react react-dom @tailwind/vite vite-tsconfig-paths @vitejs/plugin-react
+    ```
+    now the dev dependencies:
+    ```bash
+    bun add -D @types/react @types/react-dom @types/bun
+    ```
+
+## Project Setup
+We ned to create some files to split the code and make it more organized. The project structure will look like this:
+
+### Project Structure
+<FileTree 
+  files={{
+    public: {
+      favicon: 'ico',
+    },
+    src: {
+      app: 'tsx',
+      client: 'tsx',
+      frontend: 'tsx',
+      index: 'ts',
+      server: 'ts',
+      style: 'css',
+      components: {
+        counter: 'tsx',
+        header: 'tsx',
+        footer: 'tsx'
+      }
+    },
+    tsconfig: 'json',
+    package: 'json',
+    'vite.config': 'ts',
+    wrangler: 'jsonc',
+  }}
+/>
+
+## Code Implementation
+
+lets start with our `index.ts` file, this file will be the entry point for our application, it will import the `app` and `server` files and start the server.
+
+```ts filename=src/index.ts
+const app = new Hono();
+
+import client from "./client";
+import api from "./server";
+import { Hono } from "hono";
+
+app.route("/api", api);
+app.route("/", client);
+
+export default app;
+```
+
+```ts filename=src/server.ts
+import { Hono } from "hono";
+const api = new Hono<{ Bindings: CloudflareBindings }>();
+
+api.get("/api", (c) => {
+  return c.text("Hello from Hono!");
+});
+
+api.get("/api/hello", (c) => {
+  return c.json({ message: "Hello from Hono!" });
+});
+
+export default api;
+```
+
+```ts filename=src/frontend.tsx
+/**
+ * This file is the entry point for the React app, it sets up the root
+ * element and renders the App component to the DOM.
+ *
+ * It is included in `src/index.html`.
+ */
+
+import { createRoot } from "react-dom/client";
+import { StrictMode } from "react";
+import { App } from "./app";
+
+// biome-ignore lint/style/noNonNullAssertion: <explanation>
+const elem = document.getElementById("root")!;
+const app = (
+  <StrictMode>
+      <App />
+  </StrictMode>
+);
+
+if (import.meta.hot) {
+  // With hot module reloading, `import.meta.hot.data` is persisted.
+  // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+    const root = (import.meta.hot.data.root ??= createRoot(elem));
+  root.render(app);
+} else {
+  // The hot module reloading API is not available in production.
+  createRoot(elem).render(app);
+}
+```
+
+have in mind that the `import.meta.hot` is a Vite specific API, it allows us to use hot module reloading in our application, this will allow us to update the code without refreshing the page. and we inject the client script to the page because we need to use the `RefreshRuntime` to enable the hot module reloading, that is why is just in the development mode.
+
+
+```ts filename=src/client.tsx
+import { Hono } from 'hono';
+const client = new Hono<{ Bindings: CloudflareBindings }>();
+
+client.get('/', ({ req, ...c }) => {
+  const { url } = req;
+  const { origin } = new URL(url);
+  const injectClientScript = `
+    import RefreshRuntime from "${origin}/@react-refresh";
+    RefreshRuntime.injectIntoGlobalHook(window);
+    window.$RefreshReg$ = () => {};
+    window.$RefreshSig$ = () => (type) => type;
+    window.__vite_plugin_react_preamble_installed__ = true;
+  `;
+  const styles = import.meta.env.PROD ? '/assets/style.css' : '/src/style.css';
+  const script = import.meta.env.PROD ? '/index.js' : '/src/frontend.tsx';
+
+  const html = `
+	<html lang="en">
+		<head>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			<link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+			<link
+				href="${styles}"
+				rel="stylesheet"
+			/>
+			<title>Data Table</title>
+			${import.meta.env.DEV &&  `<script type="module">${injectClientScript}</script>`}
+		</head>
+		<body>
+			<div id="root"></div>
+			<script type="module" src="${script}"></script>
+		</body>
+	</html>
+	`;
+
+  return c.html(html, {
+    headers: {
+      'Content-Type': 'text/html',
+      'Cache-Control': 'no-store',
+    },
+  });
+});
+
+export default client;
+```
+
+the `app.tsx` file will be the main entry point for our application, it will import the components and render them to the DOM. fell free to add whatever you want to the app, but for this example we will use a simple counter component and a header and footer component.
+
+```tsx filename=src/app.tsx
+import Counter from "./components/counter";
+import Header from "./components/header";
+import Footer from "./components/footer";
+
+export function App() {
+  return (
+    <div className="flex flex-col h-screen">
+      <Header />
+      <main className="flex-grow">
+        <Counter />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+```
+
+```tsx filename=src/components/counter.tsx
+import { useState } from "react";
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div className="flex flex-col items-center justify-center h-full">
+      <h1 className="text-2xl font-bold">Counter: {count}</h1>
+      <button
+        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+        onClick={() => setCount(count + 1)}
+      >
+        Increment
+      </button>
+    </div>
+  );
+}
+```
+
+```tsx filename=src/components/header.tsx
+export default function Header() {
+  return (
+    <header className="bg-gray-800 text-white p-4">
+      <h1 className="text-2xl">My Hono App</h1>
+    </header>
+  );
+}
+```
+
+```tsx filename=src/components/footer.tsx
+export default function Footer() {
+  return (
+    <footer className="bg-gray-800 text-white p-4">
+      <p className="text-center">© 2025 My Hono App</p>
+    </footer>
+  );
+}
+```
+
+```css filename=src/style.css
+@import "tailwindcss";
+```
+now we need to configure the `vite.config.ts` file to use the `@vitejs/plugin-react` plugin and the `vite-tsconfig-paths` plugin to resolve the paths in the tsconfig file and the `@tailwind/vite` plugin to use tailwindcss in our project.
+
+```ts filename=vite.config.ts
+import { cloudflare } from "@cloudflare/vite-plugin";
+import build from "@hono/vite-build/cloudflare-workers";
+import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+import ssrHotReload from "vite-plugin-ssr-hot-reload";
+import viteTsConfigPaths from "vite-tsconfig-paths";
+export default defineConfig(({ command, isSsrBuild }) => {
+	if (command === "serve") {
+		return {
+			plugins: [
+				ssrHotReload(),
+				cloudflare(),
+				viteTsConfigPaths(),
+				react(),
+				tailwindcss(),
+			],
+			optimizeDeps: {
+				include: [
+					"react",
+					"react-dom"
+				],
+			}
+		};
+	}
+	if (!isSsrBuild) {
+		return {
+			plugins: [
+				viteTsConfigPaths(),
+				react(),
+				cloudflare(),
+				tailwindcss(),
+				build({ outputDir: "dist" })
+			],
+			build: {
+				rollupOptions: {
+					input: ["./src/style.css", "./src/frontend.tsx"],
+					output: {
+						assetFileNames: "assets/[name].[ext]",
+						chunkFileNames: "assets/[name].js",
+						entryFileNames: "assets/[name].js",
+						manualChunks: {
+							frontend: ["./src/frontend.tsx"],
+						},
+					},
+				},
+			},
+		};
+	}
+	return {
+		ssr:{
+			noExternal: true,
+		},
+		plugins: [build({ outputDir: "dist-server" }), viteTsConfigPaths()],
+	};
+});
+
+```
+
+Now for cloudflare workers we need to configure the `wrangler.toml` file to use the `dist` folder as the output folder and the `dist-server` folder as the server folder.
+
+```jsonc filename=wrangler.jsonc
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "my-hono-app",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-04-25",
+  "compatibility_flags": [
+    "nodejs_compat_v2",
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}
+```
+
+## Running the Application
+
+Let's modify the `package.json` file to add the scripts to run the application in development and production mode.
+
+```json filename=package.json
+{
+  "scripts": {
+    "dev": "bun run clear && vite",
+    "build": "vite build && vite build --ssr ",
+    "preview": "bun run clear && $npm_execpath run build && wrangler dev dist-server/index.js",
+    "deploy": "bun run clear && $npm_execpath run build && wrangler deploy dist-server/index.js",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings",
+    "clear": "rm -rf dist dist-server .wrangler"
+  },
+}
+```
+
+## Conclusion
+
+In this guide, we have set up a React application using Hono as the server framework and Vite as the build tool. This combination provides a fast and modern development experience, allowing us to build scalable and efficient web applications. We also explored how to use Tailwind CSS for styling and how to configure the project for production deployment.
+
+Feel free to customize the application further by adding more components, routes, and features as needed. Happy coding!
+
