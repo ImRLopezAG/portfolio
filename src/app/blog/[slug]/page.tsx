@@ -1,6 +1,6 @@
 import { useMDXComponents } from '@components/mdx-component'
 import { ViewTransition } from '@components/view-transition'
-import { rehypeExtractFilename } from '@lib/rehype-extract-filename'
+import { rehypeExtractFileInfo } from '@lib/rehype-extract-filename'
 import { getPost, getPosts } from '@server/services/post'
 import { absoluteUrl } from '@shared/utils'
 import { Badge } from '@ui/badge'
@@ -123,7 +123,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
 												keepBackground: false
 											} as Options,
 										],
-										rehypeExtractFilename,
+										rehypeExtractFileInfo
 									],
 									remarkPlugins: [],
 									format: 'mdx',

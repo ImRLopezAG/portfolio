@@ -13,10 +13,10 @@ type ListItemProps = ComponentPropsWithoutRef<'li'>
 type AnchorProps = ComponentPropsWithoutRef<'a'>
 type BlockquoteProps = ComponentPropsWithoutRef<'blockquote'>
 type CodeProps = ComponentPropsWithoutRef<'code'>
-import { useTheme } from 'next-themes'
 type PreProps = ComponentPropsWithoutRef<'pre'> & {
 	'data-filename'?: string
 	'data-theme'?: string	
+	'data-line-count'?: number
 }
 
 const components = cache(() => ({
@@ -145,6 +145,7 @@ const components = cache(() => ({
 				className={className}
 				{...props}
 				filename={props['data-filename']}
+				lineCount={props['data-line-count']}
 			>
 				{children}
 			</CodeBlock>
