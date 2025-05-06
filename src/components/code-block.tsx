@@ -9,7 +9,7 @@ type CodeBlockProps = React.HTMLAttributes<HTMLPreElement> & {
   filename?: string
   'data-language'?: string
   'data-meta'?: string
-	lineCount?: number
+	lineCount: number
 }
 
 export function CodeBlock({

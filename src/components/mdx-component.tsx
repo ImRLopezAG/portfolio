@@ -145,7 +145,7 @@ const components = cache(() => ({
 				className={className}
 				{...props}
 				filename={props['data-filename']}
-				lineCount={props['data-line-count']}
+				lineCount={props['data-line-count'] ?? 0}
 			>
 				{children}
 			</CodeBlock>
