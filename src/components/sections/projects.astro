@@ -5,10 +5,6 @@ import { AnimatedSection } from './section';
 import ProjectCard from '@components/project-card.astro';
 import { projects } from '@shared/cv';
 
-const MATRIX =
-  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}';
-
-const FONT_SIZE = 10;
 ---
 
 <AnimatedSection id='projects'>
@@ -32,7 +28,7 @@ const FONT_SIZE = 10;
   </div>
 
 </AnimatedSection>
-<script is:inline>
+<script>
   (function () {
     const MATRIX =
       'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}';
@@ -40,7 +36,7 @@ const FONT_SIZE = 10;
     const FONT_SIZE = 10;
     const $allCanvas = document.querySelectorAll(
       '[data-project-card] canvas'
-    );
+    ) as NodeListOf<HTMLCanvasElement>;
 
     $allCanvas.forEach(($canvas) => {
       const $canvasCTX = $canvas.getContext('2d');
@@ -49,7 +45,7 @@ const FONT_SIZE = 10;
       $canvas.width = window.innerWidth;
 
       const columns = $canvas.width / FONT_SIZE;
-      const drops = [];
+      const drops: number[] = [];
 
       for (let x = 0; x < columns; x++) drops[x] = 1;
 

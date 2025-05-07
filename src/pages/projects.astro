@@ -15,48 +15,49 @@ import { projects } from '@shared/cv';
       {projects.map((project) => <ProjectCard project={project} />)}
     </div>
   </div>
-  <script is:inline>
-    (function () {
-      const MATRIX =
-        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}';
+</MainLayout>
 
-      const FONT_SIZE = 10;
-      const $allCanvas = document.querySelectorAll(
-        '[data-project-card] canvas'
-      );
+<script>
+  (function () {
+    const MATRIX =
+      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}';
 
-      $allCanvas.forEach(($canvas) => {
-        const $canvasCTX = $canvas.getContext('2d');
+    const FONT_SIZE = 10;
+    const $allCanvas = document.querySelectorAll(
+      '[data-project-card] canvas'
+    ) as NodeListOf<HTMLCanvasElement>;
 
-        $canvas.height = window.innerHeight;
-        $canvas.width = window.innerWidth;
+    $allCanvas.forEach(($canvas) => {
+      const $canvasCTX = $canvas.getContext('2d');
 
-        const columns = $canvas.width / FONT_SIZE;
-        const drops = [];
+      $canvas.height = window.innerHeight;
+      $canvas.width = window.innerWidth;
 
-        for (let x = 0; x < columns; x++) drops[x] = 1;
+      const columns = $canvas.width / FONT_SIZE;
+      const drops: number[] = [];
 
-        function draw() {
-          if (!$canvasCTX) return;
-          $canvasCTX.fillStyle = 'rgba(0, 0, 0, 0.04)';
-          $canvasCTX.fillRect(0, 0, $canvas.width, $canvas.height);
-          $canvasCTX.fillStyle = '#22b455';
-          $canvasCTX.font = FONT_SIZE + 'px arial';
-          for (let i = 0; i < drops.length; i++) {
-            const text = MATRIX[Math.floor(Math.random() * MATRIX.length)];
-            $canvasCTX.fillText(text, i * FONT_SIZE, drops[i] * FONT_SIZE);
+      for (let x = 0; x < columns; x++) drops[x] = 1;
 
-            if (drops[i] * FONT_SIZE > $canvas.height && Math.random() > 0.975)
-              drops[i] = 0;
+      function draw() {
+        if (!$canvasCTX) return;
+        $canvasCTX.fillStyle = 'rgba(0, 0, 0, 0.04)';
+        $canvasCTX.fillRect(0, 0, $canvas.width, $canvas.height);
+        $canvasCTX.fillStyle = '#22b455';
+        $canvasCTX.font = FONT_SIZE + 'px arial';
+        for (let i = 0; i < drops.length; i++) {
+          const text = MATRIX[Math.floor(Math.random() * MATRIX.length)];
+          $canvasCTX.fillText(text, i * FONT_SIZE, drops[i] * FONT_SIZE);
 
-            drops[i]++;
-          }
+          if (drops[i] * FONT_SIZE > $canvas.height && Math.random() > 0.975)
+            drops[i] = 0;
 
-          requestAnimationFrame(draw);
+          drops[i]++;
         }
 
         requestAnimationFrame(draw);
-      });
-    })();
-  </script>
-</MainLayout>
+      }
+
+      requestAnimationFrame(draw);
+    });
+  })();
+</script>

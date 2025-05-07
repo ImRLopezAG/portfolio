@@ -8,7 +8,7 @@ interface Props {
   toc: {
     depth: number;
     title: string;
-    url: `#${string}`;
+    url: `#${string}` | string;
   }[];
 }
 const { post, toc } = Astro.props;

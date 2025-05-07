@@ -20,16 +20,21 @@ if (!post) {
 }
 
 const { Content, headings } = await render(post);
+const toc = [
+  {
+    depth: 1,
+    text: post.data.title,
+    slug: post.data.slug,
+  },
+  ...headings,
+].map((item) => ({
+  depth: item.depth,
+  title: item.text,
+  url: `#${item.slug}`,
+}));
 ---
 
-<BlogLayout
-  post={post}
-  toc={headings.map((item) => ({
-    depth: item.depth,
-    title: item.text,
-    url: `#${item.slug}`,
-  }))}
->
+<BlogLayout post={post} toc={toc}>
   <div class='mx-auto max-w-3xl'>
     <div class='flex-col gap-6 space-y-4 mb-5'>
       <Button asChild variant='ghost'>
@@ -40,8 +45,9 @@ const { Content, headings } = await render(post);
       </Button>
 
       <h1
-        class='font-bold text-3xl tracking-tight sm:text-4xl'
+        class='font-bold text-3xl tracking-tight sm:text-4xl scroll-m-28'
         transition:name={`blog-title-${slug}`}
+        id={post.data.slug}
       >
         {post.data.title}
       </h1>
