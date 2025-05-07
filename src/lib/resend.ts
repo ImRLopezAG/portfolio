@@ -1,4 +1,3 @@
-'use server'
 import { Resend } from 'resend'
 
 import { ContactFormEmail } from '@components/contact/contact'
