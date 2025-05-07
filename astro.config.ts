@@ -1,0 +1,56 @@
+import mdx from '@astrojs/mdx'
+import react from '@astrojs/react'
+import sitemap from '@astrojs/sitemap'
+import vercel from '@astrojs/vercel'
+import tailwindcss from '@tailwindcss/vite'
+import { defineConfig, envField } from 'astro/config'
+import rehypePrettyCode, { type Options } from 'rehype-pretty-code'
+import rehypeSlug from 'rehype-slug'
+import remarkToc from 'remark-toc'
+import {
+	metaTransformer,
+	rehypeExtractFileInfo,
+} from './src/lib/rehype-plugins'
+
+// https://astro.build/config
+
+export default defineConfig({
+	vite: {
+		plugins: [tailwindcss()],
+	},
+	output: 'server',
+	integrations: [
+		react(),
+		mdx({
+			syntaxHighlight: false,
+			remarkPlugins: [[remarkToc, { tight: true, ordered: true }]],
+			rehypePlugins: [
+				[
+					rehypePrettyCode,
+					{
+						keepBackground: false,
+						theme: 'one-dark-pro',
+						grid: false,
+						themes: {
+							light: 'one-light',
+							dark: 'one-dark-prp',
+						},
+						transformers: [metaTransformer],
+					} as Options,
+				],
+				rehypeSlug,
+				rehypeExtractFileInfo,
+			],
+		}),
+		sitemap(),
+	],
+	experimental: {
+		contentIntellisense: true,
+	},
+	env: {
+		schema: {
+			RESEND_API_KEY: envField.string({ context: 'server', access: 'secret' }),
+		},
+	},
+	adapter: vercel(),
+})

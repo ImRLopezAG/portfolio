@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import BlogCard from '@components/blog/blog-card.astro';
+import MainLayout from '@layouts/layout.astro';
+import { cn } from '@lib/utils';
+import { Badge } from '@ui/badge';
+const category = Astro.url.searchParams.get('category');
+const categoryName = category?.replace(/-/g, ' ') || 'All';
+const posts = await getCollection('posts');
+
+const categories = [...new Set(posts.map((post) => post.data.category))];
+const filteredPosts = () => {
+  if (categoryName === 'All') {
+    return posts;
+  }
+  return posts.filter((post) => {
+    return post.data.category.toLowerCase() === categoryName.toLowerCase();
+  });
+};
+---
+
+<MainLayout
+  content={{
+    title: 'Blog',
+  }}
+>
+  <div class='container mx-auto px-4 py-20'>
+    <div class='mx-auto max-w-4xl'>
+      <div class='mb-12 space-y-4 text-center'>
+        <h1 class='font-bold text-4xl tracking-tight sm:text-5xl'>Blog</h1>
+        <div class='mx-auto h-1 w-20 rounded-full bg-primary'></div>
+        <p class='text-muted-foreground text-xl'>
+          Thoughts, ideas, and insights on web development and programming
+        </p>
+      </div>
+
+      <div class='mb-8 flex flex-wrap justify-center gap-2'>
+        <Badge
+          className={cn('cursor-pointer bg-muted text-black dark:text-white ', {
+            'bg-primary': categoryName === 'all' || categoryName === 'All',
+          })}
+        >
+          <a href='/blog'>All</a>
+        </Badge>
+        {
+          categories.map((category) => (
+            <Badge
+              className={cn(
+                'cursor-pointer bg-muted text-black dark:text-white',
+                {
+                  'bg-primary': categoryName === category,
+                }
+              )}
+            >
+              <a
+                href={`/blog?category=${category?.replace(/ /g, '-') || category}`}
+              >
+                {category}
+              </a>
+            </Badge>
+          ))
+        }
+      </div>
+
+      <div class='grid gap-8'>
+        {
+          filteredPosts().map((post) => (
+            <BlogCard post={post}  />
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</MainLayout>

@@ -11,8 +11,8 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
 	className,
 }) => {
 	return (
-		<section id={id} className={cn('animate-view py-20', className)}>
-			<div className='space-y-12'>{children}</div>
+		<section id={id} className={cn('animate-view py-10 scroll-m-12', className)}>
+			<div className='space-y-8'>{children}</div>
 		</section>
 	)
 }

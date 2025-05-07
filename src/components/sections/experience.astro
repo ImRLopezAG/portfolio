@@ -1,0 +1,60 @@
+---
+import  ExperienceCard  from '@components/experience-card.astro';
+import { education, work } from '@shared/cv';
+import { Briefcase, GraduationCap } from 'lucide-react';
+import { AnimatedSection } from './section';
+import { SectionTitle } from '@/components/sections/section-title';
+---
+
+<AnimatedSection id='experience'>
+  <SectionTitle title='Experience & Education' />
+
+  <div class='grid gap-8 lg:grid-cols-2'>
+    <div class='space-y-6'>
+      <div class='flex items-center gap-2'>
+        <Briefcase className='h-6 w-6 text-primary' />
+        <h3 class='font-bold text-2xl'>Work Experience</h3>
+      </div>
+
+      <div class='space-y-6'>
+        {
+          work.map((experience) => (
+            <ExperienceCard
+              title={experience.position}
+              company={experience.name}
+              startDate={experience.startDate}
+              endDate={experience.endDate}
+              description={experience.summary}
+              responsibilities={experience.highlights}
+            />
+          ))
+        }
+      </div>
+    </div>
+
+    <div class='space-y-6'>
+      <div class='flex items-center gap-2'>
+        <GraduationCap className='h-6 w-6 text-primary' />
+        <h3 class='font-bold text-2xl'>Education</h3>
+      </div>
+
+      <div class='space-y-6'>
+        {
+          education.map((edu) => (
+            <ExperienceCard
+              title={edu.area}
+              company={edu.institution}
+              startDate={edu.startDate}
+              endDate={edu.endDate}
+              description={edu.studyType}
+              responsibilities={edu.courses}
+              isEducation
+              type={edu.studyType}
+              value={`${edu.scoreType}: ${edu.score}`}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</AnimatedSection>

@@ -1,0 +1,50 @@
+---
+import { CodeIcon } from './icons';
+import { CopyButton } from '@components/ui/copy-button';
+
+interface Props {
+  filename?: string;
+  'data-language'?: string;
+  'data-meta'?: string;
+  'data-line-count': number;
+  'data-code'?: string;
+}
+
+const props = Astro.props;
+const { 'data-line-count': lineCount, filename, 'data-meta': metaData, 'data-code': code } = props;
+const extractedFilename =
+  filename || metaData?.match(/filename=([^\s,]+)/)?.[1] || 'plain.txt';
+
+props['data-code'] = undefined
+---
+
+<div
+  class='not-prose my-6 overflow-hidden rounded-lg border bg-zinc-900 text-white'
+>
+  <div
+    class='flex items-center justify-between border-stone-700 border-b bg-stone-900 px-4 py-2'
+  >
+    <div class='flex items-center gap-6 text-muted-foreground text-sm'>
+      <CodeIcon title={extractedFilename} />
+      <span>{extractedFilename !== 'plain.txt' && extractedFilename}</span>
+    </div>
+    <CopyButton value={code ?? ''} client:idle />
+  </div>
+  <div class='flex'>
+    <div
+      class='select-none bg-zinc-900 p-3 text-right text-muted-foreground text-sm flex flex-col'
+    >
+      {
+        Array.from({ length: lineCount }).map((_, i) => (
+          <span class='lining-nums leading-relaxed'>{i + 1}</span>
+        ))
+      }
+    </div>
+
+    <pre
+      class='overflow-x-auto p-3 text-sm flex items-start w-full leading-relaxed'
+      {...props}>
+      <slot />
+    </pre>
+  </div>
+</div>

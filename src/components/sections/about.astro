@@ -1,0 +1,85 @@
+---
+import { Card, CardContent } from '@/components/ui/card';
+import { basics } from '@shared/cv';
+import { Mail, MapPin, Phone } from 'lucide-react';
+import { AnimatedSection } from './section';
+import { SectionTitle } from '@/components/sections/section-title';
+---
+
+<AnimatedSection id='about'>
+  <SectionTitle title='About Me' />
+  <div class='grid gap-8 lg:grid-cols-2'>
+    <Card className='overflow-hidden'>
+      <CardContent className='p-6'>
+        <div class='space-y-4'>
+          <h3 class='font-bold text-2xl'>Who I Am</h3>
+          {
+            basics.summary.map((summary, index) => (
+              <p class='text-muted-foreground'>
+                {summary}
+              </p>
+            ))
+          }
+        </div>
+      </CardContent>
+    </Card>
+
+    <Card>
+      <CardContent className='p-6'>
+        <div class='space-y-6'>
+          <h3 class='font-bold text-2xl'>Personal Info</h3>
+          <div class='grid gap-4'>
+            <div class='flex items-center gap-3'>
+              <MapPin className='h-5 w-5 text-primary' />
+              <div>
+                <p class='font-medium'>Location</p>
+                <p class='text-muted-foreground text-sm'>
+                  Santo Domingo, Dominican Republic
+                </p>
+              </div>
+            </div>
+            <div class='flex items-center gap-3'>
+              <Mail className='h-5 w-5 text-primary' />
+              <div>
+                <p class='font-medium'>Email</p>
+                <p class='text-muted-foreground text-sm'>
+                  contact@imrlopez.dev
+                </p>
+              </div>
+            </div>
+            <div class='flex items-center gap-3'>
+              <Phone className='h-5 w-5 text-primary' />
+              <div>
+                <p class='font-medium'>Phone</p>
+                <p class='text-muted-foreground text-sm'>+1 8492679236</p>
+              </div>
+            </div>
+          </div>
+
+          <div class='space-y-2'>
+            <h4 class='font-medium'>Languages</h4>
+            <div class='grid gap-2'>
+              <div class='flex items-center justify-between'>
+                <span>Spanish</span>
+                <span class='text-muted-foreground text-sm'> Native </span>
+              </div>
+              <div class='h-2 w-full rounded-full bg-muted'>
+                <div class='h-2 w-full rounded-full bg-primary'></div>
+              </div>
+
+              <div class='flex items-center justify-between'>
+                <span>English</span>
+                <span class='text-muted-foreground text-sm'>
+                  Advanced
+                </span>
+              </div>
+              <div class='h-2 w-full rounded-full bg-muted'>
+                <div class='h-2 w-4/5 rounded-full bg-primary'></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  </div>
+</AnimatedSection>

@@ -1,0 +1,46 @@
+---
+import { ModeToggle } from '@ui/mode-toggle';
+import { NavbarClient } from './navbar-client';
+
+const navLinks = [
+  { href: '/#home', label: 'Home' },
+  { href: '/#about', label: 'About' },
+  { href: '/#experience', label: 'Experience' },
+  { href: '/#skills', label: 'Skills' },
+  { href: '/#projects', label: 'Projects' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/#contact', label: 'Contact' },
+];
+---
+
+<header
+  class='fixed top-0 right-0 left-0 z-50  py-4 transition-all duration-300 bg-background'
+>
+  <div class='container mx-auto flex items-center justify-between px-4'>
+    <a
+      href='/'
+      class='bg-gradient-to-r from-primary to-purple-600 bg-clip-text font-bold text-transparent text-xl'
+    >
+      Angel Lopez
+    </a>
+
+    <NavbarClient navLinks={navLinks} client:idle />
+
+    {/* Desktop Navbar */}
+    <div class='hidden items-center gap-6 md:flex'>
+      <nav class='flex items-center gap-6'>
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class='font-medium text-sm transition-colors hover:text-primary'
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+      <ModeToggle client:visible />
+    </div>
+  </div>
+</header>

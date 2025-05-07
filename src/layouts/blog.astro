@@ -1,0 +1,36 @@
+---
+import MainLayout from '@layouts/layout.astro';
+import { TOC, TOCPopover } from '@/components/blog/toc-side';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  toc: {
+    depth: number;
+    title: string;
+    url: `#${string}`;
+  }[];
+}
+const { post, toc } = Astro.props;
+
+---
+
+<MainLayout
+  content={{
+    title: post.data.title,
+    description: post.data.description,
+  }}
+>
+  <div class='container mx-auto px-4 py-20 gap-12 lg:flex relative'>
+
+    {/* Main content with spacing for TOC */}
+    <div class='lg:pr-[25%] w-full pt-[1/4]'>  <!-- Added padding for TOC space -->
+      <slot />
+    </div>
+    
+    {/* Desktop TOC */}
+    <div class='hidden lg:block fixed right-4 top-20 w-1/4 h-[calc(100vh-10rem)] overflow-y-auto'>
+      <TOC toc={toc} client:load />
+    </div>
+  </div>
+</MainLayout>

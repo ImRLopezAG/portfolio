@@ -1,0 +1,56 @@
+---
+import MainLayout from '@layouts/layout.astro';
+import { Button } from '@ui/button';
+import Image from 'astro/components/Image.astro';
+import { ArrowRight } from 'lucide-react';
+
+interface Props {
+  title?: string;
+  desc?: string;
+}
+
+const {
+  title = 'Page not found',
+  desc = 'Sorry, we couldn’t find the page you’re looking for.',
+} = Astro.props;
+---
+
+<MainLayout
+  content={{
+    title: 'not found',
+  }}
+>
+  <div
+    class='grid h-screen items-center bg-background pb-8 lg:grid-cols-2 lg:pb-0'
+  >
+    <div class='text-center'>
+      <p class='font-semibold text-base text-muted-foreground'>404</p>
+      <h1
+        class='mt-4 font-bold text-3xl tracking-tight md:text-5xl lg:text-7xl'
+      >
+        {title}
+      </h1>
+      <p class='mt-6 text-base text-muted-foreground leading-7'>
+        {desc}
+      </p>
+      <div class='mt-10 flex items-center justify-center gap-x-2'>
+        <Button size='lg' asChild>
+          <a href='/'>Go back home</a>
+        </Button>
+        <Button size='lg' variant='ghost'>
+          Contact support <ArrowRight className='ms-2 h-4 w-4' />
+        </Button>
+      </div>
+    </div>
+    <div class='hidden lg:block'>
+      <Image
+        src={'/404.svg'}
+        width={300}
+        height={400}
+        class='w-full object-contain lg:max-w-2xl'
+        alt='not found image'
+        loading='eager'
+      />
+    </div>
+  </div>
+</MainLayout>

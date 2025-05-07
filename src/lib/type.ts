@@ -1,19 +1,34 @@
-import type * as schema from '@server/schemas'
-import type { projects } from '@shared/cv'
-import type { NextMiddleware } from 'next/server'
-import type { z } from 'zod'
+import type * as schema from "@lib/schemas";
+import type { projects, skills } from "@shared/cv";
+import type { ComponentPropsWithoutRef } from "react";
+import type { z } from "zod";
+
 declare global {
 	interface Props {
-		children?: React.ReactNode
-		className?: string
+		children?: React.ReactNode;
+		className?: string;
 	}
 	interface ParamsProps {
-		searchParams: Promise<Record<string, string>>
-		params: Promise<Record<string, string>>
+		searchParams: Promise<Record<string, string>>;
+		params: Promise<Record<string, string>>;
 	}
 
-	type BlogMetadata = z.infer<typeof schema.metadataSchema>
-	type Email = z.infer<typeof schema.emailSchema>
-	type MiddlewareFactory = (middleware: NextMiddleware) => NextMiddleware
-	type Projects = (typeof projects)[number]
+	type BlogMetadata = z.infer<typeof schema.metadataSchema>;
+	type Email = z.infer<typeof schema.emailSchema>;
+	type Projects = (typeof projects)[number];
+
+	type Skill = (typeof skills)[number];
+
+	type HeadingProps = ComponentPropsWithoutRef<"h1">;
+	type ParagraphProps = ComponentPropsWithoutRef<"p">;
+	type ListProps = ComponentPropsWithoutRef<"ul">;
+	type ListItemProps = ComponentPropsWithoutRef<"li">;
+	type AnchorProps = ComponentPropsWithoutRef<"a">;
+	type BlockquoteProps = ComponentPropsWithoutRef<"blockquote">;
+	type CodeProps = ComponentPropsWithoutRef<"code">;
+	type PreProps = ComponentPropsWithoutRef<"pre"> & {
+		"data-filename"?: string;
+		"data-theme"?: string;
+		"data-line-count"?: number;
+	};
 }

@@ -1,0 +1,132 @@
+---
+import { Github, Linkedin, Mail } from 'lucide-react'
+
+const currentYear = new Date().getFullYear()
+---
+
+<footer class='border-t bg-muted/40 py-12 mt-auto'>
+	<div class='container mx-auto px-4'>
+		<div class='grid grid-cols-2 gap-8 lg:grid-cols-4'>
+			<div class='space-y-4'>
+				<a
+					href='/'
+					class='bg-gradient-to-r from-primary to-purple-600 bg-clip-text font-bold text-transparent text-xl'
+				>
+					Angel Lopez
+				</a>
+				<p class='text-muted-foreground'>
+					Full-Stack developer with +2 years of experience & basketball
+					player
+				</p>
+				<div class='flex gap-4'>
+					<a
+						href='https://github.com/ImRLopezAG'
+						target='_blank'
+						rel='noopener noreferrer'
+						class='text-muted-foreground transition-colors hover:text-primary'
+					>
+						<Github className='h-5 w-5' />
+						<span class='sr-only'>GitHub</span>
+					</a>
+					<a
+						href='https://www.aedin.com/in/angel-gabriel-lopez/'
+						target='_blank'
+						rel='noopener noreferrer'
+						class='text-muted-foreground transition-colors hover:text-primary'
+					>
+						<Linkedin className='h-5 w-5' />
+						<span class='sr-only'>aedIn</span>
+					</a>
+					<a
+						href='mailto:contact@imrlopez.dev'
+						class='text-muted-foreground transition-colors hover:text-primary'
+					>
+						<Mail className='h-5 w-5' />
+						<span class='sr-only'>Email</span>
+					</a>
+				</div>
+			</div>
+
+			<div class='space-y-4'>
+				<h3 class='font-medium'>Quick as</h3>
+				<nav class='flex flex-col gap-2'>
+					<a
+						href='/#home'
+						class='text-muted-foreground transition-colors hover:text-primary'
+					>
+						Home
+					</a>
+					<a
+						href='/#about'
+						class='text-muted-foreground transition-colors hover:text-primary'
+					>
+						About
+					</a>
+					<a
+						href='/#experience'
+						class='text-muted-foreground transition-colors hover:text-primary'
+					>
+						Experience
+					</a>
+					<a
+						href='/#skills'
+						class='text-muted-foreground transition-colors hover:text-primary'
+					>
+						Skills
+					</a>
+					<a
+						href='/#projects'
+						class='text-muted-foreground transition-colors hover:text-primary'
+					>
+						Projects
+					</a>
+					<a
+						href='/#contact'
+						class='text-muted-foreground transition-colors hover:text-primary'
+					>
+						Contact
+					</a>
+				</nav>
+			</div>
+
+			<div class='space-y-4'>
+				<h3 class='font-medium'>Blog</h3>
+				<nav class='flex flex-col gap-2'>
+					<a
+						href='/blog'
+						class='text-muted-foreground transition-colors hover:text-primary'
+					>
+						All Posts
+					</a>
+					<a
+						href='/blog?category=web-development'
+						class='text-muted-foreground transition-colors hover:text-primary'
+					>
+						Web Development
+					</a>
+					<a
+						href='/blog?category=programming'
+						class='text-muted-foreground transition-colors hover:text-primary'
+					>
+						Programming
+					</a>
+				</nav>
+			</div>
+
+			<div class='space-y-4'>
+				<h3 class='font-medium'>Contact</h3>
+				<div class='space-y-2'>
+					<p class='text-muted-foreground'>
+						Santo Domingo, Dominican Republic
+					</p>
+					<p class='text-muted-foreground'>contact@imrlopez.dev</p>
+					<p class='text-muted-foreground'>+1 849 267 9236</p>
+				</div>
+			</div>
+		</div>
+
+		<div class='mt-12 border-t pt-6 text-center text-muted-foreground'>
+			<p>© {currentYear} Angel Gabriel Lopez. All rights reserved.</p>
+		</div>
+	</div>
+</footer>

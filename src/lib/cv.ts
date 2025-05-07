@@ -257,6 +257,7 @@ export const {
 			highlights: ['NextJs', 'sqlite', 'Hono', 'Turso'],
 			url: 'https://rnc-contributors.vercel.app/api',
 			github: 'https://github.com/ImRLopezAG/rnc-contributors',
+			img: 'assets/rnc-contributors.png',
 		},
 		{
 			name: 'SHurl',
@@ -275,6 +276,7 @@ export const {
 			highlights: ['NextJs', 'TRPC', 'TailwindCss'],
 			url: 'https://img-opt.vercel.app/',
 			github: '',
+			img: 'assets/image-otp.png',
 		},
 		{
 			name: 'EMP (English Immersion Program)',
@@ -293,6 +295,7 @@ export const {
 			highlights: ['NextJs', 'TRPC', 'TailwindCss', 'postgres', 'drizzle'],
 			url: 'https://crime-app.vercel.app',
 			github: '',
+			img: 'assets/crime-app.png',
 		},
 		{
 			name: 'Tech Path',
@@ -302,6 +305,7 @@ export const {
 			highlights: ['NextJs', 'TRPC', 'TailwindCss'],
 			url: 'https://tech-path.vercel.app/',
 			github: '',
+			img: 'assets/tech-path.png',
 		},
 		{
 			name: 'GNX/utilities',
@@ -379,6 +383,7 @@ export const {
 			highlights: ['NextJs', 'TailwindCss', 'Google Gemini AI', 'Zustand'],
 			url: '',
 			github: 'https://github.com/ImRLopezAG/gpt-next',
+			img: 'assets/ai-chat.png',
 		},
 	],
 }

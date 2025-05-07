@@ -1,0 +1,257 @@
+---
+slug: business-central-docker
+title: Business Central Docker Setup
+description: Explore the setup and configuration of Business Central in a Docker environment for better maintainability and scalability.
+category: Infrastructure
+date: March 20, 2024
+tags:
+  - Business Central
+  - Docker
+  - Setup
+  - Configuration
+  - Infrastructure
+---
+
+# Business Central Docker Setup
+
+Business Central (BC) is a powerful ERP solution, and running it in a Docker container can simplify deployment and management. This guide provides a PowerShell script to create a Business Central container with various configurations.
+
+### Prerequisites
+
+- Docker installed and running
+- PowerShell with administrative privileges
+- Business Central Container Helper module installed
+- A valid Business Central license file
+- Access to the internet for downloading images
+
+## PowerShell Script
+
+```shell filename=Microsoft.PowerShell_profile.ps1
+# Admin check with module loading logic
+$IsAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(
+    [Security.Principal.WindowsBuiltInRole]::Administrator
+)
+
+if ($IsAdmin) {
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    Write-Host "ADMIN MODE ⚡" -ForegroundColor Green
+    Import-Module BcContainerHelper -Force
+} else {
+    Write-Host "User Mode 🔒" -ForegroundColor Yellow
+    # Load limited functionality here if needed
+}
+
+<# Create-Instance Function Improvements #>
+function Add-BcContainer {
+    param (
+        [Parameter(Mandatory)]
+        [string]$name,
+        [Parameter(Mandatory)]
+        [ValidateScript({ Test-Path $_ -PathType Leaf })]
+        [string]$license,
+        [ValidateSet('Latest', 'First', 'All', 'Closest')]
+        [string]$select = 'Latest',
+        [ValidateSet('OnPrem', 'SandBox')]
+        [string]$type = 'OnPrem',
+        [ValidateScript({ Test-Path $_ -PathType Leaf })]
+        [string]$bakFile = $null,
+        [ValidateScript({ $_ -match '^\d{1,2}\.\d{1,2}\.\d{1,2}\.\d{1,2}$' })]
+        [string]$version = $null,
+        [string]$country = 'w1',
+        [ValidateSet('Customer', 'Internal')]
+        [string]$artifactType = 'Internal',
+        # Features
+        [switch]$includeTest = $false,
+        [switch]$ssl = $false,
+        [switch]$expose = $false,
+        # External Database
+        [string]$db_server = 'host.docker.internal',
+        [string]$db_name = $null,
+        [string]$db_user = 'DockerUser',
+        [string]$db_password = 'P@@sword1',
+        [string]$db_instance = $null,
+        # Ports
+        [int]$webPort = $null,
+        [int]$devPort = $null,
+        # Network
+        [string]$network = $null
+    )
+
+    # Check Docker is running
+    if ((Get-Service -Name "Docker" -ErrorAction SilentlyContinue).Status -ne 'Running') {
+        Write-Host "Docker is not running" -ForegroundColor Red
+        return
+    }
+
+    $defaultPorts = $null
+
+    if ($artifactType -eq 'Internal') {
+        $defaultPorts = @{
+            web = 8020
+            dev = 7020
+        }
+    } elseif ($artifactType -eq 'Customer') {
+        $defaultPorts = @{
+            web = 9020
+            dev = 6020
+        }
+    }
+
+    function Get-UsedPorts {
+        try {
+            docker ps --format '{{.Ports}}' | ForEach-Object {
+                if ($_ -match '(\d+)->\d+/tcp') { [int]$matches[1] }
+            } | Where-Object { $_ }
+        } catch {
+            Write-Host "Error checking used ports: $_" -ForegroundColor Red
+            return @()
+        }
+    }
+
+    function Find-AvailablePorts {
+        param (
+            [int]$initialWebPort,
+            [int]$initialDevPort,
+            [int]$increment = 5,
+            [int]$maxAttempts = 20
+        )
+
+        $usedPorts = Get-UsedPorts
+        $portDelta = $initialWebPort - $initialDevPort
+
+        for ($i = 0; $i -lt $maxAttempts; $i++) {
+            $currentWeb = $initialWebPort + ($i * $increment)
+            $currentDev = $currentWeb - $portDelta
+
+            if ($currentWeb -notin $usedPorts -and $currentDev -notin $usedPorts) {
+                return @{ Web = $currentWeb; Dev = $currentDev }
+            }
+        }
+        return $null
+    }
+
+    if (-not $IsAdmin) {
+        Write-Host "You need to run this function as an Administrator" -ForegroundColor Red
+        return
+    }
+
+    # Check if BC Container Helper module is loaded
+    if (-not (Get-Module -Name BcContainerHelper)) {
+        Write-Host "BC Container Helper module is not loaded" -ForegroundColor Red
+        return
+    }
+
+    $db_credentials = @{
+        server   = $db_server
+        database = $db_name
+        user     = $db_user
+        password = $db_password
+        instance = $db_instance
+    }
+
+    $artifactUrl = @{
+        country = $country
+        select  = $select
+        type    = $type
+    }
+
+    if ($version) {
+        $artifactUrl['version'] = $version
+    }
+
+    $containerParams = @{
+        accept_eula   = $true
+        updateHosts   = $true
+        multitenant   = $false
+        containerName = $name.ToLower()
+        credential    = New-Object pscredential 'admin', (ConvertTo-SecureString 'P@@sword1' -AsPlainText -Force)
+        auth          = 'UserPassword'
+        artifactUrl   = Get-BcArtifactUrl @artifactUrl
+        imageName     = $name.ToLower()
+        licenseFile   = $license
+        isolation     = 'hyperv'
+    }
+
+    if ($network) {
+        $containerParams += @{
+            network = $network
+        }
+    }
+
+    $usedPorts = Get-UsedPorts
+
+    # Find available ports
+    $availablePorts = Find-AvailablePorts -initialWebPort $defaultPorts['web'] -initialDevPort $defaultPorts['dev']
+
+    if ($null -eq $availablePorts) {
+        Write-Host "No available ports found" -ForegroundColor Red
+        return
+    }
+
+    if ($expose) {
+        $webServicePort = $availablePorts['web']
+        $developerServicePort = $availablePorts['dev']
+
+        if ($webPort) {
+            $webServicePort = $webPort
+        }
+        if ($devPort) {
+            $developerServicePort = $devPort
+        }
+
+        $soapPort = $webServicePort + 2
+        $odataPort = $webServicePort + 3
+        $containerParams += @{
+            webClientPort         = $webServicePort
+            developerServicesPort = $developerServicePort
+            soapServicesPort      = $soapPort
+            odataServicesPort     = $odataPort
+            publishPorts          = @($webServicePort, $developerServicePort, $soapPort, $odataPort)
+        }
+    }
+
+    if ($bakFile) {
+        $containerParams['bakFile'] = $bakFile
+    }
+
+    if ($includeTest) {
+        $containerParams['includeTestToolkit'] = $true
+    }
+
+    if ($ssl) {
+        $containerParams['useSSL'] = $true
+    }
+
+    # Validate DB credentials when one is set
+    if ($db_credentials['database']) {
+        if ($containerParams['bakFile']) {
+            $containerParams['bakFile'] = $null
+            Write-Host "Bak file is not supported when using external database" -ForegroundColor Yellow
+        }
+        $containerParams += @{
+            databaseServer     = $db_credentials['server']
+            databaseInstance   = $db_credentials['instance']
+            databaseName       = $db_credentials['database']
+            databaseCredential = New-Object pscredential $db_credentials['user'], (ConvertTo-SecureString $db_credentials['password'] -AsPlainText -Force)
+        }
+    }
+
+    # Display all container parameters
+    Write-Host "Container parameters:" -ForegroundColor Yellow
+    foreach ($key in $containerParams.Keys) {
+        Write-Host "$key : $($containerParams[$key])" -ForegroundColor Cyan
+    }
+
+    # Ask for confirmation
+    if ((Read-Host "`nProceed with creation? (Y/N)") -eq 'Y') {
+        try {
+            New-BcContainer @containerParams
+            Write-Host "Container $name created successfully!" -ForegroundColor Green
+        } catch {
+            Write-Host "Creation failed: $_" -ForegroundColor Red
+        }
+    } else {
+        Write-Host "Operation cancelled" -ForegroundColor Yellow
+    }
+}
+```

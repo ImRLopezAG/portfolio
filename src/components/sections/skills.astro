@@ -1,0 +1,82 @@
+---
+import { Card, CardContent } from '@/components/ui/card';
+
+import { skills } from '@shared/cv';
+import { AnimatedSection } from './section';
+import { SkillTabs } from '@components/skill-tabs'
+import { SectionTitle } from '@/components/sections/section-title';
+
+
+const skillCategories = new Set<string>();
+for (const skill of skills) {
+  for (const keyword of skill.keywords) {
+    skillCategories.add(keyword);
+  }
+}
+
+const skillCategoriesMap = skills.reduce(
+  (acc, skill) => {
+    for (const keyword of skill.keywords) {
+      if (!acc[keyword]) {
+        acc[keyword] = [];
+      }
+      acc[keyword].push(skill);
+    }
+    return acc;
+  },
+  {} as Record<string, typeof skills>
+);
+---
+
+<AnimatedSection id='skills'>
+  <SectionTitle title='Skills & Technologies' desc={`A collection of technologies and methodologies I've worked with throughout
+      my career.`} />
+
+  <SkillTabs
+		categories={Array.from(skillCategories)}
+		skills={skillCategoriesMap}
+		client:visible
+	/>
+
+  <div class='grid gap-4 grid-cols-2 lg:grid-cols-4'>
+    <Card className='overflow-hidden'>
+      <div class='h-2 bg-green-500'></div>
+      <CardContent className='p-6'>
+        <div class='mb-2 font-bold text-4xl text-green-500'>Advanced</div>
+        <p class='text-muted-foreground'>
+          Technologies and concepts I've mastered and use with confidence
+        </p>
+      </CardContent>
+    </Card>
+
+    <Card className='overflow-hidden'>
+      <div class='h-2 bg-blue-500'></div>
+      <CardContent className='p-6'>
+        <div class='mb-2 font-bold text-4xl text-blue-500'>Mid</div>
+        <p class='text-muted-foreground'>
+          Skills I'm proficient in and use regularly in my projects
+        </p>
+      </CardContent>
+    </Card>
+
+    <Card className='overflow-hidden'>
+      <div class='h-2 bg-amber-500'></div>
+      <CardContent className='p-6'>
+        <div class='mb-2 font-bold text-4xl text-amber-500'>Beginner</div>
+        <p class='text-muted-foreground'>
+          Technologies I'm currently learning and exploring in my projects
+        </p>
+      </CardContent>
+    </Card>
+
+    <Card className='overflow-hidden'>
+      <div class='h-2 bg-foreground'></div>
+      <CardContent className='p-6'>
+        <div class='mb-2 font-bold text-4xl text-foreground'>Growing</div>
+        <p class='text-muted-foreground'>
+          I'm constantly learning new technologies and improving my skills
+        </p>
+      </CardContent>
+    </Card>
+  </div>
+</AnimatedSection>
