@@ -64,7 +64,7 @@ function TreeNode({
 		.sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
 
 	return (
-		<ul className='space-y-1'>
+		<ul className='space-y-1 not-prose'>
 			{folders.map(([key, value]) => (
 				<li key={key} className='relative'>
 					<FolderNode

@@ -2,7 +2,7 @@ import type * as schema from "@lib/schemas";
 import type { projects, skills } from "@shared/cv";
 import type { ComponentPropsWithoutRef } from "react";
 import type { z } from "zod";
-
+import type { ReactNode } from "react";
 declare global {
 	interface Props {
 		children?: React.ReactNode;
@@ -31,4 +31,12 @@ declare global {
 		"data-theme"?: string;
 		"data-line-count"?: number;
 	};
+
+	export interface TOCItemType {
+		title: ReactNode;
+		url: string;
+		depth: number;
+	}
+	
+	export type TableOfContents = TOCItemType[];
 }

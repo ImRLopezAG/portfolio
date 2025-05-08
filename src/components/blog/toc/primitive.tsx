@@ -2,7 +2,6 @@
 import type { AnchorHTMLAttributes, ReactNode, RefObject } from 'react';
 import { createContext, forwardRef, use, useContext, useMemo, useRef } from 'react';
 import scrollIntoView from 'scroll-into-view-if-needed';
-import type { TableOfContents } from './get-toc';
 import { mergeRefs } from './merge-refs';
 import { useOnChange } from './use-on-change';
 import { useAnchorObserver } from './use-anchor-observer';

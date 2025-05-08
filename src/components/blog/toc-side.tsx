@@ -6,7 +6,7 @@ import {
 	TocPopoverTrigger,
 } from './toc/index'
 import { AnchorProvider } from './toc/primitive'
-import { TOCScrollArea, Toc } from './toc/toc'
+import { TOCItems, TOCScrollArea, Toc } from './toc/toc'
 import ClerkTOCItems from './toc/toc-clerk'
 
 interface Props {
@@ -38,13 +38,17 @@ interface TOCPopoverProps extends Props {
 
 export function TOCPopover({ toc, path }: TOCPopoverProps) {
 	return (
-		<TocPopover className='h-12'>
-			<TocPopoverTrigger className='w-full' items={toc} path={path} />
-			<TocPopoverContent>
-				<TOCScrollArea isMenu>
-					<ClerkTOCItems items={toc} />
-				</TOCScrollArea>
-			</TocPopoverContent>
-		</TocPopover>
+		<AnchorProvider toc={toc}>
+			<TocPopover>
+				<TocPopoverTrigger items={toc} path={path} className='' />
+				<TocPopoverContent>
+					<TOCScrollArea isMenu>
+						<Toc className=''>
+							<ClerkTOCItems items={toc} />
+						</Toc>
+					</TOCScrollArea>
+				</TocPopoverContent>
+			</TocPopover>
+		</AnchorProvider>
 	)
 }

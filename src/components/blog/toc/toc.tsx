@@ -28,7 +28,6 @@ export interface TOCProps {
 export function Toc(props: HTMLAttributes<HTMLDivElement>) {
 	return (
 		<div
-			id='nd-toc'
 			{...props}
 			className={cn(
 				'sticky top-[calc(var(--banner-height)+var(--nav-height))] h-(--toc-height) pt-12 pb-2',

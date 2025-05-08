@@ -31,8 +31,8 @@ function calc(container: HTMLElement, active: string[]): TOCThumb {
 }
 
 function update(element: HTMLElement, info: TOCThumb): void {
-  element.style.setProperty('--fd-top', `${info[0]}px`);
-  element.style.setProperty('--fd-height', `${info[1]}px`);
+  element.style.setProperty('--top', `${info[0]}px`);
+  element.style.setProperty('--height', `${info[1]}px`);
 }
 
 export function TocThumb({

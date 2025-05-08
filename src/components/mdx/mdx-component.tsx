@@ -1,6 +1,9 @@
 import { cn } from '@/lib/utils'
 import type { ComponentPropsWithoutRef } from 'react'
 import { cache } from 'react'
+import { Heading } from './headings'
+import { Callout } from './callout'
+import { Card, Cards } from './card'
 
 type HeadingProps = ComponentPropsWithoutRef<'h1'>
 type ParagraphProps = ComponentPropsWithoutRef<'p'>
@@ -12,30 +15,24 @@ type CodeProps = ComponentPropsWithoutRef<'code'>
 
 
 export const mdxComponents = {
-	h1: ({ className, ...props }: HeadingProps) => (
-		<h1 className={cn('mb-0 scroll-m-28 pt-12 font-bold text-3xl', className)} {...props} />
-	),
-	h2: ({ className, ...props }: HeadingProps) => (
-		<h2
-			className={cn(
-				'mt-8 scroll-m-28 mb-3 font-semibold text-2xl text-gray-800 dark:text-zinc-200',
-				className,
-			)}
-			{...props}
-		/>
-	),
-	h3: ({ className, ...props }: HeadingProps) => (
-		<h3
-			className={cn(
-				'mt-8 mb-3 scroll-m-28 font-medium text-gray-800 text-xl dark:text-zinc-200',
-				className,
-			)}
-			{...props}
-		/>
-	),
-	h4: ({ className, ...props }: HeadingProps) => (
-		<h4 className={cn('font-medium', className)} {...props} />
-	),
+	h1: (props: HeadingProps) => (
+    <Heading as="h1" {...props} />
+  ),
+  h2: (props: HeadingProps) => (
+    <Heading as="h2" {...props} />
+  ),
+  h3: (props: HeadingProps) => (
+    <Heading as="h3" {...props} />
+  ),
+  h4: (props: HeadingProps) => (
+    <Heading as="h4" {...props} />
+  ),
+  h5: (props: HeadingProps) => (
+    <Heading as="h5" {...props} />
+  ),
+  h6: (props: HeadingProps) => (
+    <Heading as="h6" {...props} />
+  ),
 	p: ({ className, ...props }: ParagraphProps) => (
 		<p
 			className={cn(
@@ -80,7 +77,7 @@ export const mdxComponents = {
 	),
 	a: ({ href, children, className, ...props }: AnchorProps) => {
 		const linkClass =
-			'text-blue-500 hover:text-blue-700 dark:text-gray-400 hover:dark:text-gray-300 dark:underline dark:underline-offset-2 dark:decoration-gray-800'
+			'text-blue-500 hover:text-blue-700 dark:text-gray-400 hover:dark:text-gray-300 dark:underline dark:underline-offset-2 dark:decoration-gray-800 not-prose'
 		if (href?.startsWith('/')) {
 			return (
 				<a href={href} className={cn(linkClass, className)} {...props}>
@@ -107,59 +104,10 @@ export const mdxComponents = {
 			</a>
 		)
 	},
-	// Inline code
-	code: ({ className, ...props }: CodeProps) => {
-		// If this is an inline code block (not inside a pre)
-		const isInlineCode =
-			!props.children ||
-			(typeof props.children === 'string' && !props.children.includes('\n'))
-
-		if (isInlineCode) {
-			return (
-				<code
-					className={cn(
-						'rounded bg-muted px-1.5 py-0.5 font-mono text-sm',
-						className,
-					)}
-					{...props}
-				/>
-			)
-		}
-
-		// For block code, we'll let the pre handle it
-		return <code className={className} {...props} />
-	},
-	// Override pre to use our custom CodeBlock
-
-	Table: ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
-		<table>
-			<thead>
-				<tr>
-					{data.headers.map((header, index) => (
-						<th key={index}>{header}</th>
-					))}
-				</tr>
-			</thead>
-			<tbody>
-				{data.rows.map((row, index) => (
-					<tr key={index}>
-						{row.map((cell, cellIndex) => (
-							<td key={cellIndex}>{cell}</td>
-						))}
-					</tr>
-				))}
-			</tbody>
-		</table>
-	),
-	blockquote: ({ className, ...props }: BlockquoteProps) => (
-		<blockquote
-			className={cn(
-				'ml-[0.075em] border-gray-300 border-l-3 pl-4 text-gray-700 dark:border-zinc-600 dark:text-zinc-300',
-				className,
-			)}
-			{...props}
-		/>
-	),
+	Callout,
+	Card,
+	Cards,
+	
 }
 
 const components = cache(() => ({

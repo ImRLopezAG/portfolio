@@ -68,7 +68,7 @@ export function TocPopoverTrigger({
             showCurrent && 'opacity-0 -translate-y-full pointer-events-none',
           )}
         >
-          {items[selected]?.title}
+          {path}
         </span>
         <span
           className={cn(
@@ -149,7 +149,7 @@ export function TocPopoverContent(props: ComponentProps<'div'>) {
     <CollapsibleContent
       data-toc-popover=""
       {...props}
-      className={cn('flex flex-col max-h-[50vh]', props.className)}
+      className={cn('flex flex-col', props.className)}
     >
       {props.children}
     </CollapsibleContent>
@@ -197,11 +197,10 @@ export function TocPopover(props: HTMLAttributes<HTMLDivElement>) {
         <Collapsible open={open} onOpenChange={setOpen} asChild>
           <header
             ref={ref}
-            id="nd-tocnav"
             {...props}
             className={cn(
               'border-b border-foreground/10 backdrop-blur-sm transition-colors',
-              (open) && 'bg-background/80',
+              (open) && 'bg-background/90',
               open && 'shadow-lg',
             )}
           >
