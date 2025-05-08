@@ -2,7 +2,6 @@
 import MainLayout from '@layouts/layout.astro';
 import ProjectCard from '@components/project-card.astro';
 import { projects } from '@shared/cv';
-
 ---
 
 <MainLayout
@@ -18,46 +17,45 @@ import { projects } from '@shared/cv';
 </MainLayout>
 
 <script>
-  (function () {
-    const MATRIX =
-      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}';
+  const MATRIX =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}';
 
-    const FONT_SIZE = 10;
-    const $allCanvas = document.querySelectorAll(
-      '[data-project-card] canvas'
-    ) as NodeListOf<HTMLCanvasElement>;
+  const FONT_SIZE = 10;
+  const $allCanvas = document.querySelectorAll(
+    '[data-project-card] canvas'
+  ) as NodeListOf<HTMLCanvasElement>;
 
-    $allCanvas.forEach(($canvas) => {
-      const $canvasCTX = $canvas.getContext('2d');
+  for (let i = 0; i < $allCanvas.length; i++) {
+    const $canvas = $allCanvas[i];
+    const $canvasCTX = $canvas.getContext('2d');
 
-      $canvas.height = window.innerHeight;
-      $canvas.width = window.innerWidth;
+    $canvas.height = window.innerHeight;
+    $canvas.width = window.innerWidth;
 
-      const columns = $canvas.width / FONT_SIZE;
-      const drops: number[] = [];
+    const columns = $canvas.width / FONT_SIZE;
+    const drops: number[] = [];
 
-      for (let x = 0; x < columns; x++) drops[x] = 1;
+    for (let x = 0; x < columns; x++) drops[x] = 1;
 
-      function draw() {
-        if (!$canvasCTX) return;
-        $canvasCTX.fillStyle = 'rgba(0, 0, 0, 0.04)';
-        $canvasCTX.fillRect(0, 0, $canvas.width, $canvas.height);
-        $canvasCTX.fillStyle = '#22b455';
-        $canvasCTX.font = FONT_SIZE + 'px arial';
-        for (let i = 0; i < drops.length; i++) {
-          const text = MATRIX[Math.floor(Math.random() * MATRIX.length)];
-          $canvasCTX.fillText(text, i * FONT_SIZE, drops[i] * FONT_SIZE);
+    function draw() {
+      if (!$canvasCTX) return;
+      $canvasCTX.fillStyle = 'rgba(0, 0, 0, 0.04)';
+      $canvasCTX.fillRect(0, 0, $canvas.width, $canvas.height);
+      $canvasCTX.fillStyle = '#22b455';
+      $canvasCTX.font = FONT_SIZE + 'px arial';
+      for (let j = 0; j < drops.length; j++) {
+        const text = MATRIX[Math.floor(Math.random() * MATRIX.length)];
+        $canvasCTX.fillText(text, j * FONT_SIZE, drops[j] * FONT_SIZE);
 
-          if (drops[i] * FONT_SIZE > $canvas.height && Math.random() > 0.975)
-            drops[i] = 0;
+        if (drops[j] * FONT_SIZE > $canvas.height && Math.random() > 0.975)
+          drops[j] = 0;
 
-          drops[i]++;
-        }
-
-        requestAnimationFrame(draw);
+        drops[j]++;
       }
 
       requestAnimationFrame(draw);
-    });
-  })();
+    }
+
+    requestAnimationFrame(draw);
+  }
 </script>

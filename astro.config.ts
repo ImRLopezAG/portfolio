@@ -28,6 +28,7 @@ export default defineConfig({
 					rehypePrettyCode,
 					{
 						keepBackground: false,
+						// theme: 'one-dark-pro',
 						grid: false,
 						themes: {
 							light: 'one-light',
@@ -49,6 +50,8 @@ export default defineConfig({
 		},
 	},
 	adapter: vercel({
-		isr: true,
+		isr: {
+			expiration: 60 * 60 * 24 * 7, 
+		},
 	}),
 })

@@ -24,15 +24,15 @@ props['data-code'] = undefined
   <div
     class='flex items-center justify-between border-stone-700 border-b bg-stone-900 px-4'
   >
-    <div class='flex items-center gap-6 text-muted-foreground text-sm'>
+    <div class='flex items-center gap-6 text-sm'>
       <CodeIcon title={extractedFilename} />
       <span>{extractedFilename !== 'plain.txt' && extractedFilename}</span>
     </div>
-    <CopyButton value={code ?? ''} client:idle />
+    <CopyButton value={code ?? ''} client:idle  className='p-1'/>
   </div>
   <div class='flex'>
     <div
-      class='select-none bg-zinc-900 p-3 text-right text-muted-foreground text-sm flex flex-col'
+      class='select-none bg-zinc-900 p-3 text-right text-sm flex flex-col'
     >
       {
         Array.from({ length: lineCount }).map((_, i) => (
