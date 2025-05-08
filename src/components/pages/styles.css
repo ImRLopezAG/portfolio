@@ -144,6 +144,8 @@
 	--animate-fade-in: fadeIn 0.8s ease-in-out forwards;
 	--animate-fade-in-up: fadeIn 0.8s ease-out;
 	--animate-fade-in-scale: fadeInScale 0.8s ease-out 0.2s forwards;
+	
+	--toc-rest: 0px;
 }
 
 /* Smooth scrolling */

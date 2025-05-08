@@ -5,9 +5,10 @@ import {
 	type ComponentProps,
 	type HTMLAttributes,
 	type ReactNode,
+	useEffect,
 	useRef,
 } from 'react'
-import type { TOCItemType } from './index'
+import type { TOCItemType } from './popover'
 import * as Primitive from './primitive'
 import { TocThumb } from './toc-thumb'
 
@@ -26,11 +27,17 @@ export interface TOCProps {
 }
 
 export function Toc(props: HTMLAttributes<HTMLDivElement>) {
+	const containerRef = useRef<HTMLDivElement>(null)
+	useEffect(() => {
+		if (!containerRef.current) return
+		const containerHeight = containerRef.current.clientHeight
+		document.documentElement.style.setProperty('--toc-rest', `${containerHeight}px`)
+	}, [])
 	return (
 		<div
 			{...props}
 			className={cn(
-				'sticky top-[calc(var(--banner-height)+var(--nav-height))] h-(--toc-height) pt-12 pb-2',
+				'sticky top-[calc(var(--banner-height)+var(--nav-height))] h-(--toc-height) pb-2',
 				props.className,
 			)}
 			style={
@@ -40,8 +47,9 @@ export function Toc(props: HTMLAttributes<HTMLDivElement>) {
 						'calc(100dvh - var(--banner-height) - var(--nav-height))',
 				} as object
 			}
+			ref={containerRef}
 		>
-			<div className='flex h-full w-(--toc-width) max-w-full flex-col gap-3 pe-4'>
+			<div className='flex h-full w-full flex-col gap-3 pe-4'>
 				{props.children}
 			</div>
 		</div>
@@ -61,7 +69,6 @@ export function TOCScrollArea({
 	...props
 }: ComponentProps<typeof ScrollArea> & { isMenu?: boolean }) {
 	const viewRef = useRef<HTMLDivElement>(null)
-
 	return (
 		<ScrollArea
 			{...props}

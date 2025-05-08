@@ -4,20 +4,23 @@ import {
 	TocPopover,
 	TocPopoverContent,
 	TocPopoverTrigger,
-} from './toc/index'
+} from './toc/popover'
 import { AnchorProvider } from './toc/primitive'
-import { TOCItems, TOCScrollArea, Toc } from './toc/toc'
+import { TOCScrollArea, Toc } from './toc/toc'
 import ClerkTOCItems from './toc/toc-clerk'
+import type {
+	 HTMLAttributes,
+} from 'react'
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLDivElement> {
 	toc: TOCItemType[]
 	header?: React.ReactNode
 }
 
-export function TOC({ toc, header }: Props) {
+export function TOC({ toc, header, ...props }: Props) {
 	return (
 		<AnchorProvider toc={toc}>
-			<Toc>
+			<Toc {...props}>
 				{header || (
 					<h3 className='inline-flex items-center gap-1.5 text-muted-foreground text-sm'>
 						<Text className='size-4' />
@@ -36,14 +39,14 @@ interface TOCPopoverProps extends Props {
 	path: string
 }
 
-export function TOCPopover({ toc, path }: TOCPopoverProps) {
+export function TOCPopover({ toc, path, ...props }: TOCPopoverProps) {
 	return (
 		<AnchorProvider toc={toc}>
-			<TocPopover>
-				<TocPopoverTrigger items={toc} path={path} className='' />
+			<TocPopover className='w-full'>
+				<TocPopoverTrigger items={toc} path={path} className='w-full' />
 				<TocPopoverContent>
 					<TOCScrollArea isMenu>
-						<Toc className=''>
+						<Toc {...props}>
 							<ClerkTOCItems items={toc} />
 						</Toc>
 					</TOCScrollArea>

@@ -2,7 +2,17 @@ import Slugger from 'github-slugger';
 import type { Heading, Root } from 'mdast';
 import type { Transformer } from 'unified';
 import { visit } from 'unist-util-visit';
-import { flattenNode } from './remark-utils';
+import type { RootContent } from 'mdast';
+
+export function flattenNode(node: RootContent): string {
+  if ('children' in node)
+    return node.children.map((child) => flattenNode(child)).join('');
+
+  if ('value' in node) return node.value;
+
+  return '';
+}
+
 
 const slugger = new Slugger();
 
@@ -53,6 +63,7 @@ export function remarkHeading({
       let id = heading.data.hProperties.id;
       const lastNode = heading.children.at(-1);
 
+
       if (!id && lastNode?.type === 'text' && customId) {
         const match = regex.exec(lastNode.value);
 
@@ -84,6 +95,14 @@ export function remarkHeading({
       return 'skip';
     });
 
+
     if (generateToc) file.data.toc = toc;
+    if (
+      generateToc &&
+      file.data.astro &&
+      file.data.astro.frontmatter
+    ) {
+      file.data.astro.frontmatter.toc = toc;
+    }
   };
 }

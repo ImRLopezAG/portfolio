@@ -16,22 +16,10 @@ if (!post) {
   return Astro.redirect(`/blog/404?slug=${slug}`);
 }
 
-const { Content, headings } = await render(post);
-const toc = [
-  {
-    depth: 1,
-    text: post.data.title,
-    slug: post.data.slug,
-  },
-  ...headings,
-].map((item) => ({
-  depth: item.depth,
-  title: item.text,
-  url: `#${item.slug}`,
-}));
+const { Content, remarkPluginFrontmatter } = await render(post);
 ---
 
-<BlogLayout post={post} toc={toc}>
+<BlogLayout post={post} toc={remarkPluginFrontmatter.toc}>
   <article transition:name={`blog-content-${slug}`} class="prose dark:prose-invert max-w-none">
     <Content
       components={{

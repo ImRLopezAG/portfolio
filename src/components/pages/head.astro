@@ -10,8 +10,8 @@ const metadata = {
     default: `${basics.name} | ${basics.label}`,
     absolute: `${basics.name} | ${basics.label}`,
   },
-  description: basics.summary.map((s) => s).join(' '),
-  abstract: basics.summary[0],
+  description: content.description ??  basics.summary.map((s) => s).join(' '),
+  abstract: content.description ?? basics.summary[0],
   icons: {
     icon: [
       {
@@ -33,17 +33,17 @@ const metadata = {
     },
   ],
   category: 'Personal',
-  generator: 'Next.js',
+  generator: 'Astro',
   classification: 'Personal',
   openGraph: {
     type: 'website',
     locale: 'en_US',
     countryName: 'Dominican Republic',
-    title: basics.name,
-    description: basics.summary.map((s) => s).join(' '),
+    title: content.title ?? basics.name,
+    description: content.description ?? basics.summary.map((s) => s).join(' '),
+    url: content.url ?? absoluteUrl('/'),
     emails: ['contact@imrlopez.dev'],
-    url: 'https://imrlopez.dev',
-    siteName: `${basics.name} | ${basics.label}`,
+    siteName: content.siteName ?? `${basics.name} | ${basics.label}`,
     images: [
       {
         url: absoluteUrl('/me.webp'),
@@ -68,8 +68,8 @@ const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: basics.name,
-    description: basics.summary.map((s) => s).join(' '),
+    title: content.twitter?.title ?? basics.name,
+    description: content.twitter?.description ?? basics.summary.map((s) => s).join(' '),
     images: [absoluteUrl('/me.webp')],
   },
 };

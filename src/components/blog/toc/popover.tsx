@@ -47,7 +47,7 @@ export function TocPopoverTrigger({
     <CollapsibleTrigger
       {...props}
       className={cn(
-        'flex flex-row items-center text-sm text-muted-foreground gap-2.5 px-4 py-2.5 text-start focus-visible:outline-none [&_svg]:shrink-0 [&_svg]:size-4 md:px-6',
+        'flex flex-row items-center text-sm text-muted-foreground gap-2.5 px-8 py-2.5 text-start focus-visible:outline-none [&_svg]:shrink-0 [&_svg]:size-4 md:px-10',
         props.className,
       )}
     >
@@ -149,7 +149,7 @@ export function TocPopoverContent(props: ComponentProps<'div'>) {
     <CollapsibleContent
       data-toc-popover=""
       {...props}
-      className={cn('flex flex-col', props.className)}
+      className={cn('flex flex-col px-6', props.className)}
     >
       {props.children}
     </CollapsibleContent>

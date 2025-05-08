@@ -6,12 +6,6 @@ import { Callout } from './callout'
 import { Card, Cards } from './card'
 
 type HeadingProps = ComponentPropsWithoutRef<'h1'>
-type ParagraphProps = ComponentPropsWithoutRef<'p'>
-type ListProps = ComponentPropsWithoutRef<'ul'>
-type ListItemProps = ComponentPropsWithoutRef<'li'>
-type AnchorProps = ComponentPropsWithoutRef<'a'>
-type BlockquoteProps = ComponentPropsWithoutRef<'blockquote'>
-type CodeProps = ComponentPropsWithoutRef<'code'>
 
 
 export const mdxComponents = {
@@ -33,48 +27,6 @@ export const mdxComponents = {
   h6: (props: HeadingProps) => (
     <Heading as="h6" {...props} />
   ),
-	p: ({ className, ...props }: ParagraphProps) => (
-		<p
-			className={cn(
-				'space-y-2 text-pretty text-gray-800 leading-snug dark:text-zinc-300',
-				className,
-			)}
-			{...props}
-		/>
-	),
-	ol: ({ className, ...props }: ListProps) => (
-		<ol
-			className={cn(
-				'list-decimal space-y-2 pl-5 text-gray-800 dark:text-zinc-300',
-				className,
-			)}
-			{...props}
-		/>
-	),
-	ul: ({ className, ...props }: ListProps) => (
-		<ul
-			className={cn(
-				'list-disc space-y-1 pl-5 text-gray-800 dark:text-zinc-300',
-				className,
-			)}
-			{...props}
-		/>
-	),
-	li: ({ className, ...props }: ListItemProps) => (
-		<li className={cn('pl-1', className)} {...props} />
-	),
-	em: ({ className, ...props }: ComponentPropsWithoutRef<'em'>) => (
-		<em className={cn('font-medium', className)} {...props} />
-	),
-	strong: ({ className, ...props }: ComponentPropsWithoutRef<'strong'>) => (
-		<strong className={cn('font-medium', className)} {...props} />
-	),
-	hr: ({ className, ...props }: ComponentPropsWithoutRef<'hr'>) => (
-		<hr
-			className={cn('my-4 border-gray-300 dark:border-zinc-600', className)}
-			{...props}
-		/>
-	),
 	a: ({ href, children, className, ...props }: AnchorProps) => {
 		const linkClass =
 			'text-blue-500 hover:text-blue-700 dark:text-gray-400 hover:dark:text-gray-300 dark:underline dark:underline-offset-2 dark:decoration-gray-800 not-prose'
@@ -107,7 +59,6 @@ export const mdxComponents = {
 	Callout,
 	Card,
 	Cards,
-	
 }
 
 const components = cache(() => ({

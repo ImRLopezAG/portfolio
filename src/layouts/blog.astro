@@ -2,12 +2,9 @@
 import MainLayout from '@layouts/layout.astro';
 import { TOC, TOCPopover } from '@/components/blog/toc-side';
 import type { CollectionEntry } from 'astro:content';
-import { mdxComponents } from '@components/mdx/mdx-component';
 import { Badge } from '@ui/badge';
 import { Button } from '@ui/button';
 import { ArrowLeft, Calendar, Tag } from 'lucide-react';
-import Code from '@components/mdx/code.astro';
-import File from '@components/mdx/file.astro';
 
 interface Props {
   post: CollectionEntry<'posts'>;
@@ -18,18 +15,28 @@ interface Props {
   }[];
 }
 const { post, toc } = Astro.props;
-const { slug } = post.data;
+const { slug, title, description } = post.data;
+const defaultDescription =
+  'A blog about web development, programming, and technology.';
 ---
 
 <MainLayout
   content={{
-    title: post.data.title,
-    description: post.data.description,
+    title: title,
+    description: description || defaultDescription,
+    siteName: title,
+    twitter: {
+      title: title,
+      description: description || defaultDescription,
+    }
   }}
 >
   <div class='container mx-auto px-4 py-20 gap-12 lg:flex relative'>
-    <div class='mx-auto'>  <!-- Added padding for TOC space -->
+    <div class='mx-auto'>
       <div class='mx-auto max-w-3xl relative'>
+        <div class='block lg:hidden fixed right-4 top-15 w-full overflow-y-auto z-10'>
+          <TOCPopover toc={toc} client:only path={title} />
+        </div>
         <div class='flex-col gap-6 space-y-4 mb-5'>
           <Button asChild variant='ghost'>
             <a class='flex items-baseline' href='/blog'>
@@ -42,26 +49,25 @@ const { slug } = post.data;
             transition:name={`blog-title-${slug}`}
             id={post.data.slug}
           >
-            {post.data.title}
+            {title}
           </h1>
-          <div class='flex flex-wrap gap-4 text-muted-foreground'>
+          <div class='flex flex-wrap gap-4 text-muted-foreground '>
             <div class='flex items-center' transition:name={`blog-date-${slug}`}>
-              <Calendar className='mr-2 h-4 w-4 text-primary' />
-              {post.data.date}
+              <Calendar className='mr-2 size-4 text-primary' />
+              <span>
+                {post.data.date}
+              </span>
             </div>
             <div
               class='flex items-center'
               transition:name={`blog-category-${slug}`}
             >
-              <Tag className='mr-2 h-4 w-4 text-primary' />
+              <Tag className='mr-2 size-4 text-primary' />
               <Badge variant='outline' className='border border-primary'>
                 {post.data.category}
               </Badge>
             </div>
           </div>
-        </div>
-        <div class='block lg:hidden fixed right-4 top-15 w-full h-[calc(100vh)] overflow-y-auto z-10'>
-          <TOCPopover toc={toc} client:only path={post.data.title} />
         </div>
         {/* Slot */}
         <slot />
@@ -69,8 +75,8 @@ const { slug } = post.data;
       </div>
     </div>
     
-    <div class='hidden lg:block sticky right-4 top-20 w-1/4 h-[calc(100vh)] overflow-y-auto'>
-      <TOC toc={toc} client:load />
+    <div class='hidden lg:block sticky right-4 top-20 w-1/4 h-[calc(var(--toc-rest))] overflow-y-auto'>
+      <TOC toc={toc} client:load className='pt-12' />
     </div>
   </div>
 </MainLayout>

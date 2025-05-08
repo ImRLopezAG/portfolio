@@ -4,12 +4,12 @@ import vercel from '@astrojs/vercel'
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig, envField } from 'astro/config'
 import rehypePrettyCode, { type Options } from 'rehype-pretty-code'
-import rehypeSlug from 'rehype-slug'
-import remarkToc from 'remark-toc'
+
 import {
 	metaTransformer,
 	rehypeExtractFileInfo,
 } from './src/lib/rehype-plugins'
+import { remarkHeading } from './src/lib/remark-plugins'
 
 // https://astro.build/config
 
@@ -22,13 +22,12 @@ export default defineConfig({
 		react(),
 		mdx({
 			syntaxHighlight: false,
-			remarkPlugins: [[remarkToc, { tight: true, ordered: true }]],
+			remarkPlugins: [remarkHeading],
 			rehypePlugins: [
 				[
 					rehypePrettyCode,
 					{
 						keepBackground: false,
-						theme: 'one-dark-pro',
 						grid: false,
 						themes: {
 							light: 'one-light',
@@ -37,7 +36,6 @@ export default defineConfig({
 						transformers: [metaTransformer],
 					} as Options,
 				],
-				rehypeSlug,
 				rehypeExtractFileInfo,
 			],
 		}),
