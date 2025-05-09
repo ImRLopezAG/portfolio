@@ -9,7 +9,7 @@ import {
 	metaTransformer,
 	rehypeExtractFileInfo,
 } from './src/lib/rehype-plugins'
-import { remarkHeading } from './src/lib/remark-plugins'
+import { remarkHeading, remarkReadingTime } from './src/lib/remark-plugins'
 
 // https://astro.build/config
 
@@ -22,7 +22,7 @@ export default defineConfig({
 		react(),
 		mdx({
 			syntaxHighlight: false,
-			remarkPlugins: [remarkHeading],
+			remarkPlugins: [remarkHeading, remarkReadingTime],
 			rehypePlugins: [
 				[
 					rehypePrettyCode,

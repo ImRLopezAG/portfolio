@@ -17,9 +17,10 @@ if (!post) {
 }
 
 const { Content, remarkPluginFrontmatter } = await render(post);
+const readTime = remarkPluginFrontmatter.readingTime;
 ---
 
-<BlogLayout post={post} toc={remarkPluginFrontmatter.toc}>
+<BlogLayout post={post} toc={remarkPluginFrontmatter.toc} readingTime={readTime}>
   <article transition:name={`blog-content-${slug}`} class="prose dark:prose-invert max-w-none">
     <Content
       components={{

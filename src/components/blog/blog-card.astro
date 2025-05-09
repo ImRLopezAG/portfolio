@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-
 import { Badge } from '@/components/ui/badge';
 import {
   Card,
@@ -15,6 +14,7 @@ interface Props {
 }
 const { post } = Astro.props;
 const slug = post.id;
+
 ---
 
 <Card className='overflow-hidden'>
@@ -44,10 +44,7 @@ const slug = post.id;
     </p>
   </CardContent>
   <CardFooter className='flex items-center justify-between'>
-    <a
-      href={`/blog/${slug}`}
-      class='font-medium text-primary hover:underline'
-    >
+    <a href={`/blog/${slug}`} class='font-medium text-primary hover:underline' transition:name={`blog-read-time-${slug}`}>
       Read more →
     </a>
     {

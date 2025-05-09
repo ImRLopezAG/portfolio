@@ -1,9 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntries } from 'astro:content';
 import BlogCard from '@components/blog/blog-card.astro';
 import MainLayout from '@layouts/layout.astro';
 import { cn } from '@lib/utils';
 import { Badge } from '@ui/badge';
+
+
 const category = Astro.url.searchParams.get('category');
 const categoryName = category?.replace(/-/g, ' ') || 'All';
 const posts = await getCollection('posts');
@@ -17,6 +19,7 @@ const filteredPosts = () => {
     return post.data.category.toLowerCase() === categoryName.toLowerCase();
   });
 };
+
 ---
 
 <MainLayout

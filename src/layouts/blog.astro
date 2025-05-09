@@ -4,7 +4,7 @@ import { TOC, TOCPopover } from '@/components/blog/toc-side';
 import type { CollectionEntry } from 'astro:content';
 import { Badge } from '@ui/badge';
 import { Button } from '@ui/button';
-import { ArrowLeft, Calendar, Tag } from 'lucide-react';
+import { ArrowLeft, Calendar, Tag, Clock } from 'lucide-react';
 
 interface Props {
   post: CollectionEntry<'posts'>;
@@ -13,8 +13,9 @@ interface Props {
     title: string;
     url: `#${string}` | string;
   }[];
+  readingTime: string;
 }
-const { post, toc } = Astro.props;
+const { post, toc, readingTime } = Astro.props;
 const { slug, title, description } = post.data;
 const defaultDescription =
   'A blog about web development, programming, and technology.';
@@ -51,7 +52,7 @@ const defaultDescription =
           >
             {title}
           </h1>
-          <div class='flex flex-wrap gap-4 text-muted-foreground '>
+          <div class='flex flex-wrap gap-4 text-muted-foreground text-sm'>
             <div class='flex items-center' transition:name={`blog-date-${slug}`}>
               <Calendar className='mr-2 size-4 text-primary' />
               <span>
@@ -66,6 +67,13 @@ const defaultDescription =
               <Badge variant='outline' className='border border-primary'>
                 {post.data.category}
               </Badge>
+            </div>
+            <div
+              class='flex items-center'
+              transition:name={`blog-read-time-${slug}`}
+            >
+              <Clock className='mr-2 size-4 text-primary' />
+              <span>{readingTime}</span>
             </div>
           </div>
         </div>
