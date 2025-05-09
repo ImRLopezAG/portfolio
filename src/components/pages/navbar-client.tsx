@@ -15,6 +15,8 @@ export const NavbarClient: React.FC<NavbarClientProps> = ({ navLinks }) => {
 			<div className='flex items-center gap-2 md:hidden'>
 				<ModeToggle />
 				<Button
+					type='button'
+					aria-label='Menu'
 					variant='ghost'
 					size='icon'
 					onClick={() => setIsMenuOpen(!isMenuOpen)}

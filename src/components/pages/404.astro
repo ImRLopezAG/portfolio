@@ -1,6 +1,6 @@
 ---
 import MainLayout from '@layouts/layout.astro';
-import { Button } from '@ui/button';
+import { Link } from '@ui/link';
 import Image from 'astro/components/Image.astro';
 import { ArrowRight } from 'lucide-react';
 
@@ -34,12 +34,12 @@ const {
         {desc}
       </p>
       <div class='mt-10 flex items-center justify-center gap-x-2'>
-        <Button size='lg' asChild>
-          <a href='/'>Go back home</a>
-        </Button>
-        <Button size='lg' variant='ghost'>
+        <Link href='/' size='lg'>
+          Go back home
+        </Link>
+        <Link href='/#contact' size='lg' variant='ghost'>
           Contact support <ArrowRight className='ms-2 h-4 w-4' />
-        </Button>
+        </Link>
       </div>
     </div>
     <div class='hidden lg:block'>

@@ -18,6 +18,8 @@ export default defineConfig({
 		plugins: [tailwindcss()],
 	},
 	output: 'server',
+	site: 'https://imrlopez.dev',
+	
 	integrations: [
 		react(),
 		mdx({

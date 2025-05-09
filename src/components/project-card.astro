@@ -1,7 +1,7 @@
 ---
 import { cn } from '@shared/utils';
 import { Badge } from '@ui/badge';
-import { Button } from '@ui/button';
+import { Link } from '@ui/link';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@ui/card';
 import { ExternalLink, Github } from 'lucide-react';
 
@@ -14,7 +14,7 @@ const { project } = Astro.props;
 
 <Card
   className={cn(
-    'group flex h-full flex-col overflow-hidden relative bg-card/80 hover:shadow-lg transition-shadow duration-300 hover:shadow-card/80  '
+    'group flex h-full flex-col overflow-hidden relative bg-card hover:shadow-lg transition-shadow duration-300 hover:shadow-card/80  '
   )}
   data-project-card
 >
@@ -57,22 +57,32 @@ const { project } = Astro.props;
     <div class='flex gap-2'>
       {
         project.github && (
-          <Button asChild variant='ghost' size='icon' className='h-8 w-8'>
-            <a href={project.github} target='_blank' rel='noreferrer'>
-              <Github className='h-4 w-4' />
-              <span class='sr-only'>GitHub</span>
-            </a>
-          </Button>
+          <Link
+            variant='ghost'
+            size='icon'
+            className='size-8'
+            href={project.github}
+            target='_blank'
+            rel='noreferrer'
+          >
+            <Github className='h-4 w-4' />
+            <span class='sr-only'>GitHub</span>
+          </Link>
         )
       }
       {
         project.url && (
-          <Button asChild variant='ghost' size='icon' className='h-8 w-8'>
-            <a href={project.url} target='_blank' rel='noreferrer'>
-              <ExternalLink className='h-4 w-4' />
-              <span class='sr-only'>Live Demo</span>
-            </a>
-          </Button>
+          <Link
+            variant='ghost'
+            size='icon'
+            className='size-8'
+            href={project.url}
+            target='_blank'
+            rel='noreferrer'
+          >
+            <ExternalLink className='h-4 w-4' />
+            <span class='sr-only'>Live Demo</span>
+          </Link>
         )
       }
     </div>

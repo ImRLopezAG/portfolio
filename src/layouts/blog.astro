@@ -3,7 +3,7 @@ import MainLayout from '@layouts/layout.astro';
 import { TOC, TOCPopover } from '@/components/blog/toc-side';
 import type { CollectionEntry } from 'astro:content';
 import { Badge } from '@ui/badge';
-import { Button } from '@ui/button';
+import { Link } from '@ui/link';
 import { ArrowLeft, Calendar, Tag, Clock } from 'lucide-react';
 
 interface Props {
@@ -45,12 +45,10 @@ const defaultDescription =
           />
         </div>
         <div class='flex-col gap-6 space-y-4 mb-5'>
-          <Button asChild variant='ghost'>
-            <a class='flex items-baseline' href='/blog'>
-              <ArrowLeft className='mr-2 h-4 w-4 text-primary' />
+          <Link variant='ghost' className='flex items-baseline' href='/blog'>
+            <ArrowLeft className='mr-2 h-4 w-4 text-primary' />
               <span class='hidden sm:block'>Back to all posts</span>
-            </a>
-          </Button>
+          </Link>
           <h1
             class='font-bold text-3xl tracking-tight sm:text-4xl scroll-m-28'
             transition:name={`blog-title-${slug}`}

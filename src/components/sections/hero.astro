@@ -1,6 +1,5 @@
 ---
-import { Button } from '@ui/button';
-import { ScrollNext } from '@ui/scroll-next';
+import { Link } from '@ui/link';
 import { AlbumIcon, Github, Instagram, Linkedin } from 'lucide-react';
 import { AnimatedSection } from './section';
 import { Image } from 'astro:assets';
@@ -34,57 +33,53 @@ import { Image } from 'astro:assets';
         applications in .NET, Next.js, and Dynamics 365.
       </p>
       <div class='flex flex-wrap gap-4'>
-        <Button asChild size='lg'>
-          <a href='#contact'>Get in touch</a>
-        </Button>
-        <Button asChild variant='outline' size='lg'>
-          <a href='#projects'>View projects</a>
-        </Button>
+        <Link href='#contact' size='lg' className='bg-transparent text-foreground'>Get in touch</Link>
+        <Link href='#projects' size='lg' className='bg-transparent text-foreground'>View projects</Link>
       </div>
       <div class='flex gap-4'>
-        <Button asChild variant='ghost' size='icon'>
-          <a
-            href='https://github.com/ImRLopezAG'
-            target='_blank'
-            rel='noreferrer'
-            title='GitHub'
-          >
-            <Github className='h-5 w-5' />
-            <span class='sr-only'>GitHub</span>
-          </a>
-        </Button>
-        <Button asChild variant='ghost' size='icon'>
-          <a
-            href='https://www.aedin.com/in/angel-gabriel-lopez/'
-            target='_blank'
-            rel='noreferrer'
-            title='aedIn'
-          >
-            <Linkedin className='h-5 w-5' />
-            <span class='sr-only'>aedIn</span>
-          </a>
-        </Button>
-        <Button asChild variant='ghost' size='icon'>
-          <a
-            href='https://www.instagram.com/angelglopez_/'
-            target='_blank'
-            rel='noreferrer'
-            title='Instagram'
-          >
-            <Instagram className='h-5 w-5' />
-            <span class='sr-only'>Instagram</span>
-          </a>
-        </Button>
-        <Button asChild variant='ghost' size='icon'>
-          <a
-            href='/blog'
-            title='Visit my blog'
-            class='rounded-full bg-muted'
-          >
-            <AlbumIcon className='h-5 w-5' />
-            <span class='sr-only'>Blog</span>
-          </a>
-        </Button>
+        <Link
+          href='https://github.com/ImRLopezAG'
+          target='_blank'
+          rel='noreferrer'
+          title='GitHub'
+          variant='ghost'
+          size='icon'
+        >
+          <Github className='h-5 w-5' />
+          <span class='sr-only'>GitHub</span>
+        </Link>
+        <Link
+          href='https://www.aedin.com/in/angel-gabriel-lopez/'
+          target='_blank'
+          rel='noreferrer'
+          title='aedIn'
+          variant='ghost'
+          size='icon'
+        >
+          <Linkedin className='h-5 w-5' />
+          <span class='sr-only'>Linkedin</span>
+        </Link>
+        <Link
+          href='https://www.instagram.com/angelglopez_/'
+          target='_blank'
+          rel='noreferrer'
+          title='Instagram'
+          variant='ghost'
+          size='icon'
+        >
+          <Instagram className='h-5 w-5' />
+          <span class='sr-only'>Instagram</span>
+        </Link>
+        <Link
+          href='/blog'
+          title='Visit my blog'
+          className='rounded-full bg-muted'
+          variant='ghost'
+          size='icon'
+        >
+          <AlbumIcon className='h-5 w-5' />
+          <span class='sr-only'>Blog</span>
+        </Link>
       </div>
     </div>
     <div
@@ -103,8 +98,5 @@ import { Image } from 'astro:assets';
         />
       </div>
     </div>
-  </div>
-  <div class='mt-16 flex justify-center'>
-    <ScrollNext elementId='about' client:visible />
   </div>
 </AnimatedSection>
