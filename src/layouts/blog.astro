@@ -29,14 +29,20 @@ const defaultDescription =
     twitter: {
       title: title,
       description: description || defaultDescription,
-    }
+    },
   }}
 >
   <div class='container mx-auto px-4 py-20 gap-12 lg:flex relative'>
     <div class='mx-auto'>
       <div class='mx-auto max-w-3xl relative'>
-        <div class='block lg:hidden fixed right-4 top-15 w-full overflow-y-auto z-10'>
-          <TOCPopover toc={toc} client:only path={title} />
+        <div
+          class='block lg:hidden fixed right-4 top-15 w-full overflow-y-auto z-10'
+        >
+          <TOCPopover
+            toc={toc}
+            path={title}
+            client:visible={{ rootMargin: '0px' }}
+          />
         </div>
         <div class='flex-col gap-6 space-y-4 mb-5'>
           <Button asChild variant='ghost'>
@@ -53,7 +59,10 @@ const defaultDescription =
             {title}
           </h1>
           <div class='flex flex-wrap gap-4 text-muted-foreground text-sm'>
-            <div class='flex items-center' transition:name={`blog-date-${slug}`}>
+            <div
+              class='flex items-center'
+              transition:name={`blog-date-${slug}`}
+            >
               <Calendar className='mr-2 size-4 text-primary' />
               <span>
                 {post.data.date}
@@ -82,9 +91,11 @@ const defaultDescription =
         {/* Slot */}
       </div>
     </div>
-    
-    <div class='hidden lg:block sticky right-4 top-20 w-1/4 h-[calc(var(--toc-rest))] overflow-y-auto'>
-      <TOC toc={toc} client:load className='pt-12' />
+
+    <div
+      class='hidden lg:block sticky right-4 top-20 w-1/4 h-[calc(var(--toc-rest))] overflow-y-auto'
+    >
+      <TOC toc={toc} className='pt-12' client:visible={{ rootMargin: '0px' }} />
     </div>
   </div>
 </MainLayout>
