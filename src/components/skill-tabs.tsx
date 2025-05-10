@@ -29,11 +29,11 @@ export function SkillTabs({ categories, skills }: SkillTabsProps) {
 											className={cn("py-1.5 text-sm", {
 												"bg-primary/20 text-foreground hover:bg-foreground/30":
 													skill.level === "Growing",
-												"bg-green-500/20 text-green-500 hover:bg-green-500/30":
+												"bg-green-200/10 text-green-500 hover:bg-green-500/30":
 													skill.level === "Advanced",
-												"bg-blue-500/20 text-blue-500 hover:bg-blue-500/30":
+												"bg-blue-200/10 text-blue-500 hover:bg-blue-500/30":
 													skill.level === "Mid",
-												"bg-amber-500/20 text-amber-500 hover:bg-amber-500/30":
+												"bg-amber-200/10 text-amber-500 hover:bg-amber-500/30":
 													skill.level === "Beginner",
 											})}
 											variant="outline"
