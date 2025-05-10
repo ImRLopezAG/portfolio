@@ -1,0 +1,15 @@
+---
+import { cn } from '@shared/utils';
+interface Props {
+  id: string;
+  className?: string;
+}
+
+const { id, className } = Astro.props;
+---
+
+<section id={id} class={cn('animate-view scroll-m-12 py-10', className)}>
+  <div class='space-y-8'>
+    <slot />
+  </div>
+</section>

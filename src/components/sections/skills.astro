@@ -2,10 +2,9 @@
 import { Card, CardContent } from '@/components/ui/card';
 
 import { skills } from '@shared/cv';
-import { AnimatedSection } from './section';
-import { SkillTabs } from '@components/skill-tabs'
-import { SectionTitle } from '@/components/sections/section-title';
-
+import Section from './section.astro';
+import { SkillTabs } from '@components/skill-tabs';
+import  SectionTitle  from './section-title.astro';
 
 const skillCategories = new Set<string>();
 for (const skill of skills) {
@@ -28,15 +27,18 @@ const skillCategoriesMap = skills.reduce(
 );
 ---
 
-<AnimatedSection id='skills'>
-  <SectionTitle title='Skills & Technologies' desc={`A collection of technologies and methodologies I've worked with throughout
-      my career.`} />
+<Section id='skills'>
+  <SectionTitle
+    title='Skills & Technologies'
+    desc={`A collection of technologies and methodologies I've worked with throughout
+      my career.`}
+  />
 
   <SkillTabs
-		categories={Array.from(skillCategories)}
-		skills={skillCategoriesMap}
-		client:visible
-	/>
+    categories={Array.from(skillCategories)}
+    skills={skillCategoriesMap}
+    client:visible
+  />
 
   <div class='grid gap-4 grid-cols-2 lg:grid-cols-4'>
     <Card className='overflow-hidden'>
@@ -79,4 +81,4 @@ const skillCategoriesMap = skills.reduce(
       </CardContent>
     </Card>
   </div>
-</AnimatedSection>
+</Section>

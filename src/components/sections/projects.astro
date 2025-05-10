@@ -1,12 +1,12 @@
 ---
 import { Button } from '@/components/ui/button';
-import { SectionTitle } from '@components/sections/section-title';
-import { AnimatedSection } from './section';
+import SectionTitle from './section-title.astro';
+import Section from './section.astro';
 import ProjectCard from '@components/project-card.astro';
 import { projects } from '@shared/cv';
 ---
 
-<AnimatedSection id='projects'>
+<Section id='projects'>
   <SectionTitle
     title='Featured Projects'
     desc='A selection of my recent work and personal projects.'
@@ -25,7 +25,7 @@ import { projects } from '@shared/cv';
       <a href='/projects'>View All Projects</a>
     </Button>
   </div>
-</AnimatedSection>
+</Section>
 <script>
   const MATRIX =
     'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}';

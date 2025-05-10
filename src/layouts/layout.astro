@@ -9,11 +9,9 @@ import { Toaster } from 'sonner';
 <html lang='en'>
   <Head content={content} />
   <body class='bg-background text-foreground antialiased'>
-    <main class='min-h-screen flex flex-col bg-background'>
+    <main class='min-h-screen flex flex-col'>
       <Navbar />
-      <div class='flex-1'>
-        <slot />
-      </div>
+      <slot />
       <Footer />
       <Toaster position='top-center' closeButton richColors client:idle />
     </main>

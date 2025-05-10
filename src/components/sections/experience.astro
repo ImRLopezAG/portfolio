@@ -1,12 +1,12 @@
 ---
-import  ExperienceCard  from '@components/experience-card.astro';
+import ExperienceCard from '@components/experience-card.astro';
 import { education, work } from '@shared/cv';
 import { Briefcase, GraduationCap } from 'lucide-react';
-import { AnimatedSection } from './section';
-import { SectionTitle } from '@/components/sections/section-title';
+import Section from './section.astro';
+import SectionTitle  from './section-title.astro';
 ---
 
-<AnimatedSection id='experience'>
+<Section id='experience'>
   <SectionTitle title='Experience & Education' />
 
   <div class='grid gap-8 lg:grid-cols-2'>
@@ -57,4 +57,4 @@ import { SectionTitle } from '@/components/sections/section-title';
       </div>
     </div>
   </div>
-</AnimatedSection>
+</Section>

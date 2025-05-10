@@ -1,7 +1,6 @@
 ---
 import { ModeToggle } from '@ui/mode-toggle';
-import { NavbarClient } from './navbar-client';
-
+import { Menu, X } from 'lucide-react';
 const navLinks = [
   { href: '/#home', label: 'Home' },
   { href: '/#about', label: 'About' },
@@ -14,7 +13,7 @@ const navLinks = [
 ---
 
 <header
-  class='fixed top-0 right-0 left-0 z-50  py-4 transition-all duration-300 bg-background'
+  class='fixed top-0 right-0 left-0 z-50 py-4 transition-all duration-300 bg-background'
 >
   <div class='container mx-auto flex items-center justify-between px-4'>
     <a
@@ -23,8 +22,48 @@ const navLinks = [
     >
       Angel Lopez
     </a>
+    
+    <div class='group'>
+      <div class='flex items-center gap-2 md:hidden'>
+        <ModeToggle client:visible/>
+        <input type='checkbox' id='menu-toggle' class='hidden' />
+        <label
+          for='menu-toggle'
+          aria-label='Menu'
+          class='variant-ghost size-icon cursor-pointer'
+        >
+          <span
+            class='block group-has-[:checked]:hidden transition-opacity duration-300'
+          >
+            <Menu className='size-5' />
+          </span>
+          <span
+            class='hidden group-has-[:checked]:block transition-opacity duration-300'
+          >
+            <X className='size-5' />
+          </span>
+        </label>
+      </div>
 
-    <NavbarClient navLinks={navLinks} client:visible />
+      {/* Mobile Dropdown Menu */}
+      <div
+        class='fixed inset-0 top-16 z-40 bg-background p-4 hidden group-has-[:checked]:block'
+      >
+        <nav class='flex flex-col gap-4'>
+          {
+            navLinks.map((link) => (
+              <a
+                href={link.href}
+                class='border-border border-b py-2 font-medium text-lg transition-colors hover:text-primary'
+                onclick="document.getElementById('menu-toggle').checked = false"
+              >
+                {link.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </div>
 
     {/* Desktop Navbar */}
     <div class='hidden items-center gap-6 md:flex'>

@@ -6,7 +6,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card'
-// import { sendEmail } from '@actions/email'
 import { actions } from 'astro:actions'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { emailSchema } from '@lib/schemas'
