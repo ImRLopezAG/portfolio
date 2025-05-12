@@ -91,9 +91,9 @@ const navLinks = [
   </div>
 </header>
 
-<script>
+<script is:inline>
   const listItem = document.querySelectorAll('nav a');
-  const menuBackDrop = document.querySelector('#menu-backdrop') as HTMLElement;
+  const menuBackDrop = document.querySelector('#menu-backdrop');
 
   listItem.forEach((item) => {
     item.addEventListener('mouseenter', () => {
