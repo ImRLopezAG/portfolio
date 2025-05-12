@@ -2,7 +2,7 @@ import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
 import vercel from '@astrojs/vercel'
 import tailwindcss from '@tailwindcss/vite'
-import { defineConfig, envField } from 'astro/config'
+import { defineConfig, envField, fontProviders } from 'astro/config'
 import rehypePrettyCode, { type Options } from 'rehype-pretty-code'
 
 import {
@@ -45,6 +45,15 @@ export default defineConfig({
 	],
 	experimental: {
 		contentIntellisense: true,
+		 fonts: [
+				{
+					provider: fontProviders.google(),
+					name: 'Inter',
+					cssVariable: '--font-inter',
+					weights: ['400', '700'],
+					fallbacks: ['system-ui', 'sans-serif'],
+				}
+		 ]
 	},
 	env: {
 		schema: {

@@ -3,6 +3,7 @@ import { basics } from '@shared/cv';
 import './styles.css';
 import { ClientRouter } from 'astro:transitions';
 const { content } = Astro.props;
+import { Font } from 'astro:assets'
 const absoluteUrl = (path: string) => `${Astro.url.origin}${path}`;
 const metadata = {
   title: {
@@ -111,7 +112,7 @@ const metadata = {
   />
   <meta property='og:email' content={metadata.openGraph.emails[0]} />
   <meta property='og:site_name' content={metadata.openGraph.siteName} />
-
+  <Font cssVariable='--font-inter' preload />
   <ClientRouter />
 </head>
 

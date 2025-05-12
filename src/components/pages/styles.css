@@ -130,15 +130,7 @@
 
 @theme {
 	/* Fonts */
-	--font-sans: var(--font-geist-sans), ui-sans-serif, system-ui;
 	--font-inter: "Inter", sans-serif, system-ui, sans-serif;
-	--font-roboto: "Roboto", sans-serif, system-ui;
-	--font-montserrat: "Montserrat", sans-serif, system-ui;
-	--font-poppins: "Poppins", sans-serif, system-ui;
-	--font-overpass-mono: "Overpass Mono", sans-serif, system-ui;
-	--font-geist: "Geist", sans-serif, system-ui, sans-serif;
-	--font-geist-mono: "Geist Mono", sans-serif, system-ui;
-	--font-geist-sans: "Geist Sans", sans-serif, system-ui;
 
 	/* Animations */
 	--animate-fade-in: fadeIn 0.8s ease-in-out forwards;
@@ -151,6 +143,10 @@
 /* Smooth scrolling */
 html {
 	scroll-behavior: smooth;
+}
+
+body {
+	font-family: var(--font-inter);
 }
 
 * {
