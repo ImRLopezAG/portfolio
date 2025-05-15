@@ -12,7 +12,7 @@ export const {
 		name: 'Angel Gabriel Lopez Solano',
 		label:
 			'Full-Stack developer with +2 years of experience & basketball player',
-		image: '/me.png',
+		image: '/me.jpg',
 		email: 'contact@imrlopez.dev',
 		phone: '+1 8492679236',
 		url: 'https://imrlopez.dev',
@@ -257,7 +257,7 @@ export const {
 			highlights: ['NextJs', 'sqlite', 'Hono', 'Turso'],
 			url: 'https://rnc-contributors.vercel.app/api',
 			github: 'https://github.com/ImRLopezAG/rnc-contributors',
-			img: 'assets/rnc-contributors.png',
+			img: 'assets/rnc-contributors.jpg',
 		},
 		{
 			name: 'SHurl',
@@ -276,7 +276,7 @@ export const {
 			highlights: ['NextJs', 'TRPC', 'TailwindCss'],
 			url: 'https://img-opt.vercel.app/',
 			github: '',
-			img: 'assets/image-otp.png',
+			img: 'assets/image-opt.jpg',
 		},
 		{
 			name: 'EMP (English Immersion Program)',
@@ -295,7 +295,7 @@ export const {
 			highlights: ['NextJs', 'TRPC', 'TailwindCss', 'postgres', 'drizzle'],
 			url: 'https://crime-app.vercel.app',
 			github: '',
-			img: 'assets/crime-app.png',
+			img: 'assets/crime-app.jpg',
 		},
 		{
 			name: 'Tech Path',
@@ -305,7 +305,7 @@ export const {
 			highlights: ['NextJs', 'TRPC', 'TailwindCss'],
 			url: 'https://tech-path.vercel.app/',
 			github: '',
-			img: 'assets/tech-path.png',
+			img: 'assets/tech-path.jpg',
 		},
 		{
 			name: 'GNX/utilities',
@@ -383,7 +383,7 @@ export const {
 			highlights: ['NextJs', 'TailwindCss', 'Google Gemini AI', 'Zustand'],
 			url: '',
 			github: 'https://github.com/ImRLopezAG/gpt-next',
-			img: 'assets/ai-chat.png',
+			img: 'assets/ai-chat.jpg',
 		},
 	],
 }
