@@ -9,7 +9,7 @@ import { AnchorProvider } from './toc/primitive'
 import { TOCScrollArea, Toc } from './toc/toc'
 import ClerkTOCItems from './toc/toc-clerk'
 import type {
-	 HTMLAttributes,
+	HTMLAttributes,
 } from 'react'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {

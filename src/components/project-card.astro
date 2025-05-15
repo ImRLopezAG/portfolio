@@ -30,6 +30,14 @@ const { project } = Astro.props;
           </span>
         )
       }
+      {
+        !project.isActive && (
+          <span class='flex items-center text-red-500 text-xs'>
+            <span class='mr-1 h-2 w-2 rounded-full bg-red-500' />
+            Inactive
+          </span>
+        )
+      }
     </CardTitle>
   </CardHeader>
   <CardContent className='flex-grow relative z-10'>

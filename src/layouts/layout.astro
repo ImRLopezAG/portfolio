@@ -19,7 +19,6 @@ import { Toaster } from 'sonner';
 </html>
 <script is:inline>
   const getThemePreference = () => {
-    
     if (typeof localStorage !== 'undefined') {
       const storedTheme = localStorage.getItem('theme');
       if (storedTheme) return storedTheme;

@@ -2,6 +2,7 @@
 import { ModeToggle } from '@ui/mode-toggle';
 import { Menu, X } from 'lucide-react';
 import Logo from '@components/logo.astro';
+import { Link } from '@components/ui/link';
 const navLinks = [
   { href: '/#home', label: 'Home' },
   { href: '/#about', label: 'About' },
@@ -51,7 +52,7 @@ const navLinks = [
       <div
         class='fixed inset-0 top-16 z-40 bg-background p-4 hidden group-has-[:checked]:block'
       >
-        <nav class='flex flex-col gap-4'>
+        <nav class='flex flex-col gap-4' aria-label='Main Navigation' mobile-nav>
           {
             navLinks.map((link) => (
               <a
@@ -69,48 +70,21 @@ const navLinks = [
 
     {/* Desktop Navbar */}
     <div class='hidden items-center gap-6 md:flex'>
-      <nav class='flex items-center gap-6'>
+      <nav class='flex items-center gap-6' desktop-nav aria-label='Main Navigation'>
         {
           navLinks.map((link) => (
-            <a
+            <Link
               href={link.href}
-              class='font-medium text-sm transition-colors hover:text-primary p-2'
+              variant='link'
+              size='sm'
+              className='text-sm transition-colors text-foreground p-2 font-black hover:text-primary'
             >
               {link.label}
-            </a>
+            </Link>
           ))
         }
       </nav>
       <ModeToggle client:visible />
     </div>
   </div>
-  <div
-    id='menu-backdrop'
-    class='bg-slate-300/50 absolute backdrop-blur-lg rounded translate-x-[var(--left)] translate-y-[var(--top)] left-0 top-0 w-[var(--width)] h-[var(--height)] transition-all duration-500 ease-in-out opacity-0 -z-10'
-  >
-  </div>
 </header>
-
-<script is:inline>
-  const listItem = document.querySelectorAll('nav a');
-  const menuBackDrop = document.querySelector('#menu-backdrop');
-
-  listItem.forEach((item) => {
-    item.addEventListener('mouseenter', () => {
-      const { left, top, width, height } = item.getBoundingClientRect();
-
-      menuBackDrop.style.setProperty('--left', `${left}px`);
-      menuBackDrop.style.setProperty('--top', `${top}px`);
-      menuBackDrop.style.setProperty('--width', `${width}px`);
-      menuBackDrop.style.setProperty('--height', `${height}px`);
-
-      menuBackDrop.style.opacity = '1';
-      menuBackDrop.style.visibility = 'visible';
-    });
-
-    item.addEventListener('mouseleave', () => {
-      menuBackDrop.style.opacity = '0';
-      menuBackDrop.style.visibility = 'hidden';
-    });
-  });
-</script>

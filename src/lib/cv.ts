@@ -289,7 +289,7 @@ export const {
 		},
 		{
 			name: 'Crime App',
-			isActive: true,
+			isActive: false,
 			description:
 				'CrimeTrackRD is an innovative platform with the primary goal of enhancing citizen security in the Dominican Republic.',
 			highlights: ['NextJs', 'TRPC', 'TailwindCss', 'postgres', 'drizzle'],
@@ -309,7 +309,7 @@ export const {
 		},
 		{
 			name: 'GNX/utilities',
-			isActive: true,
+			isActive: false,
 			description:
 				'A set of utility libraries made in TypeScript, which serve to develop a backend in a straightforward manner and all  with generics',
 			highlights: ['Typescript', 'Node', 'Express'],
@@ -336,7 +336,7 @@ export const {
 		},
 		{
 			name: 'Real Estate',
-			isActive: true,
+			isActive: false,
 			description:
 				'Real estate application where you can manage properties, clients, and sales.',
 			highlights: ['.Net', 'TailwindCss', 'SQL database'],
@@ -345,7 +345,7 @@ export const {
 		},
 		{
 			name: 'Internet Banking',
-			isActive: true,
+			isActive: false,
 			description:
 				'Banking administrator, where clients can manage their accounts, payments, loans. The administrator can manage the clients, accounts, and loans.',
 			highlights: [
@@ -361,7 +361,7 @@ export const {
 		},
 		{
 			name: 'Task Manager',
-			isActive: true,
+			isActive: false,
 			description:
 				'A task manager I developed for my personal use, where I can manage my tasks, projects, and goals.',
 			highlights: [
@@ -377,7 +377,7 @@ export const {
 		},
 		{
 			name: 'Chat Bot',
-			isActive: true,
+			isActive: false,
 			description:
 				'Chatbot using Google Gemini AI with chat persistence in local storage using zustand.',
 			highlights: ['NextJs', 'TailwindCss', 'Google Gemini AI', 'Zustand'],
