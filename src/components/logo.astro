@@ -1,6 +1,14 @@
+---
+const { className,  ...props} = Astro.props;
 
-<svg class='h-8 text-foreground' fill='currentcolor' version='1.0' viewBox='100 0 450 90'
-  xmlns='http://www.w3.org/2000/svg'>
+---
+<svg class:list={[
+  'h-8 text-foreground',
+  className
+]} fill='currentcolor' version='1.0' viewBox='100 0 450 90'
+  xmlns='http://www.w3.org/2000/svg'
+  {...props}
+  >
   <path d='M121 44.5V65h8V24h-8v20.5z'></path>
   <path
     d='M195 25.5c0 .9 1.1 2.7 2.5 4 2.4 2.5 2.6 2.5 21 2.5 18 0 18.5.1 18.5 2.1 0 1.1-.5 2.9-1 4-1 1.8-2.3 1.9-21 1.9h-20v25h8V48h12.5l8.5 8.5 8.5 8.5h11.7l-7.8-8.3-7.7-8.2 6.2-.5c9-.7 10.1-2.4 10.1-14.6V24h-25c-21.9 0-25 .2-25 1.5z'>

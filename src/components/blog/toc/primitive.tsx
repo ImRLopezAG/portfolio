@@ -1,10 +1,22 @@
 'use client';
 import type { AnchorHTMLAttributes, ReactNode, RefObject } from 'react';
-import { createContext, forwardRef, use, useContext, useMemo, useRef } from 'react';
+import { createContext, forwardRef, use, useMemo, useRef } from 'react';
 import scrollIntoView from 'scroll-into-view-if-needed';
-import { mergeRefs } from './merge-refs';
 import { useOnChange } from './use-on-change';
 import { useAnchorObserver } from './use-anchor-observer';
+
+export function mergeRefs<T>(...refs: React.Ref<T>[]): React.RefCallback<T> {
+  return (value) => {
+    for (const ref of refs) {
+      if (typeof ref === 'function') {
+        ref(value);
+      } else if (ref !== null) {
+        ref.current = value;
+      }
+    }
+  };
+}
+
 
 const ActiveAnchorContext = createContext<string[]>([]);
 
@@ -23,7 +35,7 @@ export function useActiveAnchor(): string | undefined {
  * The id of visible anchors
  */
 export function useActiveAnchors(): string[] {
-  return useContext(ActiveAnchorContext);
+  return use(ActiveAnchorContext);
 }
 
 export interface AnchorProviderProps {
@@ -82,7 +94,7 @@ export interface TOCItemProps
 
 export const TOCItem = forwardRef<HTMLAnchorElement, TOCItemProps>(
   ({ onActiveChange, ...props }, ref) => {
-    const containerRef = useContext(ScrollContext);
+    const containerRef = use(ScrollContext);
     const anchors = useActiveAnchors();
     const anchorRef = useRef<HTMLAnchorElement>(null);
     const mergedRef = mergeRefs(anchorRef, ref);

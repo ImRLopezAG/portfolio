@@ -36,7 +36,7 @@ const defaultDescription =
     <div class='mx-auto'>
       <div class='mx-auto max-w-3xl relative'>
         <div
-          class='block lg:hidden fixed right-4 top-15 w-full overflow-y-auto z-10'
+          class='block lg:hidden fixed right-4 top-8 w-full overflow-y-auto z-10'
         >
           <TOCPopover
             toc={toc}
@@ -45,10 +45,6 @@ const defaultDescription =
           />
         </div>
         <div class='flex-col gap-6 space-y-4 mb-5'>
-          <Link variant='link' className='flex items-center justify-start' href='/blog'>
-            <ArrowLeft className='mr-2 h-4 w-4 text-primary' />
-            <span class='hidden sm:block'>Back to all posts</span>
-          </Link>
           <h1
             class='font-bold text-3xl tracking-tight sm:text-4xl scroll-m-28'
             transition:name={`blog-title-${slug}`}
@@ -93,7 +89,7 @@ const defaultDescription =
     <div
       class='hidden lg:block sticky right-4 top-20 w-1/4 h-[calc(var(--toc-rest))] overflow-y-auto'
     >
-      <TOC toc={toc} className='pt-12' client:visible={{ rootMargin: '0px' }} />
+      <TOC toc={toc}  client:visible={{ rootMargin: '0px' }} />
     </div>
   </div>
 </MainLayout>
