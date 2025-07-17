@@ -3,8 +3,7 @@ import MainLayout from '@layouts/layout.astro';
 import { TOC, TOCPopover } from '@/components/blog/toc-side';
 import type { CollectionEntry } from 'astro:content';
 import { Badge } from '@ui/badge';
-import { Link } from '@ui/link';
-import { ArrowLeft, Calendar, Tag, Clock } from 'lucide-react';
+import { Calendar, Tag, Clock } from 'lucide-react';
 
 interface Props {
   post: CollectionEntry<'posts'>;

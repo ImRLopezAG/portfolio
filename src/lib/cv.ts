@@ -231,7 +231,7 @@ export const {
 			level: 'Beginner',
 			keywords: ['Mobile', 'Frontend'],
 		},
-	],
+	] as const,
 	languages: [
 		{
 			language: 'Spanish',
