@@ -11,13 +11,13 @@ export const {
 	basics: {
 		name: 'Angel Gabriel Lopez Solano',
 		label:
-			'Full-Stack developer with +2 years of experience & basketball player',
+			'Full-Stack developer with +3 years of experience & basketball player',
 		image: '/me.jpg',
 		email: 'contact@imrlopez.dev',
 		phone: '+1 8492679236',
 		url: 'https://imrlopez.dev',
 		summary: [
-			'Results-driven software developer with 2+ years of experience crafting impactful, real-world applications in .NET, Next.js, and Dynamics 365. Recognized for designing reliable, scalable solutions in areas such as citizen safety, education, and fintech. Blending technical expertise with a proactive, solution-oriented mindset.',
+			'Results-driven software developer with 3+ years of experience crafting impactful, real-world applications in .NET, Next.js, and Dynamics 365. Recognized for designing reliable, scalable solutions in areas such as citizen safety, education, and fintech. Blending technical expertise with a proactive, solution-oriented mindset.',
 			'Skilled in collaborative and independent work environments, consistently delivering clean, efficient code that exceeds expectations. Eager to contribute technical insights and innovation to a dynamic team.',
 		],
 		location: {
