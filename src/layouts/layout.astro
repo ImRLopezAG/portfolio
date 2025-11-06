@@ -1,5 +1,7 @@
 ---
 const { content } = Astro.props;
+
+import Hexagon from "@components/hex.astro";
 import Footer from "@components/pages/footer.astro";
 import Head from "@components/pages/head.astro";
 import Navbar from "@components/pages/navbar.astro";
@@ -10,10 +12,12 @@ import { Toaster } from "sonner";
   <Head content={content} />
   <body class="bg-background text-foreground antialiased">
     <main class="min-h-screen flex flex-col">
-      <Navbar />
-      <slot />
-      <Footer />
-      <Toaster position="top-center" closeButton richColors client:idle />
+      <!-- <Hexagon> -->
+        <Navbar />
+        <slot />
+        <Footer />
+        <Toaster position="top-center" closeButton richColors client:idle />
+      <!-- </Hexagon> -->
     </main>
   </body>
 </html>
