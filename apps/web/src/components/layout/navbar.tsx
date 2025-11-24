@@ -38,7 +38,7 @@ export function Navbar() {
 	return (
 		<header className='sticky top-2 z-40 px-4 lg:top-5'>
 			<div className='container mx-auto'>
-				<div className='flex items-center justify-between rounded-2xl border p-3 px-4 backdrop-blur-sm transition-colors'>
+				<div className='translucent flex items-center justify-between rounded-2xl border p-3 px-4'>
 					<Logo />
 					{/* <!-- Mobile --> */}
 					<div className='flex items-center gap-2 lg:hidden'>
@@ -53,7 +53,7 @@ export function Navbar() {
 
 							<SheetContent
 								side='left'
-								className='flex flex-col justify-between rounded-tr-2xl rounded-br-2xl border-secondary translucent'
+								className='translucent flex flex-col justify-between rounded-tr-2xl rounded-br-2xl border-secondary'
 							>
 								<div>
 									<SheetHeader className='mb-4 ml-4'>

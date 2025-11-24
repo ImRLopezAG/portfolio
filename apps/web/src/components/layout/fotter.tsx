@@ -1,7 +1,7 @@
 import { Github, Linkedin, Mail } from 'lucide-react'
 export function Footer() {
 	return (
-		<footer className='mt-20 py-12 px-4'>
+		<footer className='mt-20 px-4 py-6'>
 			<div className='translucent container mx-auto rounded-3xl border border-white/5 p-12 px-4'>
 				<div className='grid grid-cols-2 gap-8 lg:grid-cols-4'>
 					<div className='space-y-4'>

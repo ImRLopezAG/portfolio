@@ -19,6 +19,7 @@ export function Tech({ name, ...props }: TechProps) {
 			width={24}
 			height={24}
 			fallbackSrc={plain}
+			{...props}
 		/>
 	)
 }

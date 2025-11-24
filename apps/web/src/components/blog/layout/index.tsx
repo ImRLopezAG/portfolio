@@ -56,7 +56,7 @@ export function BlogLayout({ children, post }: Props) {
 				</div>
 			</div>
 
-			<div className='sticky top-20 right-4 hidden h-[calc(var(--toc-rest))] w-1/4 overflow-y-auto lg:block'>
+			<div className='sticky top-24 right-4 hidden h-[calc(var(--toc-rest))] w-1/4 overflow-y-auto lg:block'>
 				<TOC toc={toc} />
 			</div>
 		</div>
