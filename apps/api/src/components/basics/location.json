@@ -1,0 +1,25 @@
+{
+	"collectionName": "components_basics_locations",
+	"info": {
+		"displayName": "location"
+	},
+	"options": {},
+	"attributes": {
+		"address": {
+			"type": "string"
+		},
+		"postalCode": {
+			"type": "string"
+		},
+		"countryCode": {
+			"type": "string"
+		},
+		"region": {
+			"type": "string"
+		},
+		"city": {
+			"type": "string"
+		}
+	},
+	"config": {}
+}

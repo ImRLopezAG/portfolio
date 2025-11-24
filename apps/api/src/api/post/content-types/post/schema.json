@@ -1,0 +1,39 @@
+{
+	"kind": "collectionType",
+	"collectionName": "posts",
+	"info": {
+		"singularName": "post",
+		"pluralName": "posts",
+		"displayName": "Post"
+	},
+	"options": {
+		"draftAndPublish": true
+	},
+	"pluginOptions": {
+		"i18n": {
+			"localized": true
+		}
+	},
+	"attributes": {
+		"content": {
+			"type": "richtext",
+			"pluginOptions": {
+				"i18n": {
+					"localized": true
+				}
+			},
+			"required": true
+		},
+		"metadata": {
+			"type": "component",
+			"pluginOptions": {
+				"i18n": {
+					"localized": true
+				}
+			},
+			"component": "post.metadata",
+			"repeatable": false,
+			"required": true
+		}
+	}
+}

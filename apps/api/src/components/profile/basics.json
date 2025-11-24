@@ -1,0 +1,51 @@
+{
+	"collectionName": "components_profile_basics",
+	"info": {
+		"displayName": "basics"
+	},
+	"options": {},
+	"attributes": {
+		"name": {
+			"type": "string",
+			"required": true
+		},
+		"email": {
+			"type": "email",
+			"required": true
+		},
+		"label": {
+			"type": "string",
+			"required": true
+		},
+		"url": {
+			"type": "string",
+			"required": true
+		},
+		"image": {
+			"type": "media",
+			"multiple": false,
+			"required": true,
+			"allowedTypes": ["images", "files"]
+		},
+		"phone": {
+			"type": "string",
+			"required": true
+		},
+		"summary": {
+			"type": "blocks"
+		},
+		"location": {
+			"type": "component",
+			"component": "basics.location",
+			"repeatable": false,
+			"required": true
+		},
+		"profiles": {
+			"type": "component",
+			"component": "basics.profile",
+			"repeatable": true,
+			"required": true
+		}
+	},
+	"config": {}
+}

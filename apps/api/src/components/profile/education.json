@@ -1,0 +1,43 @@
+{
+  "collectionName": "components_profile_educations",
+  "info": {
+    "displayName": "education"
+  },
+  "options": {},
+  "attributes": {
+    "institution": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "area": {
+      "type": "string",
+      "required": true
+    },
+    "studyType": {
+      "type": "string"
+    },
+    "startDate": {
+      "type": "date",
+      "required": true
+    },
+    "endDate": {
+      "type": "date"
+    },
+    "score": {
+      "type": "string",
+      "required": true
+    },
+    "courses": {
+      "type": "blocks"
+    },
+    "scoreType": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "config": {}
+}

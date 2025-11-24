@@ -1,0 +1,22 @@
+{
+	"collectionName": "components_basics_profiles",
+	"info": {
+		"displayName": "profile"
+	},
+	"options": {},
+	"attributes": {
+		"username": {
+			"type": "string",
+			"required": true
+		},
+		"url": {
+			"type": "string",
+			"required": true
+		},
+		"network": {
+			"type": "string",
+			"required": true
+		}
+	},
+	"config": {}
+}

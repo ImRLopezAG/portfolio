@@ -1,0 +1,40 @@
+{
+	"collectionName": "components_post_metadata",
+	"info": {
+		"displayName": "metadata",
+		"icon": "bulletList"
+	},
+	"options": {},
+	"attributes": {
+		"slug": {
+			"type": "string",
+			"required": true,
+			"unique": true,
+			"regex": "^(?=.{1,200}$)[a-z0-9]+(?:-[a-z0-9]+)*$"
+		},
+		"title": {
+			"type": "string",
+			"required": true
+		},
+		"posting": {
+			"type": "date",
+			"required": true
+		},
+		"category": {
+			"type": "string",
+			"required": true
+		},
+		"desc": {
+			"type": "text"
+		},
+		"tags": {
+			"type": "blocks"
+		},
+		"image": {
+			"type": "media",
+			"multiple": false,
+			"allowedTypes": ["files", "images"]
+		}
+	},
+	"config": {}
+}

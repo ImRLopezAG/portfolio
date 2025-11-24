@@ -1,0 +1,71 @@
+{
+  "collectionName": "components_profile_projects",
+  "info": {
+    "displayName": "project"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "desc": {
+      "type": "string",
+      "required": true
+    },
+    "state": {
+      "type": "enumeration",
+      "required": true,
+      "default": "ACTIVE",
+      "enum": [
+        "ACTIVE",
+        "INACTIVE",
+        "WIP",
+        "PRACTICE"
+      ]
+    },
+    "color": {
+      "type": "enumeration",
+      "required": true,
+      "default": "emerald",
+      "enum": [
+        "black",
+        "white",
+        "slate",
+        "gray",
+        "zinc",
+        "neutral",
+        "stone",
+        "red",
+        "orange",
+        "amber",
+        "yellow",
+        "lime",
+        "green",
+        "emerald",
+        "teal",
+        "cyan",
+        "sky",
+        "blue",
+        "indigo",
+        "violet",
+        "purple",
+        "fuchsia",
+        "pink",
+        "rose"
+      ]
+    },
+    "url": {
+      "type": "string"
+    },
+    "github": {
+      "type": "string"
+    },
+    "techStack": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::skill.skill"
+    }
+  },
+  "config": {}
+}
