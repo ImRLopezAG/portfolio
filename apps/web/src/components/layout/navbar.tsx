@@ -39,7 +39,9 @@ export function Navbar() {
 		<header className='sticky top-2 z-40 px-4 lg:top-5'>
 			<div className='container mx-auto'>
 				<div className='translucent flex items-center justify-between rounded-2xl border p-3 px-4'>
-					<Logo />
+					<Link href='/'>
+						<Logo />
+					</Link>
 					{/* <!-- Mobile --> */}
 					<div className='flex items-center gap-2 lg:hidden'>
 						<Sheet open={isOpen} onOpenChange={setIsOpen}>

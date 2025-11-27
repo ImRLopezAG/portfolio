@@ -1,19 +1,8 @@
 import { BlogLayout } from '@components/blog/layout'
-import { metadata } from '@lib/metadata'
 import { strapi } from '@services/strapi.service'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import LoadingState from '@components/blog/layout/loading'
-export async function generateMetadata({
-	params,
-}: LayoutProps<'/blog/[slug]'>) {
-	const { slug } = await params
-	const data = await strapi.getPostBySlug(slug)
-	if (!data) return metadata({ title: 'Post not found' })
-	const { metadata: meta } = data
-	return metadata({ title: meta.title, description: meta.desc })
-}
-
 export default async function BlogPost({
 	children,
 	params,

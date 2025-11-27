@@ -1,6 +1,7 @@
 import { Badge } from '@ui/badge'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@ui/card'
 import { ViewTransition } from 'react'
+import Link from 'next/link'
 
 interface Props {
 	post: BlogPost
@@ -34,12 +35,13 @@ export function BlogCard({ post: { metadata } }: Props) {
 			</CardContent>
 			<CardFooter className='flex items-center justify-between'>
 				<ViewTransition name={`blog-read-time-${slug}`}>
-					<a
+					<Link
 						href={`/blog/${slug}`}
 						className='font-medium text-primary hover:underline'
+						prefetch={true}
 					>
 						Read more →
-					</a>
+					</Link>
 				</ViewTransition>
 				{metadata.tags && (
 					<div className='mt-2 flex w-4/5 flex-wrap justify-end gap-2'>

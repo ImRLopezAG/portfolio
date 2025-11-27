@@ -56,10 +56,9 @@ export default ({ env }) => {
 		},
 		sqlite: {
 			connection: {
-				filename: path.join(
-					__dirname,
-					'..',
-					'..',
+				// Use process.cwd() for consistent path resolution in production builds
+				filename: path.resolve(
+					process.cwd(),
 					env('DATABASE_FILENAME', '.tmp/data.db'),
 				),
 			},

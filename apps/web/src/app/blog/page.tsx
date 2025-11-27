@@ -22,13 +22,13 @@ export default async function Home({ searchParams }: PageProps<'/blog'>) {
 		)
 	}
 	return (
-		<div className='container px-4 py-20 mx-auto'>
-			<div className='max-w-4xl mx-auto'>
+		<div className='container mx-auto px-4 py-20 z-40'>
+			<div className='mx-auto max-w-4xl'>
 				<div className='mb-12 space-y-4 text-center'>
 					<h1 className='font-bold text-4xl tracking-tight sm:text-5xl'>
 						Blog
 					</h1>
-					<div className='h-1 w-20 rounded-full bg-primary mx-auto' />
+					<div className='mx-auto h-1 w-20 rounded-full bg-primary' />
 					<p className='text-muted-foreground text-xl'>
 						Thoughts, ideas, and insights on web development and programming
 					</p>

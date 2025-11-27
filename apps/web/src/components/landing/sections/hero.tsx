@@ -10,7 +10,7 @@ export async function HeroSection() {
 	const orbitSkills = skills.slice(0, 6) // Take top 6 skills for the orbit
 
 	return (
-		<LandingSection id='hero' allowSplit={false}>
+		<LandingSection id='hero' allowSplit={false} className='py-0'>
 			<div className='grid items-center gap-12 lg:grid-cols-2'>
 				<div className='motion-preset-slide-right-lg motion-duration-700 motion-delay-500 order-last space-y-8 lg:order-first'>
 					<div className='translucent inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-primary text-sm'>
