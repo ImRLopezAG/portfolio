@@ -162,3 +162,9 @@ Desktop.ini
 .LSOverride
 
 *.sql
+# AWS secrets
+aws/.env
+
+# AWS secrets
+aws/.env
+aws/task-definition.json

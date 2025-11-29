@@ -19,5 +19,4 @@ services:
     ports:
       - "${PORT}:${PORT}"
     volumes:
-      # Bind mount to use existing local data
       - ./.tmp:/usr/src/app/.tmp

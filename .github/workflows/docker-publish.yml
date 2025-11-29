@@ -62,3 +62,33 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/next-strapi')
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Deploy to ECS
+        env:
+          AWS_REGION: us-east-1
+          AWS_VPC_ID: ${{ secrets.AWS_VPC_ID }}
+          AWS_SUBNET_1: ${{ secrets.AWS_SUBNET_1 }}
+          AWS_SUBNET_2: ${{ secrets.AWS_SUBNET_2 }}
+          AWS_EFS_FILE_SYSTEM_ID: ${{ secrets.AWS_EFS_FILE_SYSTEM_ID }}
+          AWS_EFS_ACCESS_POINT_ID: ${{ secrets.AWS_EFS_ACCESS_POINT_ID }}
+          AWS_ALB_TARGET_GROUP_ARN: ${{ secrets.AWS_ALB_TARGET_GROUP_ARN }}
+          DOCKER_IMAGE: ghcr.io/${{ github.repository_owner }}/portfolio-api:${{ github.ref_name }}
+        run: |
+          chmod +x ./aws/deploy.sh
+          ./aws/deploy.sh
