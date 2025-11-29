@@ -3,7 +3,11 @@
   "ui": "tui",
   "globalPassThroughEnv": [
     "PATH",
-    "NODE_ENV"
+    "NODE_ENV",
+    "NODE_ENV",
+    "RESEND_API_KEY",
+    "STRAPI_URL",
+    "STRAPI_API_TOKEN"
   ],
   "tasks": {
     "build": {
