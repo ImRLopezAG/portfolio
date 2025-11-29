@@ -88,7 +88,13 @@ jobs:
           AWS_EFS_FILE_SYSTEM_ID: ${{ secrets.AWS_EFS_FILE_SYSTEM_ID }}
           AWS_EFS_ACCESS_POINT_ID: ${{ secrets.AWS_EFS_ACCESS_POINT_ID }}
           AWS_ALB_TARGET_GROUP_ARN: ${{ secrets.AWS_ALB_TARGET_GROUP_ARN }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+          R2_PUBLIC_URL: ${{ secrets.R2_PUBLIC_URL }}
           DOCKER_IMAGE: ghcr.io/imrlopezag/portfolio-api:latest
         run: |
-          chmod +x ./aws/deploy.sh
+          chmod +x ./aws/setup.sh ./aws/deploy.sh
+          ./aws/setup.sh
           ./aws/deploy.sh

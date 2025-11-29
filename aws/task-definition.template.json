@@ -70,6 +70,26 @@
         {
           "name": "JWT_SECRET",
           "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:portfolio/strapi-JWT_SECRET"
+        },
+        {
+          "name": "R2_ACCESS_KEY_ID",
+          "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:portfolio/strapi-R2_ACCESS_KEY_ID"
+        },
+        {
+          "name": "R2_SECRET_ACCESS_KEY",
+          "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:portfolio/strapi-R2_SECRET_ACCESS_KEY"
+        },
+        {
+          "name": "R2_ENDPOINT",
+          "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:portfolio/strapi-R2_ENDPOINT"
+        },
+        {
+          "name": "R2_BUCKET",
+          "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:portfolio/strapi-R2_BUCKET"
+        },
+        {
+          "name": "R2_PUBLIC_URL",
+          "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:portfolio/strapi-R2_PUBLIC_URL"
         }
       ],
       "repositoryCredentials": {
