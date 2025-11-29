@@ -90,5 +90,7 @@ jobs:
           AWS_ALB_TARGET_GROUP_ARN: ${{ secrets.AWS_ALB_TARGET_GROUP_ARN }}
           DOCKER_IMAGE: ghcr.io/${{ github.repository_owner }}/portfolio-api:${{ github.ref_name }}
         run: |
+          # Lowercase the image name (Docker requires lowercase)
+          export DOCKER_IMAGE=$(echo "$DOCKER_IMAGE" | tr '[:upper:]' '[:lower:]')
           chmod +x ./aws/deploy.sh
           ./aws/deploy.sh
