@@ -4,10 +4,15 @@ set -e
 # Disable AWS CLI pager to prevent blocking
 export AWS_PAGER=""
 
-# Configuration
-REGION="us-east-1"
-VPC_ID="vpc-0b12e1cd3cec6a9a7"  # Replace with your VPC ID
-SUBNET_IDS=("subnet-0b6f1b119fe2f2456" "subnet-066001e23226d7c01")  # Replace with your subnet IDs
+# Load environment variables from .env file if it exists (for local development)
+if [ -f "aws/.env" ]; then
+  export $(grep -v '^#' aws/.env | xargs)
+fi
+
+# Configuration from environment variables
+REGION="${AWS_REGION:-us-east-1}"
+VPC_ID="${AWS_VPC_ID:?AWS_VPC_ID is required}"
+SUBNET_IDS=("${AWS_SUBNET_1:?AWS_SUBNET_1 is required}" "${AWS_SUBNET_2:?AWS_SUBNET_2 is required}")
 SECURITY_GROUP_NAME="portfolio-efs-sg"
 EFS_NAME="portfolio-strapi-data"
 
