@@ -66,7 +66,7 @@ jobs:
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/next-strapi')
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main')
     
     steps:
       - name: Checkout repository
