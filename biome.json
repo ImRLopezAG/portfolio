@@ -1,67 +1,71 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.3.2/schema.json",
-	"vcs": {
-		"enabled": true,
-		"clientKind": "git",
-		"useIgnoreFile": true
-	},
-	"files": {
-		"ignoreUnknown": false
-	},
-	"formatter": {
-		"enabled": true,
-		"bracketSpacing": true
-	},
-	"javascript": {
-		"formatter": {
-			"semicolons": "asNeeded",
-			"jsxQuoteStyle": "single",
-			"quoteStyle": "single"
-		},
-		"linter": {
-			"enabled": true
-		}
-	},
-	"css": {
-		"formatter": {
-			"indentStyle": "tab",
-			"enabled": true
-		},
-		"linter": {
-			"enabled": false
-		},
-		"parser": {
-			"tailwindDirectives": true
-		}
-	},
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"nursery": {
-				"useSortedClasses": {
-					"level": "warn",
-					"fix": "safe",
-					"options": {
-						"functions": ["clsx", "cva", "cn"]
-					}
-				}
-			},
-			"a11y": {
-				"useSemanticElements": "warn",
-				"useButtonType": "warn"
-			},
-			"security": {
-				"noDangerouslySetInnerHtml": "warn"
-			},
-			"correctness": {
-				"useExhaustiveDependencies": "off",
-				"useUniqueElementIds": "info"
-			},
-			"recommended": true,
-			"suspicious": {
-				"noArrayIndexKey": "warn",
-				"noAssignInExpressions": "warn"
-			}
-		}
-	}
+  "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": false
+  },
+  "formatter": {
+    "enabled": true,
+    "bracketSpacing": true
+  },
+  "javascript": {
+    "formatter": {
+      "semicolons": "asNeeded",
+      "jsxQuoteStyle": "single",
+      "quoteStyle": "single"
+    },
+    "linter": {
+      "enabled": true
+    }
+  },
+  "css": {
+    "formatter": {
+      "indentStyle": "tab",
+      "enabled": true
+    },
+    "linter": {
+      "enabled": false
+    },
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "nursery": {
+        "useSortedClasses": {
+          "level": "warn",
+          "fix": "safe",
+          "options": {
+            "functions": [
+              "clsx",
+              "cva",
+              "cn"
+            ]
+          }
+        }
+      },
+      "a11y": {
+        "useSemanticElements": "warn",
+        "useButtonType": "warn"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "warn"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "off",
+        "useUniqueElementIds": "info"
+      },
+      "recommended": true,
+      "suspicious": {
+        "noArrayIndexKey": "warn",
+        "noAssignInExpressions": "warn"
+      }
+    }
+  }
 }
