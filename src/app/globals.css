@@ -3,6 +3,8 @@
 
 @plugin "@tailwindcss/typography";
 @plugin "tailwindcss-motion";
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
 
 @custom-variant dark (&:is(.dark *));
 @source "../../../../node_modules/streamdown/dist/index.js";

@@ -1,13 +1,6 @@
-import { strapi } from '@services/strapi.service'
-import { Suspense } from 'react'
-import { LoadingSection } from '@landing/loading'
-export default function BlogPost({ children }: LayoutProps<'/blog'>) {
-	return <Suspense fallback={<LoadingSection />}>{children}</Suspense>
-}
+import { DocsLayout } from 'fumadocs-ui/layouts/docs'
+import { source } from '@/lib/source'
 
-export async function generateStaticParams() {
-	const posts = await strapi.getPosts()
-	return posts.map(({ metadata }) => ({
-		slug: metadata.slug,
-	}))
+export default function Layout({ children }: LayoutProps<'/blog'>) {
+	return <DocsLayout tree={source.pageTree}>{children}</DocsLayout>
 }

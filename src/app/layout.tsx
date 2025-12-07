@@ -3,10 +3,11 @@ import { Background3D } from '@landing/bg'
 import { LoadingSection } from '@landing/loading'
 import { Footer } from '@layout/fotter'
 import { Navbar } from '@layout/navbar'
-import { metadata } from '@lib/metadata'
+// import { metadata } from '@lib/metadata'
 import { cn } from '@lib/utils'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Suspense } from 'react'
+
 import './globals.css'
 
 const geistSans = Geist({
@@ -19,9 +20,9 @@ const geistMono = Geist_Mono({
 	subsets: ['latin'],
 })
 
-export function generateMetadata() {
-	return metadata()
-}
+// export function generateMetadata() {
+// 	return metadata()
+// }
 
 export default function RootLayout({
 	children,

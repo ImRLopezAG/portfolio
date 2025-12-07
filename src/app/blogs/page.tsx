@@ -3,7 +3,7 @@ import { cn } from '@lib/utils'
 import { strapi } from '@services/strapi.service'
 import { Badge } from '@ui/badge'
 import Link from 'next/link'
-export default async function Home({ searchParams }: PageProps<'/blog'>) {
+export default async function Home({ searchParams }: PageProps<'/blogs'>) {
 	const search = await searchParams
 	const categoryName = search.category as string | undefined
 	const posts = await strapi.getPosts()
