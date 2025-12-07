@@ -1,7 +1,7 @@
 import { strapi } from '@services/strapi.service'
 import type { Metadata } from 'next'
-export async function seo(meta?: Metadata): Promise<Metadata> {
-	const { basics } = await strapi.profile()
+export function seo(meta?: Metadata): Metadata {
+	const { basics } = strapi.profile()
 	const defaultDescription =
 		basics.summary.map(({ text }) => text).join('\n') ||
 		'Welcome to my portfolio website.'

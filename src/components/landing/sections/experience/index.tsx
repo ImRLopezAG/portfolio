@@ -2,8 +2,8 @@ import { LandingSection } from '@landing/section'
 import { strapi } from '@services/strapi.service'
 import { Briefcase, GraduationCap } from 'lucide-react'
 import { ExperienceCard } from './card'
-export async function ExperienceSection() {
-	const { work, education } = await strapi.profile()
+export function ExperienceSection() {
+	const { work, education } = strapi.profile()
 	return (
 		<LandingSection id='experience' title='Experience & Education'>
 			<div className='grid gap-8 lg:grid-cols-2'>

@@ -9,8 +9,8 @@ import {
 } from '@ui/card'
 import { Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
 import { ContactForm } from './form'
-export async function ContactSection() {
-	const { basics } = await strapi.profile()
+export function ContactSection() {
+	const { basics } = strapi.profile()
 	return (
 		<LandingSection
 			id='contact'

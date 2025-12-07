@@ -5,8 +5,8 @@ import { AlbumIcon, Github, Instagram, Linkedin, Terminal } from 'lucide-react'
 import Image from 'next/image'
 import { Tech } from './tech-stack/tech'
 
-export async function HeroSection() {
-	const { basics, skills } = await strapi.profile()
+export function HeroSection() {
+	const { basics, skills } = strapi.profile()
 	const orbitSkills = skills.slice(0, 6) // Take top 6 skills for the orbit
 
 	return (

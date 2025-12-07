@@ -2,8 +2,8 @@ import { LandingSection } from '@landing/section'
 import { strapi } from '@services/strapi.service'
 import { Tech } from './tech'
 import { cn } from '@lib/utils' 
-export async function TechStack() {
-	const { skills } = await strapi.profile()
+export function TechStack() {
+	const { skills } = strapi.profile()
 
 	return (
 		<LandingSection id='skills' title='Tech Stack'>

@@ -8,8 +8,8 @@ const getIcon = (iconName: keyof typeof icons | undefined) => {
 	return name in icons ? icons[name as keyof typeof icons] : Layers
 }
 
-export async function WorkSection() {
-	const { projects } = await strapi.profile()
+export function WorkSection() {
+	const { projects } = strapi.profile()
 	return (
 		<LandingSection id='projects' title='Work'>
 			<div className='grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-6'>
