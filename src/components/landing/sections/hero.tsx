@@ -117,6 +117,7 @@ export async function HeroSection() {
 								loading='eager'
 								width={600}
 								height={600}
+								priority={false}
 							/>
 						</div>
 

@@ -2,7 +2,7 @@ import { cn } from '@lib/utils'
 import { Image } from '@ui/image'
 
 interface TechProps
-	extends Omit<React.ComponentProps<typeof Image>, 'src' | 'alt'> {
+	extends Omit<React.ComponentProps<typeof Image>, 'src' | 'alt' | 'width' | 'height' | 'fallbackSrc' | 'priority'> {
 	name: string
 	/** Invert icon colors on dark mode (for black/white icons) */
 	invert?: boolean
@@ -30,6 +30,8 @@ export function Tech({
 			width={24}
 			height={24}
 			fallbackSrc={fallbacks}
+			priority={false}
+			unoptimized
 			{...props}
 		/>
 	)

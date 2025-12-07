@@ -10,11 +10,6 @@ const validImagesCdnHosts = [
 const nextConfig: NextConfig = {
 	cacheComponents: true,
 	reactCompiler: true,
-	images: {
-		remotePatterns: validImagesCdnHosts.map(
-			(host) => new URL(`https://${host}/**`),
-		),
-	},
 	typescript: {
 		ignoreBuildErrors: true,
 	},
@@ -23,11 +18,46 @@ const nextConfig: NextConfig = {
 		turbopackFileSystemCacheForDev: true,
 	},
 	transpilePackages: ['three'],
+	images: {
+		remotePatterns: validImagesCdnHosts.map(
+			(host) => new URL(`https://${host}/**`),
+		),
+	},
 	async rewrites() {
 		return [
 			{
 				source: '/blog',
 				destination: '/blogs',
+			},
+		]
+	},
+	async headers() {
+		return [
+			{
+				source: '/(.*)',
+				headers: [
+					{
+						key: 'X-Content-Type-Options',
+						value: 'nosniff',
+					},
+					{
+						key: 'X-Frame-Options',
+						value: 'DENY',
+					},
+					{
+						key: 'Referrer-Policy',
+						value: 'strict-origin-when-cross-origin',
+					},
+				],
+			},
+			{
+				source: '/_next/image',
+				headers: [
+					{
+						key: 'Cache-Control',
+						value: 'public, max-age=31536000, immutable',
+					},
+				],
 			},
 		]
 	},
