@@ -269,30 +269,59 @@ type SkillEntry = {
 	invert?: boolean
 }
 const SKILL_MAP: Map<string, SkillEntry> = new Map([
-	['tailwind', { name: 'tailwind', color: 'hover:border-blue-500/30', logo: 'tailwindcss' }],
-	['react', { name: 'react', color: 'hover:border-blue-500/30', logo: 'react_dark' }],
-	['node', { name: 'node', color: 'hover:border-green-700/30', logo: 'nodejs' }],
+	[
+		'tailwind',
+		{
+			name: 'tailwind',
+			color: 'hover:border-blue-500/30',
+			logo: 'tailwindcss',
+		},
+	],
+	[
+		'react',
+		{ name: 'react', color: 'hover:border-blue-500/30', logo: 'react_dark' },
+	],
+	[
+		'node',
+		{ name: 'node', color: 'hover:border-green-700/30', logo: 'nodejs' },
+	],
 	['typescript', { name: 'typescript', color: 'hover:border-blue-600/30' }],
-	['nestjs', { name: 'nest.js', color: 'hover:border-red-400/30', logo: 'nestjs' }],
+	[
+		'nestjs',
+		{ name: 'nest.js', color: 'hover:border-red-400/30', logo: 'nestjs' },
+	],
 	[
 		'nextjs',
 		{
 			name: 'next.js',
 			color: 'hover:border-gray-500/30',
-			logo: 'nextjs_icon_dark'
+			logo: 'nextjs_icon_dark',
 		},
 	],
-	['aws', { name: 'aws', color: 'hover:border-orange-500/30', logo: 'aws_dark' }],
+	[
+		'aws',
+		{ name: 'aws', color: 'hover:border-orange-500/30', logo: 'aws_dark' },
+	],
 	[
 		'mongo db',
-		{ name: 'mongo db', color: 'hover:border-green-600/30', logo: 'mongodb-icon-dark' },
+		{
+			name: 'mongo db',
+			color: 'hover:border-green-600/30',
+			logo: 'mongodb-icon-dark',
+		},
 	],
 	['graphql', { name: 'graphql', color: 'hover:border-pink-500/30' }],
-	['c-sharp', { name: 'c-sharp', color: 'hover:border-purple-700/30', logo: 'csharp' }],
+	[
+		'c-sharp',
+		{ name: 'c-sharp', color: 'hover:border-purple-700/30', logo: 'csharp' },
+	],
 	['redis', { name: 'redis', color: 'hover:border-red-600/30' }],
 	['expo', { name: 'expo', color: 'hover:border-gray-500/30', invert: true }],
 	['docker', { name: 'docker', color: 'hover:border-blue-400/30' }],
-	['cypress', { name: 'cypress', color: 'hover:border-green-500/30', invert: true }],
+	[
+		'cypress',
+		{ name: 'cypress', color: 'hover:border-green-500/30', invert: true },
+	],
 	['postgresql', { name: 'postgresql', color: 'hover:border-blue-500/30' }],
 	[
 		'socket.io',
@@ -303,6 +332,8 @@ const SKILL_MAP: Map<string, SkillEntry> = new Map([
 		},
 	],
 	['hono', { name: 'hono', color: 'hover:border-orange-500/30' }],
+	['sqlite', { name: 'sqlite', color: 'hover:border-blue-400/30' }],
+	['upstash', { name: 'upstash', color: 'hover:border-emerald-500/30' }],
 ])
 
 const textBlock = z.array(
@@ -340,7 +371,10 @@ const skillInput = z.union([
 			return {
 				id: autoId('SK'),
 				name: data.name,
-				color: data.color ?? found?.color ?? 'border-blue-400 hover:border-blue-500/30',
+				color:
+					data.color ??
+					found?.color ??
+					'border-blue-400 hover:border-blue-500/30',
 				logo: data.logo ?? found?.logo,
 				invert: data.invert ?? found?.invert ?? false,
 			}

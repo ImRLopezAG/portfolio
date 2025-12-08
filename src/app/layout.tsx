@@ -3,16 +3,13 @@ import { Navbar } from '@components/layout/navbar'
 import { Providers } from '@components/providers'
 import { Background3D } from '@landing/bg'
 import { seo } from '@lib/seo'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 
-const geistSans = Geist({
-	variable: '--font-geist-sans',
-	subsets: ['latin'],
-})
 
-const geistMono = Geist_Mono({
-	variable: '--font-geist-mono',
+
+const jetbrains = JetBrains_Mono({
+	variable: '--font-jt-mono',
 	subsets: ['latin'],
 })
 
@@ -26,7 +23,7 @@ export default function RootLayout({
 	return (
 		<html lang='en' suppressHydrationWarning>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden antialiased`}
+				className={`${jetbrains.variable} overflow-x-hidden antialiased`}
 			>
 				<Providers>
 					<Background3D />

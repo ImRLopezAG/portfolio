@@ -44,7 +44,7 @@ const data = {
 			name: 'Sync4ge',
 			url: 'https://github.com/Sync4ge',
 			github: 'https://github.com/Sync4ge',
-			state: 'ACTIVE',
+			state: 'WIP',
 			desc: 'modular platform designed for enterprise reliability. It delivers secure multi-tenant infrastructure, predictable performance.',
 			color: 'blue',
 			techStack: ['nextjs', 'docker', 'nest.js', 'redis', 'postgresql', 'aws'],
@@ -57,7 +57,14 @@ const data = {
 			state: 'ACTIVE',
 			desc: 'LegalAi is an AI-powered legal assistant that helps users with legal research, document generation, and case analysis.',
 			color: 'cyan',
-			techStack: ['tanstack', 'sqlite', 'socket.io', 'hono', 'upstash', 'redis'],
+			techStack: [
+				'tanstack',
+				'sqlite',
+				'socket.io',
+				'hono',
+				'upstash',
+				'redis',
+			],
 		},
 		{
 			name: 'RNC Contributors',
@@ -68,7 +75,7 @@ const data = {
 			color: 'emerald',
 			techStack: ['hono', 'sqlite', 'redis', 'upstash'],
 			icon: 'ServerCog',
-		}
+		},
 	],
 	languages: [
 		{ language: 'English', fluency: 'ADVANCE' },
@@ -147,7 +154,6 @@ const data = {
 		},
 	],
 } satisfies ProfileInput
-
 export const strapi = {
 	profile: () => profile.parse(data),
 } as const
