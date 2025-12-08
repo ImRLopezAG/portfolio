@@ -47,8 +47,8 @@ export async function LoadingSection() {
 				</div>
 
 				<div className='grid gap-8'>
-					{filteredPosts().map((_post) => (
-						<Skeleton key={Math.random()} className='h-48 w-full rounded-lg' />
+					{filteredPosts().map((_post, idx) => (
+						<Skeleton key={`loading-skeleton-${idx}`} className='h-48 w-full rounded-lg' />
 					))}
 				</div>
 			</div>
