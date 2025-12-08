@@ -3,6 +3,7 @@ import { cn } from '@lib/utils'
 import type { strapi } from '@services/strapi.service'
 import { Card, CardContent, CardFooter, CardHeader } from '@ui/card'
 import type { LucideIcon } from 'lucide-react'
+import Link from 'next/link'
 
 interface WorkProps {
 	project: ReturnType<typeof strapi.profile>['projects'][number]
@@ -47,9 +48,16 @@ export function Work({ icon: Icon, project }: WorkProps) {
 					/>
 				</div>
 			</CardHeader>
-			<CardContent className='flex-1 p-6'>
+			<CardContent className='flex-1 p-4'>
 				<div className='mb-3 flex items-center justify-between'>
-					<h3 className='font-medium tracking-tight'>{name}</h3>
+					<Link
+						href={project.url ?? project.github ?? '/#project'}
+						className='font-medium tracking-tight hover:underline'
+						target='_blank'
+						rel='noreferrer'
+					>
+						{name}
+					</Link>
 					<span className='rounded border border-white/10 px-2 py-0.5 text-[10px] uppercase tracking-wider'>
 						{state}
 					</span>

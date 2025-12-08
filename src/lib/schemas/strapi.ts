@@ -334,6 +334,7 @@ const SKILL_MAP: Map<string, SkillEntry> = new Map([
 	['hono', { name: 'hono', color: 'hover:border-orange-500/30' }],
 	['sqlite', { name: 'sqlite', color: 'hover:border-blue-400/30' }],
 	['upstash', { name: 'upstash', color: 'hover:border-emerald-500/30' }],
+	['shadcn', { name: 'shadcn-ui', color: 'hover:border-gray-500/30', invert: true }],
 ])
 
 const textBlock = z.array(
