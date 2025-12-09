@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
 		remotePatterns: validImagesCdnHosts.map(
 			(host) => new URL(`https://${host}/**`),
 		),
+		formats: ['image/avif', 'image/webp'],
 	},
 	async rewrites() {
 		return [

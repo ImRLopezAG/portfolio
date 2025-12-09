@@ -1,0 +1,791 @@
+---
+title: Building Scalable and Faster Web Applications with Next.js
+description: Learn how to build scalable and faster web applications using Next.js with best practices and performance optimization techniques.
+category: Web Development
+date: Dec 9, 2025
+tags:
+  - Next.js
+  - React
+  - Web Development
+  - Performance
+  - Scalability
+  - SEO
+---
+
+Next.js has revolutionized the way we build web applications, offering a powerful framework that combines the best of React with server-side rendering capabilities, data fetching, and routing. In this post, we'll explore how you can leverage Next.js to build scalable web applications that perform well, rank high in search engines, and provide a great user experience.
+
+## Why Next.js?
+
+Next.js provides several features that make it an excellent choice for building scalable web applications:
+
+- Server-side rendering (SSR) for improved SEO and performance
+- Static site generation (SSG) for blazing-fast page loads
+- Incremental Static Regeneration (ISR) for dynamic content with static benefits
+- Partial Pre Rendering (PPR) for rendering only dynamic parts of a page
+- API routes for building backend functionality
+- File-based routing for simplified navigation
+- Cache control and performance optimization features
+- Built-in TypeScript support for type safety
+- React server components for faster rendering
+
+These features allow developers to create applications that can handle high traffic, deliver content quickly, and provide a seamless user experience across devices. This makes Next.js a preferred choice for businesses looking to scale their web presence effectively but doesn't means that Next.js is a Golden Hammer for every use case as developers still need to evaluate their specific needs and constraints before choosing a framework.
+
+# Performance Optimization Techniques
+
+To ensure your Next.js application is fast and scalable, consider implementing the following performance optimization techniques:
+
+## Config
+
+Many developers overlook the importance of proper configuration of the entry point of their Next.js applications. By fine-tuning the `next.config.ts` file, you can enable features like image optimization, code splitting, and caching strategies that significantly enhance performance.
+
+```ts title='next.config.ts'
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
+  cacheComponents: true,
+	reactCompiler: true, 
+	typescript: {
+		ignoreBuildErrors: true,
+	}
+}
+export default nextConfig;
+```
+This configuration enables component caching and the React compiler, which can lead to faster builds and improved runtime performance, splitting code into static and dynamic parts of each page.
+
+### Image Optimization
+
+Next.js provides built-in image optimization capabilities through the `next/image` component. By using this component, you can automatically serve optimized images in modern formats like WebP, which reduces load times and improves performance, but what if  we go farther??
+
+```tsx title='next.config.ts'
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
+  // Other configurations...
+  images: {
+    domains: ['example.com'], // Add your image domains here
+    formats: ['image/avif', 'image/webp'], // Enable modern image formats
+  },
+  async headers() {
+    return [
+      {
+				source: '/_next/image',
+				headers: [
+					{
+						key: 'Cache-Control',
+						value: 'public, max-age=31536000, immutable',
+					},
+				],
+			},
+    ];
+  },
+};
+export default nextConfig;
+```
+This configuration not only enables modern image formats but also sets cache-control headers for optimized images, allowing browsers to cache them effectively and reduce load times on subsequent visits. You can also use a `CDN` to serve images faster across different geographical locations by reducing latency and improving load times for users worldwide.
+
+## Caching
+
+On the latest versions of Next.js (16+), caching has been improved significantly with the introduction of `cacheComponents` and 3 new directives: [`use cache`](https://nextjs.org/docs/app/api-reference/directives/use-cache), [`use cache:private`](https://nextjs.org/docs/app/api-reference/directives/use-cache-private), and [`use cache:remote`](https://nextjs.org/docs/app/api-reference/directives/use-cache-remote), as they came out from the framework itself some developers or the community didn't like them and I understand why and agree that they could have been better designed you can check [Tanner Linsley](https://tanstack.com/blog/directives-and-the-platform-boundary) blog about directives to get better understanding what I mean. But at the end of the day, they are here to stay and we need to learn how to use them properly to take advantage of their benefits in our applications. Proper caching strategies can significantly reduce server load and improve response times, especially for frequently accessed data.
+
+```ts title='app/actions.ts'
+import { cacheTag, cacheLife } from 'next/cache'
+
+export async function getData() {
+  'use cache'
+  cacheTag('my-data')
+  cacheLife('hours')
+  const data = await fetch('/api/data')
+  return data
+}
+
+```
+
+In this example, the `getData` function uses the `use cache` directive along with `cacheTag` and `cacheLife` to cache the fetched data for one hour. This reduces the number of requests made to the server for the same data, improving performance.
+
+The `cacheLife` function allows you to specify the cache profile that comes with predefined configurations like `stale`, `revalidate` and `expire` to help you manage how long data should be cached based on your application's needs.
+
+| Profile   | Use Case | stale | revalidate | expire |
+|-----------|----------|-------|------------|--------|
+| `default` | Standard content | 5 minutes | 15 minutes | 1 year |
+| `seconds` | Real-time data | 30 seconds | 1 second | 1 minute |
+| `minutes` | Frequently updated content | 5 minutes | 1 minute | | 1 hour |
+| `hours`   | Content updated multiple times per day | 5 minutes | 1 hour | 1 day |
+| `days`    | Content updated daily | | 5 minutes | 1 day | 1 week |
+| `weeks`   | Content updated weekly | 5 minutes | 1 week | 30 days |
+| `max`    | Stable content that rarely changes | 5 minutes | 30 days | 1 year |
+
+You can create custom profiles as well if none of the predefined ones fit your needs.
+
+```ts title='next.config.ts'
+import type { NextConfig } from 'next';
+const nextConfig: NextConfig = {
+  cacheLife: {
+    shortLived: {
+      stale: 10, // 10 seconds
+      revalidate: 5, // 5 seconds
+      expire: 60, // 1 minute
+    },
+  },
+}
+export default nextConfig;
+```
+This configuration defines a custom cache profile called `shortLived`, which can be used in your application to cache data that changes frequently.
+
+## Api Routes
+
+Next.js API routes allow you to build backend functionality directly within your Next.js application but the file-based routing system can lead to scalability issues as your application grows. To mitigate this, consider using another approach such as using a dedicated backend framework of rpcs services.
+
+### Using a Dedicated Backend framework inside Next.js
+
+While Next.js API routes are convenient for small to medium-sized applications, they may not be the best choice for larger applications with complex backend logic. In such cases, consider using a dedicated backend framework like [Elysia](https://elysiajs.com/) or [Hono](https://honojs.dev/) to handle your backend functionality.
+
+#### Elysia
+
+<Tabs defaultValue="api">
+  <TabsList>
+    <TabsTrigger value="api">
+      <Tech name='typescript' className='size-4' />
+      Api Route
+    </TabsTrigger>
+    <TabsTrigger value="lib">
+      <Tech name='typescript' className='size-4' />
+      Lib
+    </TabsTrigger>
+    <TabsTrigger value="app">
+      <Tech name='react' className='size-4' />
+      App Route
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="api">
+      ```ts title='src/app/api/[[...elysia]]/route.ts'
+    import { Elysia } from 'elysia'
+
+    const app = new Elysia({ prefix: '/api' })
+      .get('/', 'Hello Nextjs')
+      .post(
+        '/user',
+        ({ body }) => body,
+        {
+          body: treaty.schema('User', {
+            name: 'string'
+          })
+        }
+      )
+
+    export type app = typeof app // [!code ++]
+
+    export const GET = app.fetch
+    export const POST = app.fetch
+    // Add other HTTP methods as needed
+    ```
+    That `app` type export is useful cause it allows you to use a kind of rpc approach in your Next.js app like this:
+
+  </TabsContent>
+
+  <TabsContent value="lib">
+    ```ts title='src/lib/api.ts'
+    import type { app as ElysiaApp } from '@/app/api/[[...elysia]]/route'
+    import { treaty } from '@elysiajs/eden'
+    // this require .api to enter /api prefix
+    export const api = treaty<app>().api
+    ```
+  </TabsContent>
+
+  <TabsContent value="app">
+    ```tsx title='src/app/page.tsx'
+    import { api } from '@/lib/api'
+
+    export default async function Page() {
+      const message = await api.get()
+
+      return <h1>Hello, {message}</h1>
+    }
+    ```
+    Like this, you can build a scalable backend using Elysia while still leveraging the benefits of Next.js for your frontend. This approach allows you to separate concerns and manage your backend logic more effectively as your application grows.
+  </TabsContent>
+
+</Tabs>
+
+
+#### Hono 
+
+<Tabs defaultValue="api">
+  <TabsList>
+    <TabsTrigger value="api">
+      <Tech name='typescript' className='size-4' />
+      Api Route
+    </TabsTrigger>
+    <TabsTrigger value="lib">
+      <Tech name='typescript' className='size-4' />
+      Lib
+    </TabsTrigger>
+    <TabsTrigger value="app">
+      <Tech name='react' className='size-4' />
+      App Route
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="api">
+      ```ts title='src/app/api/[[...hono]]/route.ts'
+      import { Hono } from 'hono'
+      import { handle } from 'hono/vercel'
+
+      const app = new Hono().basePath('/api')
+
+      app.get('/hello', (c) => {
+        return c.json({
+          message: 'Hello Next.js!',
+        })
+      })
+
+      export type app = typeof app // [!code ++]
+
+      export const GET = handle(app)
+      export const POST = handle(app)
+      // Add other HTTP methods as needed
+      ```
+      As with Elysia, you can export the `app` type to use it in a rpc-like manner in your Next.js application.
+
+  </TabsContent>
+
+  <TabsContent value="lib">
+    ```ts title='src/lib/api.ts'
+    import type { app as HonoApp } from '@/app/api/[[...hono]]/route'
+    import { hc } from 'hono/client'
+
+    export const api = hc<HonoApp>('/api')
+    ```
+  </TabsContent>
+
+  <TabsContent value="app">
+    ```tsx title='src/app/page.tsx'
+    import { api } from '@/lib/api'
+    export default async function Page() {
+      const response = await api.$get('/hello')
+      const data = await response.json()
+
+      return <h1>{data.message}</h1>
+    }
+    ```
+    Like this, you can build a scalable backend using Hono while still leveraging the benefits of Next.js for your frontend. This approach allows you to separate concerns and manage your backend logic more effectively as your application grows.
+  </TabsContent>
+
+</Tabs>
+
+
+### Using RPC Services
+Another approach to building a scalable backend for your Next.js application is to use RPC services like [tRPC](https://trpc.io/) or [oRpc](https://orpc.dev/). These services allow you to define your backend logic in a type-safe manner and call it directly from your frontend code without the need for RESTful API endpoints even when they use rest to communicate the back with the server on NextJs.
+
+#### tRPC
+
+
+<Tabs defaultValue="rpc">
+  <TabsList>
+    <TabsTrigger value="rpc">
+      <Tech name='typescript' className='size-4' />
+      RPC Config
+    </TabsTrigger>
+    <TabsTrigger value="router">
+      <Tech name='typescript' className='size-4' />
+      Router
+    </TabsTrigger>
+    <TabsTrigger value="api">
+      <Tech name='typescript' className='size-4' />
+      Api Route
+    </TabsTrigger>
+    <TabsTrigger value="client">
+      <Tech name='typescript' className='size-4' />
+      Lib
+    </TabsTrigger>
+    <TabsTrigger value="app">
+      <Tech name='react' className='size-4' />
+      App Route
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="rpc">
+    ```ts title='src/server/trpc/init.ts'
+    import { initTRPC } from '@trpc/server';
+    export const createContext = (props: {
+      headers: Request
+    }) => ({ userId: 'demo-user' });
+    export type Context = Awaited<ReturnType<typeof createContext>>;
+    const t = initTRPC.context<Context>().create();
+    export const router = t.router;
+    export const publicProcedure = t.procedure;
+    export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
+      if (!ctx.userId) throw new Error('Not authenticated');
+      return next({ ctx });
+    });
+    ```
+  </TabsContent>
+  <TabsContent value="router">
+    ```ts title='src/server/trpc/routers/user.ts'
+    import { z } from 'zod';
+    import { router, publicProcedure, protectedProcedure } from '../trpc';
+    const users = [{ id: 1, name: 'Ada', email: 'ada@example.com' }];
+    export const userRouter = router({
+      list: publicProcedure.query(() => users),
+      createUser: protectedProcedure
+        .input(z.object({
+          name: z.string().min(1, 'Name cannot be empty'),
+          email: z.string().email('Invalid email address'),
+        }))
+        .mutation(async ({ input }) => {
+          const exists = users.some(u => u.email === input.email);
+          if (exists) throw new Error('Email already exists');
+          const user = { id: users.length + 1, ...input };
+          users.push(user);
+          return user;
+        }),
+    });
+    ```
+  </TabsContent>
+  <TabsContent value="api">
+    ```ts title='src/app/api/trpc/[[...trpc]]/route.ts'
+    import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+    import type { NextRequest } from "next/server";
+    import { createTRPCContext } from "~server/trpc/init";
+    import { appRouter } from "~server/trpc/root";
+
+    const handler = (req: NextRequest) =>
+      fetchRequestHandler({
+        endpoint: "/api/trpc",
+        req,
+        router: appRouter,
+        createContext: () => createTRPCContext({ headers: req.headers }),
+        onError:
+          process.env.NODE_ENV === "development"
+            ? ({ path, error }) => {
+                const { code, cause } = error;
+                console.error(
+                  `❌ tRPC failed on ${path ?? "<no-path>"}: ${code} - ${cause}`,
+                );
+              }
+            : undefined,
+        allowMethodOverride: true,
+      });
+    export { handler as GET, handler as POST };
+    ```
+  </TabsContent>
+  <TabsContent value="client">
+    ```ts title='src/lib/trpc.tsx'
+    'use client'
+    import type { AppRouter } from '~server/trpc/root'
+    import {
+      defaultShouldDehydrateQuery,
+      QueryCache,
+      QueryClient,
+    } from '@tanstack/react-query'
+    import {
+      createTRPCClient,
+      httpBatchStreamLink,
+      httpSubscriptionLink,
+      splitLink,
+    } from '@trpc/client'
+    import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query'
+    import { cache } from 'react'
+    import SuperJSON from 'superjson'
+    import { createTRPCContext } from "@trpc/tanstack-react-query";
+    import { QueryClientProvider } from "@tanstack/react-query";
+    import type { PropsWithChildren } from "react";
+    import type { AppRouter } from "~/server/trpc/root";
+
+    const { TRPCProvider: Provider, useTRPC, useTRPCClient } =
+      createTRPCContext<AppRouter>();
+
+    export { useTRPC, useTRPCClient }
+
+    export const queryClient = new QueryClient({
+      queryCache: new QueryCache({
+        
+      }),
+      defaultOptions: {
+        queries: { staleTime: 60 * 1000 },
+        dehydrate: {
+          serializeData: SuperJSON.serialize,
+          shouldDehydrateQuery: (query) =>
+            defaultShouldDehydrateQuery(query) || query.state.status === 'pending',
+        },
+        hydrate: {
+          deserializeData: SuperJSON.deserialize,
+        },
+      },
+    })
+
+    interface TRPCProviderProps extends PropsWithChildren {
+
+    }
+
+    export function TRPCProvider({
+      trpcClient,
+    }: TRPCProviderProps) {
+        const client = createTRPCClient<AppRouter>({
+          links: [
+            splitLink({
+              condition: (op) => op.type === 'subscription',
+              true: httpSubscriptionLink({
+                url: '/api/trpc',
+                transformer: SuperJSON,
+              }),
+
+              false: httpBatchStreamLink({
+                transformer: SuperJSON,
+                url: '/api/trpc',
+                headers: async () => {
+                  const headers = new Headers()
+                  return headers
+                },
+                fetch: (url, options) => {
+                  return fetch(url, {
+                    ...options,
+                    credentials: 'include',
+                  })
+                },
+              }),
+            }),
+          ],
+        })
+
+      const trpc = createTRPCOptionsProxy({
+        client,
+        queryClient,
+      })
+
+      return (
+        <Provider trpcClient={trpc} queryClient={queryClient}>
+          <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+        </Provider>
+      );
+    }
+    ```
+  </TabsContent>
+  <TabsContent value="app">
+    ```tsx title='src/app/layout.tsx'
+    import { TRPCProvider } from '@/lib/trpc'
+
+    export default function RootLayout({
+      children,
+    }: {
+      children: React.ReactNode
+    }) {
+      return (
+        <html lang="en">
+          <body>
+            <TRPCProvider>
+              {children}
+            </TRPCProvider>
+          </body>
+        </html>
+      )
+    }
+    ```
+    ```tsx title='src/app/page.tsx'
+    'use client'
+    import { useTRPC } from '@/lib/trpc'
+    import { useQuery, useMutation } from '@tanstack/react-query'
+
+    export default function Page() {
+      const trpc = useTRPC()
+      const { data:users, isLoading } = useQuery(trpc.users.list.queryOptions())
+      const createUserMutation = useMutation(trpc.users.createUser.mutationOptions())
+      const [name, setName] = useState('Angel');
+      const [email, setEmail] = useState('angel@example.com');
+
+      if (isLoading) return <div>Loading...</div>
+
+      return (
+        <div style={{ padding: 20, fontFamily: 'Inter, sans-serif' }}>
+          <h2>tRPC Demo: Create User</h2>
+          <h3>Existing users</h3>
+          <ul>
+            {users.map(u => (
+              <li key={u.id}>{u.name} — {u.email}</li>
+            ))}
+          </ul>
+          <h3>Create user</h3>
+          <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
+            <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+            <button onClick={() => createUserMutation.mutate({ name, email })}>Create</button>
+          </div>
+          {createUserMutation.isPending && <p>Creating...</p>}
+          {createUserMutation.error && <p style={{ color: 'crimson' }}>{createUserMutation.error.message}</p>}
+        </div>
+      )
+    }
+  ```
+  </TabsContent>
+</Tabs>
+
+#### oRpc
+
+<Tabs defaultValue="rpc">
+  <TabsList>
+    <TabsTrigger value="rpc">
+      <Tech name='typescript' className='size-4' />
+      RPC Config
+    </TabsTrigger>
+    <TabsTrigger value="router">
+      <Tech name='typescript' className='size-4' />
+      Router
+    </TabsTrigger>
+    <TabsTrigger value="api">
+      <Tech name='typescript' className='size-4' />
+      Api Route
+    </TabsTrigger>
+    <TabsTrigger value="client">
+      <Tech name='typescript' className='size-4' />
+      Lib
+    </TabsTrigger>
+    <TabsTrigger value="app">
+      <Tech name='react' className='size-4' />
+      App Route
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="rpc">
+    ```ts title='src/server/orpc/init.ts'
+    import { os, ORPCError } from "@orpc/server";
+
+
+    export const publicProcedure = os
+
+    export const protectedProcedure = os.use( async ({ ctx, next }) => {
+      if (!ctx.userId) throw new ORPCError("UNAUTHORIZED", { message: "Not authenticated" });
+      const result = await next({ ctx });
+
+      return result
+    });
+
+    export { ORPCError }
+    ```
+  </TabsContent>
+  <TabsContent value="router">
+    ```ts title='src/server/orpc/routers/user.ts'
+    import * as z from "zod";
+    import { publicProcedure, protectedProcedure, ORPCError } from "../orpc"
+
+    const users = [{ id: 1, name: "Ada", email: "ada@example.com" }];
+
+    const UserSchema = z.object({
+    id: z.number().int().min(1),
+    name: z.string(),
+    email: z.string().email(),
+    });
+
+    const CreateUserInput = z.object({
+    name: z.string().min(1, "Name cannot be empty"),
+    email: z.string().email("Invalid email address"),
+    });
+
+    export const userRouter = {
+    list: publicProcedure
+      .route({ method: "GET", path: "/users" })
+      .output(z.array(UserSchema))
+      .handler(async () => users),
+
+    create: protectedProcedure
+      .route({ method: "POST", path: "/users" })
+      .input(CreateUserInput)
+      .output(UserSchema)
+      .handler(async ({ input }) => {
+        if (users.some((u) => u.email === input.email)) {
+          throw new ORPCError("CONFLICT", { message: "Email already exists" });
+        }
+        const user = { id: users.length + 1, ...input };
+        users.push(user);
+        return user;
+      }),
+    };
+    ```
+    ```ts title='src/server/orpc/index.ts'
+    import { createRouterClient } from "@orpc/server";
+    import { RPCHandler } from "@orpc/server/fetch";
+    import { BatchHandlerPlugin } from "@orpc/server/plugins";
+
+    import { usersRouter } from "./routers/users";
+
+    const router = {
+      user: usersRouter,
+    };
+
+    export type ORPCRouter = typeof router;
+
+    export const handler = new RPCHandler(router, {
+      plugins: [new BatchHandlerPlugin()],
+    });
+
+    export const api = createRouterClient(router);
+    ```
+  </TabsContent>
+  <TabsContent value="api">
+    ```ts title='src/app/api/orpc/[[...orpc]]/route.ts'
+    import { handler } from "@/server/orpc";
+
+    async function handleRequest(request: Request) {
+      const { response } = await handler.handle(request, {
+        prefix: "/api/orpc",
+        context: {
+          headers: request.headers
+        },
+      });
+
+      return response ?? new Response("Not found", { status: 404 });
+    }
+
+    export const GET = handleRequest;
+    export const POST = handleRequest;
+    export const PUT = handleRequest;
+    export const PATCH = handleRequest;
+    export const DELETE = handleRequest;
+    ```
+  </TabsContent>
+  <TabsContent value="client">
+    ```ts title='src/lib/orpc.tsx'
+    'use client'
+    import { type RouterUtils } from "@orpc/react-query";
+    import { type RouterClient } from "@orpc/server";
+    import { createContext, useContext } from "react";
+    import { QueryClientProvider } from "@tanstack/react-query";
+    import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
+    import { type ORPCRouter } from "~/server/api";
+    import {
+      defaultShouldDehydrateQuery,
+      QueryCache,
+      QueryClient,
+    } from '@tanstack/react-query'
+    import SuperJSON from 'superjson'
+
+    type ORPCReactUtils = RouterUtils<RouterClient<ORPCRouter>>;
+
+    export const ORPCContext = createContext<ORPCReactUtils | undefined>(undefined);
+
+    export const queryClient = new QueryClient({
+      queryCache: new QueryCache({
+        
+      }),
+      defaultOptions: {
+        queries: { staleTime: 60 * 1000 },
+        dehydrate: {
+          serializeData: SuperJSON.serialize,
+          shouldDehydrateQuery: (query) =>
+            defaultShouldDehydrateQuery(query) || query.state.status === 'pending',
+        },
+        hydrate: {
+          deserializeData: SuperJSON.deserialize,
+        },
+      },
+    })
+
+    export function useORPC(): ORPCReactUtils {
+      const orpc = useContext(ORPCContext);
+      if (!orpc) {
+        throw new Error("ORPCContext is not set up properly");
+      }
+      return orpc;
+    }
+
+    import { createORPCClient } from "@orpc/client";
+    import { RPCLink } from "@orpc/client/fetch";
+    import { BatchLinkPlugin } from "@orpc/client/plugins";
+    import { createORPCReactQueryUtils } from "@orpc/react-query";
+    import { type RouterClient } from "@orpc/server";
+
+    function createORPC(cookie?: string) {
+      const link = new RPCLink({
+        url: "/api/orpc",
+        headers: {
+          Cookie: cookie,
+        },
+        plugins: [
+          new BatchLinkPlugin({
+            groups: [
+              {
+                condition: () => true,
+                context: {},
+              },
+            ],
+          }),
+        ],
+      });
+
+      const client: RouterClient<ORPCRouter> = createORPCClient(link);
+
+      return createORPCReactQueryUtils(client);
+    }
+
+
+    export default function ORPCProvider({
+      children,
+      cookie,
+    }: {
+      children: React.ReactNode;
+      cookie?: string;
+    }) {
+      const orpc = createORPC(cookie);
+
+      return (
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryStreamedHydration>
+            <ORPCContext.Provider value={orpc}>{children}</ORPCContext.Provider>
+          </ReactQueryStreamedHydration>
+        </QueryClientProvider>
+      );
+    }
+    ```
+  </TabsContent>
+  <TabsContent value="app">
+    ```tsx title='src/app/layout.tsx'
+    import { ORPCProvider } from '@/lib/trpc'
+
+    export default function RootLayout({
+      children,
+    }: {
+      children: React.ReactNode
+    }) {
+      return (
+        <html lang="en">
+          <body>
+            <ORPCProvider>
+              {children}
+            </ORPCProvider>
+          </body>
+        </html>
+      )
+    }
+    ```
+    ```tsx title='src/app/page.tsx'
+    'use client'
+    import { useORPC } from '@/lib/orpc'
+    import { useQuery, useMutation } from '@tanstack/react-query'
+
+    export default function Page() {
+      const orpc = useORPC()
+      const { data:users, isLoading } = useQuery(orpc.users.list.queryOptions())
+      const createUserMutation = useMutation(orpc.users.createUser.mutationOptions())
+      const [name, setName] = useState('Angel');
+      const [email, setEmail] = useState('angel@example.com');
+
+      if (isLoading) return <div>Loading...</div>
+
+      return (
+        <div style={{ padding: 20, fontFamily: 'Inter, sans-serif' }}>
+          <h2>tRPC Demo: Create User</h2>
+          <h3>Existing users</h3>
+          <ul>
+            {users.map(u => (
+              <li key={u.id}>{u.name} — {u.email}</li>
+            ))}
+          </ul>
+          <h3>Create user</h3>
+          <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
+            <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+            <button onClick={() => createUserMutation.mutate({ name, email })}>Create</button>
+          </div>
+          {createUserMutation.isPending && <p>Creating...</p>}
+          {createUserMutation.error && <p style={{ color: 'crimson' }}>{createUserMutation.error.message}</p>}
+        </div>
+      )
+    }
+  ```
+  </TabsContent>
+</Tabs>

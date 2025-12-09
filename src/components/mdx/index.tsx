@@ -13,6 +13,7 @@ import {
 import defaultMdxComponents from 'fumadocs-ui/mdx'
 import type { MDXComponents } from 'mdx/types'
 import { Mermaid } from './mermaid'
+import { Tech } from '@landing/sections/tech-stack/tech'
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
 	return {
 		...defaultMdxComponents,
@@ -32,6 +33,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
 		TabsTrigger,
 		Accordion,
 		Accordions,
+		Tech,
 		...components,
 	}
 }
+

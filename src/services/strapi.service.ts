@@ -17,7 +17,7 @@ const data = {
 		],
 		email: 'contact@imrlopez.dev',
 		image: {
-			url: 'https://bucket.imrlopez.dev/Profile_709c6270a0.webp',
+			url: 'https://bucket.imrlopez.dev/Profile.webp',
 			caption:
 				'A professional man poses for a headshot in a modern office environment.',
 		},

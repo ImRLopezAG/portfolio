@@ -3,10 +3,16 @@ import { cn } from '@lib/utils'
 import { Badge } from '@ui/badge'
 import Link from 'next/link'
 import { source } from '@/lib/source'
+
 export default async function Home({ searchParams }: PageProps<'/blogs'>) {
 	const search = await searchParams
 	const categoryName = search.category as string | undefined
-	const posts = source.getPages()
+	const posts = source
+		.getPages()
+		.toSorted(
+			(a, b) =>
+				new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+		)
 	const categories = Array.from(
 		new Set(posts.map((post) => post.data.category).filter(Boolean)),
 	) as string[]
