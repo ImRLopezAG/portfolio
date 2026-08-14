@@ -2,6 +2,7 @@ import { LandingSection } from '@landing/section'
 import { strapi } from '@services/strapi.service'
 import { Briefcase, GraduationCap } from 'lucide-react'
 import { ExperienceCard } from './card'
+import { CompanyExperience } from './company'
 export function ExperienceSection() {
 	const { work, education } = strapi.profile()
 	return (
@@ -14,16 +15,8 @@ export function ExperienceSection() {
 					</div>
 
 					<div className='space-y-6'>
-						{work.map((experience) => (
-							<ExperienceCard
-								key={experience.id}
-								title={experience.position}
-								company={experience.name}
-								startDate={experience.startedDate}
-								endDate={experience.endDate || undefined}
-								description={experience.summary}
-								responsibilities={experience.highlights}
-							/>
+						{work.map((company) => (
+							<CompanyExperience key={company.id} {...company} />
 						))}
 					</div>
 				</div>

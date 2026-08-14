@@ -8,6 +8,7 @@ const validImagesCdnHosts = [
 ] as const
 
 const nextConfig: NextConfig = {
+	allowedDevOrigins: ['local.imrlopez.dev'],
 	cacheComponents: true,
 	reactCompiler: true,
 	typescript: {
@@ -18,11 +19,17 @@ const nextConfig: NextConfig = {
 		turbopackFileSystemCacheForDev: true,
 	},
 	transpilePackages: ['three'],
+	// Both use React APIs (createContext) that are absent under the
+	// `react-server` condition, so they must resolve at runtime, not be bundled.
+	serverExternalPackages: ['@react-pdf/renderer', '@json-render/react-pdf'],
 	images: {
 		remotePatterns: validImagesCdnHosts.map(
 			(host) => new URL(`https://${host}/**`),
 		),
 		formats: ['image/avif', 'image/webp'],
+		// Drives the optimizer's own Cache-Control on /_next/image. Setting that
+		// header manually via headers() breaks dev-time revalidation.
+		minimumCacheTTL: 31536000,
 	},
 	async rewrites() {
 		return [
@@ -48,15 +55,6 @@ const nextConfig: NextConfig = {
 					{
 						key: 'Referrer-Policy',
 						value: 'strict-origin-when-cross-origin',
-					},
-				],
-			},
-			{
-				source: '/_next/image',
-				headers: [
-					{
-						key: 'Cache-Control',
-						value: 'public, max-age=31536000, immutable',
 					},
 				],
 			},

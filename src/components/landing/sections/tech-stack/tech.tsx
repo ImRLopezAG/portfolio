@@ -7,7 +7,7 @@ const ICON_PREFIX = 'icons'
 interface TechProps
 	extends Omit<
 		React.ComponentProps<typeof Image>,
-		'src' | 'alt' | 'width' | 'height' | 'fallbackSrc' | 'priority'
+		'src' | 'alt' | 'width' | 'height' | 'fallbackSrc'
 	> {
 	name: string
 	/** Invert icon colors on dark mode (for black/white icons) */
@@ -19,6 +19,7 @@ export function Tech({
 	invert,
 	customSrc,
 	className,
+	priority = false,
 	...props
 }: TechProps) {
 	const normalized = name.toLowerCase().replace('.', '')
@@ -36,7 +37,7 @@ export function Tech({
 			width={24}
 			height={24}
 			fallbackSrc={fallbacks}
-			priority={false}
+			priority={priority}
 			unoptimized
 			{...props}
 		/>

@@ -1,5 +1,6 @@
 import { LandingSection } from '@landing/section'
 import { strapi } from '@services/strapi.service'
+import { Github, Linkedin } from '@ui/brand-icons'
 import {
 	Card,
 	CardContent,
@@ -7,7 +8,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@ui/card'
-import { Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
+import { Mail, MapPin, Phone } from 'lucide-react'
 import { ContactForm } from './form'
 export function ContactSection() {
 	const { basics } = strapi.profile()

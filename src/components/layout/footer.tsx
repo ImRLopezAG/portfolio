@@ -1,4 +1,5 @@
-import { Github, Linkedin, Mail } from 'lucide-react'
+import { Github, Linkedin } from '@ui/brand-icons'
+import { Mail } from 'lucide-react'
 export function Footer() {
 	return (
 		<footer className='mt-20 px-4 py-6'>
@@ -26,13 +27,13 @@ export function Footer() {
 								<span className='sr-only'>GitHub</span>
 							</a>
 							<a
-								href='https://www.aedin.com/in/angel-gabriel-lopez/'
+								href='https://www.linkedin.com/in/angel-gabriel-lopez/'
 								target='_blank'
 								rel='noopener noreferrer'
 								className='text-muted-foreground transition-colors hover:text-primary'
 							>
 								<Linkedin className='h-5 w-5' />
-								<span className='sr-only'>aedIn</span>
+								<span className='sr-only'>LinkedIn</span>
 							</a>
 							<a
 								href='mailto:contact@imrlopez.dev'
@@ -45,7 +46,7 @@ export function Footer() {
 					</div>
 
 					<div className='space-y-4'>
-						<h3 className='font-medium'>Quick as</h3>
+						<h3 className='font-medium'>Quick links</h3>
 						<nav className='flex flex-col gap-2'>
 							<a
 								href='/#home'

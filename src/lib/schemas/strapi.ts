@@ -334,7 +334,11 @@ const SKILL_MAP: Map<string, SkillEntry> = new Map([
 	['hono', { name: 'hono', color: 'hover:border-orange-500/30' }],
 	['sqlite', { name: 'sqlite', color: 'hover:border-blue-400/30' }],
 	['upstash', { name: 'upstash', color: 'hover:border-emerald-500/30' }],
-	['shadcn', { name: 'shadcn-ui', color: 'hover:border-gray-500/30', invert: true }],
+	[
+		'shadcn',
+		{ name: 'shadcn-ui', color: 'hover:border-gray-500/30', invert: true },
+	],
+	['convex', { name: 'convex', color: 'hover:border-amber-500/30' }],
 ])
 
 const textBlock = z.array(
@@ -384,6 +388,107 @@ const skillInput = z.union([
 
 const skillsArray = z.array(skillInput)
 
+const EMPLOYMENT_TYPE = [
+	'Full-time',
+	'Part-time',
+	'Contract',
+	'Freelance',
+	'Internship',
+	'Self-employed',
+] as const
+
+const WORK_MODE = ['On-site', 'Hybrid', 'Remote'] as const
+
+const workEntry = z
+	.object({
+		name: z.string(),
+		position: z.string(),
+		url: z.url().optional(),
+		startedDate: z.string(),
+		endDate: z.string().nullable(),
+		// Company-level context. Read off the most recent position when grouped.
+		employmentType: z.enum(EMPLOYMENT_TYPE).optional(),
+		location: z.string().optional(),
+		workMode: z.enum(WORK_MODE).optional(),
+		logo: z.url().optional(),
+		/** Shown collapsed, next to the role — free-form, unlike `skillsArray`. */
+		skills: z.array(z.string()).default([]),
+		summary: textBlock.default([]),
+		highlights: textBlock.default([]),
+	})
+	.transform((data) => ({ ...data, id: autoId('WK') }))
+
+type WorkEntry = z.infer<typeof workEntry>
+
+export type Company = ReturnType<typeof groupByCompany>[number]
+export type Position = Company['positions'][number]
+
+/**
+ * Collapses the flat JSON-Resume-style `work` list into one entry per company,
+ * so multiple positions held at the same employer render as a single timeline
+ * instead of repeating the company. Entries are matched on `name`
+ * case-insensitively — spell it identically to group a promotion.
+ */
+function groupByCompany(entries: WorkEntry[]) {
+	const companies = new Map<
+		string,
+		{ id: string; company: string; url?: string; positions: WorkEntry[] }
+	>()
+
+	for (const entry of entries) {
+		const key = entry.name.toLowerCase()
+		const existing = companies.get(key)
+		if (existing) {
+			// Keep the first non-empty url seen for the company.
+			existing.url ??= entry.url
+			existing.positions.push(entry)
+			continue
+		}
+		companies.set(key, {
+			id: autoId('CO'),
+			company: entry.name,
+			url: entry.url,
+			positions: [entry],
+		})
+	}
+
+	return Array.from(companies.values())
+		.map(({ positions, ...company }) => {
+			// Most recent position first — it heads the timeline.
+			const ordered = [...positions]
+				.sort((a, b) => b.startedDate.localeCompare(a.startedDate))
+				.map(({ position, ...rest }) => ({ ...rest, title: position }))
+
+			const startDate = ordered.reduce(
+				(earliest, p) => (p.startedDate < earliest ? p.startedDate : earliest),
+				ordered[0].startedDate,
+			)
+			// A single ongoing position keeps the whole company ongoing.
+			const closed = ordered.flatMap((p) => (p.endDate ? [p.endDate] : []))
+			const endDate =
+				closed.length === ordered.length
+					? closed.reduce((latest, end) => (end > latest ? end : latest))
+					: null
+
+			// Company-level context comes from the current/most recent position.
+			const { employmentType, location, workMode, logo } = ordered[0]
+
+			return {
+				...company,
+				positions: ordered,
+				startDate,
+				endDate,
+				employmentType,
+				location,
+				workMode,
+				logo,
+			}
+		})
+		.sort((a, b) =>
+			b.positions[0].startedDate.localeCompare(a.positions[0].startedDate),
+		)
+}
+
 export const profile = z
 	.object({
 		basics: z.object({
@@ -411,24 +516,13 @@ export const profile = z
 					.transform((data) => ({ ...data, id: autoId('PR') })),
 			),
 		}),
-		work: z.array(
-			z
-				.object({
-					name: z.string(),
-					position: z.string(),
-					url: z.url().optional(),
-					startedDate: z.string(),
-					endDate: z.string().nullable(),
-					summary: textBlock,
-					highlights: textBlock,
-				})
-				.transform((data) => ({ ...data, id: autoId('WK') })),
-		),
+		work: z.array(workEntry),
 		education: z.array(
 			z
 				.object({
 					institution: z.string(),
 					url: z.url().optional(),
+					location: z.string().optional(),
 					area: z.string(),
 					studyType: z.string(),
 					scoreType: z.string(),
@@ -470,4 +564,5 @@ export const profile = z
 		...data,
 		id: autoId('PF'),
 		skills: Array.from(SKILL_MAP.values()),
+		work: groupByCompany(data.work),
 	}))

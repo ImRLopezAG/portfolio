@@ -47,7 +47,15 @@ const data = {
 			state: 'WIP',
 			desc: 'ERP/CRM system designed to streamline business operations, enhance customer relationship management, and drive growth through integrated solutions.',
 			color: 'blue',
-			techStack: ['nextjs', 'docker', 'nest.js', 'redis', 'postgresql', 'aws', 'cloudflare'],
+			techStack: [
+				'nextjs',
+				'docker',
+				'nest.js',
+				'redis',
+				'postgresql',
+				'aws',
+				'cloudflare',
+			],
 			icon: 'Cloud',
 		},
 		{
@@ -95,6 +103,7 @@ const data = {
 		{
 			institution: 'Intituto Tecnologico de las Americas (ITLA)',
 			url: 'https://itla.edu.do/',
+			location: 'Santo Domingo, Dominican Republic',
 			area: 'Software Engineer',
 			studyType: 'Bachelor',
 			startDate: '2021-01-06',
@@ -112,6 +121,7 @@ const data = {
 		{
 			institution: 'Mescyt - English Immersion Program',
 			url: 'https://mescyt.gob.do/',
+			location: 'Santo Domingo, Dominican Republic',
 			area: 'Foreign languages',
 			studyType: 'Certificate',
 			startDate: '2023-01-16',
@@ -127,9 +137,64 @@ const data = {
 	],
 	work: [
 		{
+			name: 'AI - Robotix',
+			position: 'Technical Lead Engineer',
+			url: 'https://airobotix.net/',
+			employmentType: 'Full-time',
+			location: 'Cupertino, California, United States',
+			workMode: 'Hybrid',
+			skills: ['Software Quality and Test Assurance'],
+			highlights: [
+				{ text: 'Lead SaaS development and product engineering' },
+				{
+					text: 'Design and manage application infrastructure as code (IaC)',
+				},
+				{ text: 'Build with Next.js, React, and TanStack Start' },
+				{ text: 'Develop an Ontology software project' },
+				{ text: 'Conduct AI research and product management' },
+			],
+			summary: [
+				{
+					text: 'I lead SaaS development and application infrastructure as code (IaC), working with Next.js, React, and TanStack Start. I also drive an Ontology software project and contribute as an AI researcher and product manager.',
+				},
+			],
+			startedDate: '2026-02-01',
+			endDate: null,
+		},
+		{
+			// NOTE: drafted from the role's skills and the team's stack — review and
+			// reword to match what you actually shipped before this goes public.
+			name: 'AI - Robotix',
+			position: 'Software Engineer',
+			url: 'https://airobotix.net/',
+			employmentType: 'Full-time',
+			location: 'Cupertino, California, United States',
+			workMode: 'Hybrid',
+			skills: ['Vibe Coding', 'Data Structures'],
+			highlights: [
+				{ text: 'Build product features across the SaaS platform' },
+				{ text: 'Ship UI with Next.js, React, and TanStack Start' },
+				{
+					text: 'Model data structures backing core application flows',
+				},
+				{ text: 'Prototype rapidly with AI-assisted development' },
+			],
+			summary: [
+				{
+					text: 'I built product features across the SaaS platform with Next.js, React, and TanStack Start, modelling the data structures behind core flows and prototyping quickly with AI-assisted development before stepping into the technical lead role.',
+				},
+			],
+			startedDate: '2025-11-01',
+			endDate: '2026-02-01',
+		},
+		{
 			name: 'Dextra',
 			position: 'Consultant developer',
 			url: 'https://dextra.com.do/',
+			employmentType: 'Full-time',
+			location: 'Santo Domingo, Distrito Nacional, Dominican Republic',
+			workMode: 'On-site',
+			skills: ['Linux', 'Analytical Skills'],
 			highlights: [
 				{ text: 'Development of business central applications' },
 				{
@@ -149,6 +214,7 @@ const data = {
 			name: 'Villacampa - School of Technology',
 			position: 'Tech Professor',
 			url: 'https://www.instagram.com/villacampast/',
+			location: 'Santo Domingo, Dominican Republic',
 			highlights: [
 				{ text: 'Taught programming and web development' },
 				{ text: "Created and maintained the school's website" },

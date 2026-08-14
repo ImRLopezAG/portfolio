@@ -1,3 +1,4 @@
+import { parseDay } from '@lib/date'
 import { Card, CardContent, CardHeader, CardTitle } from '@ui/card'
 import { formatDate } from 'date-fns'
 
@@ -35,8 +36,8 @@ export function ExperienceCard({
 				<div className='flex items-start justify-between'>
 					<CardTitle>{title}</CardTitle>
 					<span className='text-muted-foreground text-sm'>
-						{formatDate(startDate, 'MMM yyyy')} -{' '}
-						{endDate ? formatDate(endDate, 'MMM yyyy') : 'Present'}
+						{formatDate(parseDay(startDate), 'MMM yyyy')} -{' '}
+						{endDate ? formatDate(parseDay(endDate), 'MMM yyyy') : 'Present'}
 					</span>
 				</div>
 				<p className='font-medium text-primary'>{company}</p>

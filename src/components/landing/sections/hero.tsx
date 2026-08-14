@@ -1,7 +1,8 @@
 import { LandingSection } from '@landing/section'
 import { strapi } from '@services/strapi.service'
+import { Github, Instagram, Linkedin } from '@ui/brand-icons'
 import { Link } from '@ui/link'
-import { AlbumIcon, Github, Instagram, Linkedin, Terminal } from 'lucide-react'
+import { AlbumIcon, FileText, Terminal } from 'lucide-react'
 import Image from 'next/image'
 import { Tech } from './tech-stack/tech'
 
@@ -36,7 +37,7 @@ export function HeroSection() {
 							className='group relative overflow-hidden'
 						>
 							<span className='relative z-10'>Get in touch</span>
-							<div className='-translate-x-full absolute inset-0 bg-white/20 transition-transform group-hover:translate-x-0' />
+							<div className='absolute inset-0 -translate-x-full bg-white/20 transition-transform group-hover:translate-x-0' />
 						</Link>
 						<Link
 							href='#projects'
@@ -95,6 +96,18 @@ export function HeroSection() {
 							<AlbumIcon className='h-5 w-5' />
 							<span className='sr-only'>Blog</span>
 						</Link>
+						{/* The route sets Content-Disposition, so this downloads directly. */}
+						<Link
+							href='/api/resume'
+							prefetch={false}
+							title='Download CV'
+							variant='ghost'
+							size='icon'
+							className='hover:bg-primary/10 hover:text-primary'
+						>
+							<FileText className='h-5 w-5' />
+							<span className='sr-only'>Download CV</span>
+						</Link>
 					</div>
 				</div>
 
@@ -127,7 +140,7 @@ export function HeroSection() {
 								return (
 									<div
 										key={skill.name}
-										className='-ml-6 -mt-6 absolute top-1/2 left-1/2 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-background/80 shadow-lg backdrop-blur-sm transition-transform hover:scale-110'
+										className='absolute top-1/2 left-1/2 -mt-6 -ml-6 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-background/80 shadow-lg backdrop-blur-sm transition-transform hover:scale-110'
 										style={{
 											transform: `rotate(${index * (360 / orbitSkills.length)}deg) translate(var(--orbit-radius)) rotate(-${index * (360 / orbitSkills.length)}deg)`,
 										}}
@@ -137,6 +150,7 @@ export function HeroSection() {
 												name={skill.logo || skill.name}
 												invert={skill.invert}
 												className='h-6 w-6'
+												priority
 											/>
 										</div>
 									</div>
