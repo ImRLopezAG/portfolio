@@ -16,7 +16,10 @@ const nextConfig: NextConfig = {
 	},
 	experimental: {
 		// viewTransition: true,
-		turbopackFileSystemCacheForDev: true,
+		// turbopackFileSystemCacheForDev: disabled — it persists compiled chunks
+		// across restarts, and superseded chunks were being served after edits
+		// (stale hydration mismatches, stale `searchParams` prerender errors).
+		// Re-enable for faster cold starts once that's fixed upstream.
 	},
 	transpilePackages: ['three'],
 	// Both use React APIs (createContext) that are absent under the

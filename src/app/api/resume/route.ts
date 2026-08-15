@@ -21,8 +21,14 @@ export async function GET() {
 		return new NextResponse(new Uint8Array(pdf), {
 			headers: {
 				'Content-Type': 'application/pdf',
-				'Content-Disposition': `attachment; filename="${filename(basics.name)}"`,
-				'Cache-Control': 'public, max-age=3600',
+				// `inline` so the browser renders it in the tab; the filename is
+				// still used if the viewer's save button is hit.
+				'Content-Disposition': `inline; filename="${filename(basics.name)}"`,
+				// Not cached: the PDF is regenerated from profile data on every
+				// request (~200ms), and a cached response also pins its
+				// Content-Disposition, which is how this previously kept
+				// downloading after being switched to `inline`.
+				'Cache-Control': 'no-store, must-revalidate',
 			},
 		})
 	} catch (error) {

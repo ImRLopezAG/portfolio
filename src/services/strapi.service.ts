@@ -41,6 +41,42 @@ const data = {
 	},
 	projects: [
 		{
+			name: 'Receptionist',
+			state: 'WIP',
+			desc: 'An AI receptionist that answers and places calls for you. Run outbound campaigns, dial contact lists in batches, pick up incoming calls, and reply to customers on WhatsApp — with a realtime voice model holding the conversation instead of a phone menu.',
+			color: 'rose',
+			techStack: [
+				'tanstack',
+				'react',
+				'hono',
+				'tailwind',
+				'convex',
+				'redis',
+				'workos',
+				'openai',
+				'xai',
+				'twilio',
+				'vercel',
+			],
+			icon: 'PhoneCall',
+		},
+		{
+			name: 'QAlitycs',
+			state: 'ACTIVE',
+			desc: 'Call center quality assurance platform that analyzes calls end to end — sentiment analysis, script adherence, and the surrounding call metrics teams need to score and coach agents on.',
+			color: 'amber',
+			techStack: [
+				'tanstack',
+				'convex',
+				'redis',
+				'ai sdk',
+				'tailwind',
+				'hono',
+				'workos',
+			],
+			icon: 'AudioLines',
+		},
+		{
 			name: 'Sync4ge',
 			url: 'https://github.com/Sync4ge',
 			github: 'https://github.com/Sync4ge',
@@ -230,6 +266,23 @@ const data = {
 		},
 	],
 } satisfies ProfileInput
+/**
+ * djb2 over the *raw* data. Hashing the parsed profile wouldn't work: its ids
+ * come from `performance.now()`, so they differ on every parse.
+ */
+function contentHash(input: string): string {
+	let h = 5381
+	for (let i = 0; i < input.length; i++) {
+		h = ((h << 5) + h + input.charCodeAt(i)) | 0
+	}
+	return (h >>> 0).toString(36)
+}
+
 export const strapi = {
 	profile: () => profile.parse(data),
+	/**
+	 * Stable content version, used to cache-bust the generated resume URL so a
+	 * previously cached PDF can never outlive an edit to this file.
+	 */
+	version: () => contentHash(JSON.stringify(data)),
 } as const

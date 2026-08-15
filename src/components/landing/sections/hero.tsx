@@ -96,17 +96,21 @@ export function HeroSection() {
 							<AlbumIcon className='h-5 w-5' />
 							<span className='sr-only'>Blog</span>
 						</Link>
-						{/* The route sets Content-Disposition, so this downloads directly. */}
+						{/* Served inline, so this opens the PDF in a new tab. The version
+						    query changes with the profile data, so a cached PDF can never
+						    survive an edit. */}
 						<Link
-							href='/api/resume'
+							href={`/api/resume?v=${strapi.version()}`}
 							prefetch={false}
-							title='Download CV'
+							target='_blank'
+							rel='noopener noreferrer'
+							title='View resume'
 							variant='ghost'
 							size='icon'
 							className='hover:bg-primary/10 hover:text-primary'
 						>
 							<FileText className='h-5 w-5' />
-							<span className='sr-only'>Download CV</span>
+							<span className='sr-only'>View resume</span>
 						</Link>
 					</div>
 				</div>

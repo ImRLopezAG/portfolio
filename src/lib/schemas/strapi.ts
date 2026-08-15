@@ -25,6 +25,8 @@ const PROJECT_ICONS = [
 	'Key',
 	'Settings',
 	'Cpu',
+	'AudioLines',
+	'PhoneCall',
 ] as const satisfies readonly (keyof typeof icons)[]
 
 const PROJECT_COLOR = [
@@ -339,6 +341,31 @@ const SKILL_MAP: Map<string, SkillEntry> = new Map([
 		{ name: 'shadcn-ui', color: 'hover:border-gray-500/30', invert: true },
 	],
 	['convex', { name: 'convex', color: 'hover:border-amber-500/30' }],
+	['tanstack', { name: 'tanstack', color: 'hover:border-cyan-500/30' }],
+	['workos', { name: 'workos', color: 'hover:border-indigo-500/30' }],
+	[
+		'ai sdk',
+		{
+			name: 'ai sdk',
+			color: 'hover:border-gray-500/30',
+			// svgl has no AI SDK mark; the Vercel triangle is the closest stand-in.
+			logo: 'vercel_dark',
+		},
+	],
+	[
+		'vercel',
+		{ name: 'vercel', color: 'hover:border-gray-500/30', logo: 'vercel_dark' },
+	],
+	['twilio', { name: 'twilio', color: 'hover:border-red-500/30' }],
+	['xai', { name: 'xai', color: 'hover:border-zinc-500/30', logo: 'xai_dark' }],
+	[
+		'openai',
+		{
+			name: 'openai',
+			color: 'hover:border-emerald-500/30',
+			logo: 'openai_dark',
+		},
+	],
 ])
 
 const textBlock = z.array(

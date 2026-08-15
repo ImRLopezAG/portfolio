@@ -10,12 +10,19 @@ import { strapi } from '@services/strapi.service'
 const INK = '#111111'
 const MUTED = '#333333'
 const RULE = '#111111'
+const LINK = '#1155cc'
 
 type Node = { type: string; props?: Record<string, unknown>; children?: Node[] }
 
 const text = (value: string, props: Record<string, unknown> = {}): Node => ({
 	type: 'Text',
 	props: { text: value, color: INK, fontSize: 10, ...props },
+})
+
+/** A real, clickable hyperlink in the PDF. */
+const link = (value: string, href: string, fontSize = 9.5): Node => ({
+	type: 'Link',
+	props: { text: value, href, color: LINK, fontSize },
 })
 
 /** Section title with the full-width rule under it. */
@@ -51,19 +58,79 @@ const subtitleRow = (left: string, right?: string): Node => ({
 })
 
 function buildDocument(): Node {
-	const { basics, work, education, skills, languages } = strapi.profile()
+	const { basics, work, education, skills, languages, projects } =
+		strapi.profile()
 
 	const linkedin = basics.profiles.find(
 		(p) => p.network.toLowerCase() === 'linkedin',
 	)
 
-	// The contact line under the name: linkedin · phone · email · site
-	const contacts = [
-		linkedin?.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''),
-		basics.phone,
-		basics.email,
-		basics.url.replace(/^https?:\/\/(www\.)?/, ''),
-	].filter(Boolean) as string[]
+	const strip = (u: string) =>
+		u.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
+
+	// Contact line: everything but the phone number is a live hyperlink.
+	const contacts: Node[] = []
+	if (linkedin) contacts.push(link(strip(linkedin.url), linkedin.url))
+	if (basics.phone) contacts.push(text(basics.phone, { fontSize: 9.5 }))
+	contacts.push(link(basics.email, `mailto:${basics.email}`))
+	contacts.push(link(strip(basics.url), basics.url))
+
+	const contactRow: Node = {
+		type: 'Row',
+		props: {
+			justifyContent: 'center',
+			alignItems: 'center',
+			gap: 6,
+			wrap: true,
+		},
+		children: contacts.flatMap((node, index) =>
+			index === 0 ? [node] : [text('·', { fontSize: 9.5, color: MUTED }), node],
+		),
+	}
+
+	// Skills read as a grid rather than one long run-on line.
+	const SKILL_COLUMNS = 4
+	const perColumn = Math.ceil(skills.length / SKILL_COLUMNS)
+	const skillGrid: Node = {
+		type: 'Row',
+		props: { gap: 10, alignItems: 'flex-start' },
+		children: Array.from({ length: SKILL_COLUMNS }, (_, column) => ({
+			type: 'Column',
+			props: { gap: 3, flex: 1 },
+			children: skills
+				.slice(column * perColumn, (column + 1) * perColumn)
+				.map((s) =>
+					text(
+						s.name.replace(/\b\w/g, (c) => c.toUpperCase()),
+						{
+							fontSize: 9.5,
+							color: MUTED,
+						},
+					),
+				),
+		})),
+	}
+
+	const projectEntries = projects.flatMap((project) => {
+		const label =
+			project.state && project.state !== 'ACTIVE'
+				? `${project.name} (${project.state})`
+				: project.name
+
+		return [
+			text(label, { fontSize: 10.5, fontWeight: 'bold' }),
+			project.desc
+				? text(project.desc, { fontSize: 10, color: MUTED, lineHeight: 1.4 })
+				: { type: 'Spacer', props: { height: 0 } },
+			project.techStack?.length
+				? text(
+						`Technologies: ${project.techStack.map((t) => t.name).join(', ')}`,
+						{ fontSize: 9.5, color: MUTED },
+					)
+				: { type: 'Spacer', props: { height: 0 } },
+			{ type: 'Spacer', props: { height: 8 } },
+		]
+	})
 
 	const experience = work.flatMap((company) => [
 		titleRow(company.company, company.location),
@@ -124,11 +191,7 @@ function buildDocument(): Node {
 							color: INK,
 						},
 					},
-					text(contacts.join('  ·  '), {
-						align: 'center',
-						fontSize: 9.5,
-						color: MUTED,
-					}),
+					contactRow,
 					{
 						type: 'Divider',
 						props: { color: RULE, thickness: 1, marginTop: 6 },
@@ -151,12 +214,10 @@ function buildDocument(): Node {
 					...studies,
 
 					...sectionHeading('Technical Skills'),
-					text(
-						skills
-							.map((s) => s.name.replace(/\b\w/g, (c) => c.toUpperCase()))
-							.join(' · '),
-						{ fontSize: 10, color: MUTED, lineHeight: 1.4 },
-					),
+					skillGrid,
+
+					...sectionHeading('Projects'),
+					...projectEntries,
 
 					...sectionHeading('Languages'),
 					text(
