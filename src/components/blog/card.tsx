@@ -17,9 +17,9 @@ export function BlogCard({ post: { slugs, data } }: Props) {
 					<span className='text-muted-foreground text-sm'>{data.date}</span>
 				</div>
 				<CardTitle className='transition-colors hover:text-primary'>
-					<Link href={`/blog/${slugs.join('/')}`} prefetch={true}>
-						{data.title}
-					</Link>
+					{/* Default prefetch, not `prefetch={true}`: post routes are partially
+					    prerendered, so a full prefetch pulls their dynamic data too. */}
+					<Link href={`/blog/${slugs.join('/')}`}>{data.title}</Link>
 				</CardTitle>
 			</CardHeader>
 			<CardContent>
@@ -29,14 +29,13 @@ export function BlogCard({ post: { slugs, data } }: Props) {
 				<Link
 					href={`/blog/${slugs.join('/')}`}
 					className='font-medium text-primary hover:underline'
-					prefetch={true}
 				>
 					Read more →
 				</Link>
 				{data.tags && (
 					<div className='mt-2 flex w-4/5 flex-wrap justify-end gap-2'>
 						{data.tags.map((tag) => (
-							<Badge key={crypto.randomUUID()} variant='outline'>
+							<Badge key={tag} variant='outline'>
 								{tag}
 							</Badge>
 						))}
