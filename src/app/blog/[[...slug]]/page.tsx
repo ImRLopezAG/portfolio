@@ -58,8 +58,26 @@ export async function generateMetadata(
 	const page = source.getPage(params.slug, await getLocale())
 	if (!page) notFound()
 
+	// Override the site-wide OG/Twitter defaults (profile photo + name) so the
+	// share card describes the post, with a generated logo card as its image.
+	const ogImage = `/api/og?slug=${encodeURIComponent(
+		params.slug?.join('/') ?? '',
+	)}`
 	return seo({
 		title: page.data.title,
 		description: page.data.description,
+		openGraph: {
+			title: page.data.title,
+			description: page.data.description,
+			type: 'article',
+			url: `https://imrlopez.dev${page.url}`,
+			images: [{ url: ogImage, width: 1200, height: 630 }],
+		},
+		twitter: {
+			card: 'summary_large_image',
+			title: page.data.title,
+			description: page.data.description,
+			images: [ogImage],
+		},
 	})
 }
