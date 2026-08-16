@@ -1,10 +1,14 @@
 import { Github, Linkedin } from '@ui/brand-icons'
 import { Mail } from 'lucide-react'
-export function Footer() {
+import { getTranslations } from 'next-intl/server'
+
+export async function Footer() {
+	const t = await getTranslations('footer')
+
 	return (
 		<footer className='mt-20 px-4 py-6'>
 			<div className='translucent container mx-auto rounded-3xl border border-white/5 p-12 px-4'>
-				<div className='grid grid-cols-2 gap-8 lg:grid-cols-4'>
+				<div className='grid grid-cols-2 gap-6 sm:gap-8 lg:grid-cols-4 [&>div]:min-w-0'>
 					<div className='space-y-4'>
 						<a
 							href='/'
@@ -46,7 +50,7 @@ export function Footer() {
 					</div>
 
 					<div className='space-y-4'>
-						<h3 className='font-medium'>Quick links</h3>
+						<h3 className='font-medium'>{t('quickLinks')}</h3>
 						<nav className='flex flex-col gap-2'>
 							<a
 								href='/#home'
@@ -117,14 +121,16 @@ export function Footer() {
 							<p className='text-muted-foreground'>
 								Santo Domingo, Dominican Republic
 							</p>
-							<p className='text-muted-foreground'>contact@imrlopez.dev</p>
+							<p className='break-all text-muted-foreground'>
+								contact@imrlopez.dev
+							</p>
 							<p className='text-muted-foreground'>+1 849 267 9236</p>
 						</div>
 					</div>
 				</div>
 
 				<div className='mt-12 border-t pt-6 text-center text-muted-foreground'>
-					<p>© 2025 Angel Gabriel Lopez. All rights reserved.</p>
+					<p>© 2025 Angel Gabriel Lopez. {t('rights')}</p>
 				</div>
 			</div>
 		</footer>

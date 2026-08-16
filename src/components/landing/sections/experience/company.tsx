@@ -11,6 +11,7 @@ import {
 	CollapsibleTrigger,
 } from '@ui/collapsible'
 import { ChevronDown, Gem } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 
 /** Shared by the expandable and static role rows so both align identically. */
@@ -138,6 +139,7 @@ export function CompanyExperience({
 	location,
 	workMode,
 }: Company) {
+	const t = useTranslations('experience')
 	const contextLine = [location, workMode].filter(Boolean).join(' · ')
 
 	return (
@@ -178,7 +180,7 @@ export function CompanyExperience({
 							</div>
 							{positions.length > 1 && (
 								<Badge variant='secondary' className='shrink-0'>
-									{positions.length} roles
+									{t('roles', { count: positions.length })}
 								</Badge>
 							)}
 						</div>

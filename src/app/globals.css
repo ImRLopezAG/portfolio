@@ -8,26 +8,32 @@
 
 @custom-variant dark (&:is(.dark *));
 
-* {
+html {
 	scrollbar-width: thin;
-	scrollbar-color: var(--color-border) var(--color-background);
+	scrollbar-color: var(--scrollbar-thumb, var(--color-border))
+		var(--scrollbar-track, var(--color-background));
 	overscroll-behavior: none;
+
+	::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: var(--scrollbar-track, var(--color-background));
+	}
+
+	::-webkit-scrollbar-thumb {
+		background-color: var(--scrollbar-thumb, var(--color-border));
+		border-radius: 4px;
+		border: 3px solid var(--scrollbar-track, var(--color-background));
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background-color: var(--scrollbar-thumb-hover, var(--color-foreground));
+	}
 }
-*::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
-}
-*::-webkit-scrollbar-track {
-	background: var(--color-background);
-}
-*::-webkit-scrollbar-thumb {
-	background-color: var(--color-border);
-	border-radius: 20px;
-	border: 3px solid var(--color-background);
-}
-*::-webkit-scrollbar-thumb:hover {
-	background-color: var(--color-foreground);
-}
+
 
 @theme inline {
 	--radius-sm: calc(var(--radius) - 4px);
@@ -165,3 +171,5 @@
 		scale: 1;
 	}
 }
+
+

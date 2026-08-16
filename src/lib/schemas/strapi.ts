@@ -368,9 +368,19 @@ const SKILL_MAP: Map<string, SkillEntry> = new Map([
 	],
 ])
 
+/**
+ * A translatable string. A bare string stays as-is (English only); an
+ * `{ en, es }` pair is collapsed to the active locale by `localize` after
+ * parsing, so the schema itself stays locale-agnostic.
+ */
+export const i18nString = z.union([
+	z.string(),
+	z.object({ en: z.string(), es: z.string() }),
+])
+
 const textBlock = z.array(
 	z
-		.object({ text: z.string() })
+		.object({ text: i18nString })
 		.transform(({ text }) => ({ id: autoId('TB'), text })),
 )
 
@@ -429,7 +439,7 @@ const WORK_MODE = ['On-site', 'Hybrid', 'Remote'] as const
 const workEntry = z
 	.object({
 		name: z.string(),
-		position: z.string(),
+		position: i18nString,
 		url: z.url().optional(),
 		startedDate: z.string(),
 		endDate: z.string().nullable(),
@@ -520,7 +530,7 @@ export const profile = z
 	.object({
 		basics: z.object({
 			name: z.string(),
-			label: z.string(),
+			label: i18nString,
 			email: z.email(),
 			phone: z.string().optional(),
 			url: z.url(),
@@ -550,8 +560,8 @@ export const profile = z
 					institution: z.string(),
 					url: z.url().optional(),
 					location: z.string().optional(),
-					area: z.string(),
-					studyType: z.string(),
+					area: i18nString,
+					studyType: i18nString,
 					scoreType: z.string(),
 					startDate: z.string(),
 					endDate: z.string().nullable(),
@@ -564,7 +574,7 @@ export const profile = z
 			z
 				.object({
 					language: z.string(),
-					fluency: z.string(),
+					fluency: i18nString,
 				})
 				.transform((data) => ({ ...data, id: autoId('LG') })),
 		),
@@ -576,7 +586,7 @@ export const profile = z
 					github: z.url().optional(),
 					state: z.enum(PROJECT_STATUS).optional(),
 					color: z.enum(PROJECT_COLOR).optional(),
-					desc: z.string().optional(),
+					desc: i18nString.optional(),
 					techStack: skillsArray.optional(),
 					icon: z.enum(PROJECT_ICONS).optional(),
 				})

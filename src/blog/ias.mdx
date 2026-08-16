@@ -24,6 +24,45 @@ This architecture enables teams to deploy services independently while sharing c
 </Callout>
 
 
+The shape that matters is the direction of dependencies. Transport knows about the domain; the domain never knows about transport.
+
+<Mermaid chart={`
+flowchart TD
+  T["Transport<br/>HTTP · RPC · queue consumer"] --> A["API layer<br/>thin adapters"]
+  A --> C["Commands<br/>write side"]
+  A --> Q["Queries<br/>read side"]
+  C --> R["Rules<br/>invariants"]
+  Q --> R
+  R --> S["Schema<br/>shape + indexes"]
+  C -.->|"events"| E["Triggers<br/>projections, audit"]
+`} />
+
+<Callout type="warn">
+The single rule that keeps this honest: **the domain must not import the transport.** If `commands.ts` imports an HTTP type, the layering is already gone — you just can't see it yet.
+</Callout>
+
+That direction is what makes a module liftable. A domain folder with its own schema, rules, and commands can be extracted into a separate service without archaeology, because nothing inside it knows how it was called.
+
+<Files>
+  <Folder name="domain" defaultOpen>
+    <Folder name="catalog" defaultOpen>
+      <File name="schema.ts" />
+      <File name="rules.ts" />
+      <File name="commands.ts" />
+      <File name="queries.ts" />
+      <File name="triggers.ts" />
+    </Folder>
+    <Folder name="shared">
+      <File name="command.ts" />
+      <File name="query.ts" />
+      <File name="idempotency.ts" />
+    </Folder>
+  </Folder>
+  <Folder name="api">
+    <File name="catalog.ts" />
+  </Folder>
+</Files>
+
 ### Why This Architecture?
 
 <Accordions>
@@ -356,6 +395,63 @@ public class OrderAnalytics
 ```
 </Tab>
 </Tabs>
+
+## CQRS in practice
+
+The pattern is easy to name and easy to fake. In a real codebase it shows up as two different files with two different shapes — writes carry an idempotency key and a permission; reads carry pagination and never mutate.
+
+<Tabs items={['Write side', 'Read side']}>
+<Tab value="Write side">
+
+Commands are registered, not hand-written. The registry owns permission, classification and the tenant guard, so every operation inherits them:
+
+```ts title="domain/catalog/commands.ts"
+export const catalogCommands = new TenantCommand({
+  defaults: {
+    permission: 'catalog.manage',
+    classification: 'restricted_mutable_master',
+    guard: requireCatalogTenant,
+  },
+  operations: {
+    'catalog.product.create': operation(
+      createProductCommandSchema,
+      products.publicDto,
+      'product',
+    ),
+  },
+})
+```
+
+Idempotency is an argument, not a convention — the same key replays the stored result instead of writing twice.
+
+</Tab>
+<Tab value="Read side">
+
+Queries never take an idempotency key and never write. They take pagination and return a mapped DTO:
+
+```ts title="domain/catalog/queries.ts"
+export const listProducts = TenantQuery.paginated({
+  args: { categoryId: v.optional(v.id('productCategories')) },
+  handler: (ctx, { categoryId, paginationOpts }) =>
+    paginateMapped(
+      ctx.table('products')
+        .withIndex('by_tenant_archived_at', (q) =>
+          q.eq('tenant', ctx.tenant).eq('archivedAt', undefined),
+        ),
+      paginationOpts,
+      products.publicDto,
+    ),
+})
+```
+
+Note the index leads with `tenant`. In a multi-tenant system that isn't an optimization — it's the isolation boundary.
+
+</Tab>
+</Tabs>
+
+<Callout type="info">
+The test for whether you really have CQRS: can you cache the read side aggressively without touching the write side? If a read path can mutate, the answer is no and the label is decoration.
+</Callout>
 
 ## Communication Protocols
 

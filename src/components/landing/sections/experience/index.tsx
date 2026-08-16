@@ -1,17 +1,19 @@
 import { LandingSection } from '@landing/section'
 import { strapi } from '@services/strapi.service'
 import { Briefcase, GraduationCap } from 'lucide-react'
+import { getLocale, getTranslations } from 'next-intl/server'
 import { ExperienceCard } from './card'
 import { CompanyExperience } from './company'
-export function ExperienceSection() {
-	const { work, education } = strapi.profile()
+export async function ExperienceSection() {
+	const t = await getTranslations('experience')
+	const { work, education } = strapi.profile(await getLocale())
 	return (
-		<LandingSection id='experience' title='Experience & Education'>
+		<LandingSection id='experience' title={t('title')}>
 			<div className='grid gap-8 lg:grid-cols-2'>
 				<div className='space-y-6'>
 					<div className='flex items-center gap-2'>
 						<Briefcase className='h-6 w-6 text-primary' />
-						<h3 className='font-bold text-2xl'>Work Experience</h3>
+						<h3 className='font-bold text-2xl'>{t('work')}</h3>
 					</div>
 
 					<div className='space-y-6'>
@@ -24,7 +26,7 @@ export function ExperienceSection() {
 				<div className='space-y-6'>
 					<div className='flex items-center gap-2'>
 						<GraduationCap className='h-6 w-6 text-primary' />
-						<h3 className='font-bold text-2xl'>Education</h3>
+						<h3 className='font-bold text-2xl'>{t('education')}</h3>
 					</div>
 
 					<div className='space-y-6'>

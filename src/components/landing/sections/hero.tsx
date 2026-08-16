@@ -4,10 +4,12 @@ import { Github, Instagram, Linkedin } from '@ui/brand-icons'
 import { Link } from '@ui/link'
 import { AlbumIcon, FileText, Terminal } from 'lucide-react'
 import Image from 'next/image'
+import { getLocale, getTranslations } from 'next-intl/server'
 import { Tech } from './tech-stack/tech'
 
-export function HeroSection() {
-	const { basics, skills } = strapi.profile()
+export async function HeroSection() {
+	const t = await getTranslations('hero')
+	const { basics, skills } = strapi.profile(await getLocale())
 	const orbitSkills = skills.slice(0, 6) // Take top 6 skills for the orbit
 
 	return (
@@ -16,7 +18,7 @@ export function HeroSection() {
 				<div className='motion-preset-slide-right-lg motion-duration-700 motion-delay-500 order-last space-y-8 lg:order-first'>
 					<div className='translucent inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-primary text-sm'>
 						<Terminal className='h-4 w-4' />
-						<span className='font-medium font-mono'>Hello World, I&apos;m</span>
+						<span className='font-medium font-mono'>{t('greeting')}</span>
 					</div>
 
 					<div className='space-y-4'>
@@ -36,7 +38,7 @@ export function HeroSection() {
 							size='lg'
 							className='group relative overflow-hidden'
 						>
-							<span className='relative z-10'>Get in touch</span>
+							<span className='relative z-10'>{t('getInTouch')}</span>
 							<div className='absolute inset-0 -translate-x-full bg-white/20 transition-transform group-hover:translate-x-0' />
 						</Link>
 						<Link
@@ -45,7 +47,7 @@ export function HeroSection() {
 							variant='outline'
 							className='group'
 						>
-							View projects
+							{t('viewProjects')}
 						</Link>
 					</div>
 
@@ -104,13 +106,13 @@ export function HeroSection() {
 							prefetch={false}
 							target='_blank'
 							rel='noopener noreferrer'
-							title='View resume'
+							title={t('viewResume')}
 							variant='ghost'
 							size='icon'
 							className='hover:bg-primary/10 hover:text-primary'
 						>
 							<FileText className='h-5 w-5' />
-							<span className='sr-only'>View resume</span>
+							<span className='sr-only'>{t('viewResume')}</span>
 						</Link>
 					</div>
 				</div>

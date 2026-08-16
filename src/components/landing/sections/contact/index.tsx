@@ -9,22 +9,18 @@ import {
 	CardTitle,
 } from '@ui/card'
 import { Mail, MapPin, Phone } from 'lucide-react'
+import { getLocale, getTranslations } from 'next-intl/server'
 import { ContactForm } from './form'
-export function ContactSection() {
-	const { basics } = strapi.profile()
+export async function ContactSection() {
+	const t = await getTranslations('contact')
+	const { basics } = strapi.profile(await getLocale())
 	return (
-		<LandingSection
-			id='contact'
-			title='Get In Touch'
-			desc='Have a project in mind or want to collaborate? Feel free to reach out!'
-		>
+		<LandingSection id='contact' title={t('title')} desc={t('desc')}>
 			<div className='grid gap-8 lg:grid-cols-2'>
 				<Card className='translucent'>
 					<CardHeader>
-						<CardTitle>Contact Information</CardTitle>
-						<CardDescription>
-							Feel free to reach out through any of these channels
-						</CardDescription>
+						<CardTitle>{t('info')}</CardTitle>
+						<CardDescription>{t('infoDesc')}</CardDescription>
 					</CardHeader>
 					<CardContent className='space-y-6'>
 						<div className='flex items-center gap-4'>
@@ -32,7 +28,7 @@ export function ContactSection() {
 								<Mail className='h-6 w-6 text-primary' />
 							</div>
 							<div>
-								<p className='font-medium'>Email</p>
+								<p className='font-medium'>{t('email')}</p>
 								<a
 									href={`mailto:${basics.email}`}
 									className='text-muted-foreground transition-colors hover:text-primary'
@@ -47,7 +43,7 @@ export function ContactSection() {
 								<Phone className='h-6 w-6 text-primary' />
 							</div>
 							<div>
-								<p className='font-medium'>Phone</p>
+								<p className='font-medium'>{t('phone')}</p>
 								<a
 									href={`tel:${basics.phone}`}
 									className='text-muted-foreground transition-colors hover:text-primary'
@@ -62,7 +58,7 @@ export function ContactSection() {
 								<MapPin className='h-6 w-6 text-primary' />
 							</div>
 							<div>
-								<p className='font-medium'>Location</p>
+								<p className='font-medium'>{t('location')}</p>
 								<p className='text-muted-foreground'>
 									{basics.location.city}, {basics.location.region}
 								</p>
@@ -70,7 +66,7 @@ export function ContactSection() {
 						</div>
 
 						<div className='pt-4'>
-							<p className='mb-3 font-medium'>Social Profiles</p>
+							<p className='mb-3 font-medium'>{t('social')}</p>
 							<div className='flex gap-4'>
 								<a
 									href='https://github.com/ImRLopezAG'

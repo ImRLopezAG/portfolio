@@ -1,0 +1,341 @@
+---
+title: Un año construyendo con IA
+description: De tres meses por aplicación CRUD a cinco proyectos en paralelo — las herramientas, el flujo de trabajo y la única opinión que no pienso soltar.
+category: AI
+date: Aug 15, 2026
+tags:
+  - AI
+  - Developer Experience
+  - Workflow
+  - Agentic Coding
+  - Tooling
+---
+
+Hace un año, una aplicación sencilla — doce tablas, algo de lógica de negocio, nada exótico — me tomaba de dos a tres meses.
+
+Hoy esa ya no es la unidad de trabajo. Y lo interesante no es que escriba más rápido. Es que el trabajo cambió de forma debajo de mí: pasé de escribir código la mayor parte del día a tomar decisiones la mayor parte del día, y en algún punto de ese camino me convertí en Technical Lead Engineer.
+
+Este es el relato honesto de cómo pasó, incluidas las partes en las que todavía soy malo.
+
+<Callout type="info">
+El titular: la IA no me hizo escribir código más rápido. Movió el cuello de botella de **producir** código a **decidir y verificar**. Todo lo demás se desprende de ahí.
+</Callout>
+
+## Qué cambió en la forma de aprender
+
+El camino clásico hacia un lenguaje era estrictamente por capas. Empezabas arriba — la sintaxis que todo el mundo escribe — y bajabas poco a poco: modismos, arquitectura, herramientas, los trucos que separan a quien *usa* un lenguaje de quien lo *conoce*. Ese descenso tomaba años.
+
+Ese orden se invirtió. Ya no necesito memorizar un lenguaje de punta a punta. Lo que necesito es entender **cómo se comporta**: sus modismos, sus escapes, sus linters, los detalles de bajo nivel que antes eran lo último que aprendías.
+
+<Callout type="warn">
+Esto no es lo mismo que "ya no hace falta aprender". Es que el conocimiento caro se movió de sitio. La sintaxis ahora es barata. Saber *por qué* un diseño está mal, no.
+</Callout>
+
+Los frameworks se dieron cuenta. Un framework nuevo hoy llega con afordancias para IA integradas — skills, rutas de migración documentadas entre herramientas equiparables, convenciones legibles por máquina. Moverse entre ecosistemas dejó de ser una reescritura y pasó a ser una traducción.
+
+## El stack que de verdad funciona
+
+Algunas herramientas son muchísimo mejores para construir cuando la IA está en el circuito — no por estar de moda, sino porque son maduras, fuertemente tipadas y están bien representadas en lo que los modelos ya conocen.
+
+<Accordions>
+  <Accordion title="Convex — datos y sincronización">
+    Mi opción por defecto. No es solo una base de datos; su capa de sincronización en el cliente hace que mantener todo actualizado deje de ser algo que yo escribo. Es una categoría entera de código — suscripciones, invalidación de caché, actualizaciones optimistas — que ya no hago a mano.
+  </Accordion>
+  <Accordion title="PostgreSQL en paralelo">
+    Dividir una base de datos de Convex y una de Postgres, o hacerlas funcionar juntas, antes era una discusión de arquitectura. Ahora es una decisión que tomo a propósito y implemento rápido. Relacional donde toca, reactivo donde toca.
+  </Accordion>
+  <Accordion title="Redis — caché">
+    Sin cambios y sigue siendo excelente. Hay cosas que no hace falta reinventar.
+  </Accordion>
+  <Accordion title="WorkOS — autenticación">
+    Se integra limpio con Next.js, React y Convex, y puedo combinar los tres sin pelearme. La autenticación es el sitio clásico donde una mala integración envenena todo lo que viene después.
+  </Accordion>
+  <Accordion title="oRPC — contratos tipados">
+    Mantiene la capa HTTP correcta por construcción. Los contratos hacen que los tipos no sean una sugerencia: se imponen a través de la frontera. Esto importa más con IA, no menos — un handler generado que viola el contrato falla de inmediato en vez de en silencio.
+  </Accordion>
+  <Accordion title="Hono — la capa HTTP">
+    Maduro, pequeño y muy amigable para la IA. Los modelos lo conocen bien, lo que significa menos tiempo corrigiendo APIs alucinadas.
+  </Accordion>
+  <Accordion title="TanStack Start / Next.js / React">
+    La capa de frontend. Ecosistemas bien documentados y con convenciones fuertes — justo las condiciones donde el código generado cae cerca de lo correcto.
+  </Accordion>
+</Accordions>
+
+<Callout type="info">
+El patrón: **las herramientas maduras, tipadas y convencionales producen mejor salida de IA.** Un framework que el modelo conoce a fondo y un contrato que falla ruidosamente valen más que cualquier técnica de prompting.
+</Callout>
+
+## La opinión que no pienso soltar: lee el código
+
+Circula una postura ruidosa en podcasts y redes de programación: que ya no deberías leer el código. Creo que está equivocada, y creo que es la vía más rápida para construir algo que no puedes mantener.
+
+Para ser preciso: no deberías obsesionarte con cada línea. Pero sí tienes que saber **qué le está haciendo la IA a tu base de código.**
+
+La razón concreta es esta. Si la dejas sola, no va a usar la estructura de archivos que tú quieres. Suena trivial. No lo es.
+
+<Tabs items={['Lo que sale sin supervisión', 'Cómo es el layering de verdad']}>
+<Tab value="Lo que sale sin supervisión">
+
+<Files>
+  <Folder name="src" defaultOpen>
+    <Folder name="components" defaultOpen>
+      <File name="ProductForm.tsx" />
+      <File name="productHelpers.ts" />
+      <File name="api.ts" />
+      <File name="types.ts" />
+      <File name="utils2.ts" />
+    </Folder>
+    <File name="db.ts" />
+  </Folder>
+</Files>
+
+Todo funciona. Nada puede salir. `utils2.ts` lo importan nueve archivos, `api.ts` toca la base de datos directamente, y sacar "catálogo" de ahí implica leerlo todo primero.
+
+</Tab>
+<Tab value="Cómo es el layering de verdad">
+
+<Files>
+  <Folder name="convex" defaultOpen>
+    <Folder name="domain" defaultOpen>
+      <Folder name="catalog" defaultOpen>
+        <File name="schema.ts" />
+        <File name="rules.ts" />
+        <File name="commands.ts" />
+        <File name="queries.ts" />
+        <File name="pricing.ts" />
+        <File name="triggers.ts" />
+      </Folder>
+      <Folder name="shared">
+        <File name="command.ts" />
+        <File name="query.ts" />
+        <File name="fixedPoint.ts" />
+      </Folder>
+    </Folder>
+    <Folder name="api">
+      <File name="catalog.ts" />
+    </Folder>
+  </Folder>
+</Files>
+
+`schema` es dueño de la forma, `rules` de las invariantes, `commands` y `queries` están separados a propósito, y `api/catalog.ts` es el único archivo que sabe que esto es Convex. El dominio no importa el transporte.
+
+</Tab>
+</Tabs>
+
+<Callout type="warn">
+Una buena estructura de archivos es lo que hace posible desacoplar un módulo después. Si no puedes levantar una pieza de tu aplicación y ponerla en otro lado, no tienes una arquitectura — tienes un montón de código que casualmente funciona.
+</Callout>
+
+Lo mismo aplica a los patrones que la gente trata como olvidados — inyección de dependencias, separación de comandos y consultas. No son obsoletos. Son exactamente lo que evita que una base de código que se mueve rápido se calcifique, y son precisamente lo que el código generado se va a saltar salvo que insistas.
+
+Concretamente, así se ve "insistir". Cada mutación del ERP que estoy construyendo pasa por un solo registro, y el registro — no el handler — es dueño del permiso, la clasificación del dato, el guard de tenant y la idempotencia:
+
+```ts title="convex/domain/catalog/commands.ts"
+export const catalogCommands = new TenantCommand({
+  defaults: {
+    permission: 'erp.catalog.manage',
+    classification: 'restricted_mutable_master',
+    guard: requireCatalogTenant,
+  },
+  operations: {
+    'catalog.product.create': catalogOperation(
+      createProductCommandSchema,
+      products.publicDto,
+      'product',
+    ),
+  },
+})
+```
+
+La capa de transporte se mantiene delgada a propósito — extiende el schema de entrada del comando y devuelve el DTO público, y eso es todo lo que sabe:
+
+```ts title="convex/api/catalog.ts"
+export const createProduct = tenantMutation({
+  args: {
+    idempotencyKey,
+    ...products.commandInput.shape,
+  },
+  returns: products.publicDto,
+  handler: (ctx, args) => createProductCommand(ctx, args),
+})
+```
+
+<Callout type="info">
+Esta es la parte que un agente no va a inventar por ti. Pide "crea una mutación de producto" y obtienes un handler que valida inline, va a la base de datos y se olvida de la auditoría. El registro es lo que tienes que exigir — una vez existe, cada operación generada hereda permisos, auditoría e idempotencia gratis.
+</Callout>
+
+Esta es la línea entre un buen ingeniero y alguien que solo produce código que funciona. También es la línea entre un vibe coder y un ingeniero de aplicaciones. Son trabajos distintos.
+
+## El recorrido: cinco etapas
+
+Entrar de lleno pasó en los últimos siete u ocho meses, y avanzó por etapas bien marcadas. Cada una rompió un techo que tenía la anterior.
+
+<StageDeck
+  caption="Desliza, o usa las flechas — cada etapa rompió un techo que tenía la anterior."
+  stages={[
+    { label: 'autocompletado', note: 'nunca salió del archivo', headline: 'Completados y chat del editor', body: 'El punto de partida. Completados más "mira esto, revisa aquello" en la barra lateral. No era una integración de verdad — yo escribía código, ella escribía código, y nos alternábamos. Útil, pero nunca salía del archivo en el que estaba.' },
+    { label: 'extensiones', note: 'llegó el contexto', headline: 'Codex y Claude dentro del editor', body: 'El salto aquí fue el contexto: todo estaba referenciado en el código real en vez de pegado en una ventana de chat. Solo eso quitó casi toda la fricción, y se volvió el día a día.' },
+    { label: 'CLIs', note: 'primeras corridas largas', headline: 'Agentes de terminal, y la incomodidad de esperar', body: 'Donde aprendí los procesos de verdad — incluidos skills y plugins, que no estaba usando en absoluto. El agente trabajaba treinta minutos y yo no tocaba código. No se sentía productivo. Costó aceptar que mirar a un sistema ejecutar, verificar y testear es el trabajo ahora.' },
+    { label: 'skills + loops', note: 'planificar e iterar', headline: 'El flujo que lo cambió todo', body: 'No un prompt más largo — una forma distinta por completo. Que te interroguen, producir una especificación, y dejarla iterar hasta que todas las suites pasen. Un solo loop puede correr cuatro o cinco horas.' },
+    { label: 'UIs agénticas', note: '4-5 en paralelo', headline: 'Romper el techo de una cosa a la vez', body: 'Las CLIs tienen un límite duro: una cosa a la vez. Trabajar en un segundo proyecto significaba otra pestaña y mucho tedio. Las UIs agénticas rompieron eso — una vez que encajó pude correr cuatro o cinco proyectos a la vez, cada uno en su loop.' }
+  ]}
+/>
+
+## El loop: interroga, planifica, itera
+
+Este es el cambio de mayor apalancamiento que hice, y vale la pena describirlo con precisión porque no es lo que la mayoría entiende por "usar IA".
+
+<LoopSession
+  cwd="~/dev/one-office"
+  prompt="agrega catalog.price-list-item.create — replica catalog.sku.create"
+  finalLabel="suites en verde"
+/>
+
+<Tabs items={['1 · El interrogatorio', '2 · El plan', '3 · El loop']}>
+<Tab value="1 · El interrogatorio">
+
+Antes de escribir código, la IA me interroga. No lo improviso — uso [grill-me](https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me), la skill de interrogatorio de Matt Pocock. Se niega a aceptar respuestas vagas, mantiene un árbol de decisiones con todo lo que sigue sin resolver, y persigue cada rama hasta que llegamos a un entendimiento compartido:
+
+```txt
+- ¿Qué capa es dueña de esto: el contrato, el servicio o la UI?
+- Dijiste "cachéalo" — ¿invalidar al escribir o TTL? ¿Cuánta staleness aceptas?
+- ¿Necesita funcionar offline o basta con UI optimista?
+- No vamos a tocar auth aquí, ¿correcto?
+- ¿Qué debe pasar cuando el proveedor devuelve un 429?
+```
+
+No se escribe nada hasta que todas tienen respuesta. El trabajo de la skill es ser molesta *ahora* para que el loop no se pierda *después*.
+
+</Tab>
+<Tab value="2 · El plan">
+
+Las respuestas se convierten en una especificación, no en un resumen — directrices, archivos objetivo, el patrón a replicar y la condición de salida:
+
+```md
+## U3 — catalog.price-list-item.create
+Archivos: convex/domain/catalog/{schema,rules,commands}.ts
+          convex/api/catalog.ts
+Patrón:   replicar catalog.sku.create — misma forma de operación TenantCommand
+Reglas:   el rango de vigencia no puede solaparse con otro ítem de la misma lista;
+          el dinero se parsea con parseDecimal en FIXED_POINT_SCALES.price
+Exponer:  tenantMutation({ args: { idempotencyKey, ...commandInput.shape },
+          returns: publicDto })
+Verificar: tests de dominio en verde, incluyendo un caso que rechace el solape
+```
+
+</Tab>
+<Tab value="3 · El loop">
+
+Después ejecuta el plan y sigue corrigiendo hasta que se cumpla la condición de salida. Esta parte corre sobre el [plugin de compound-engineering](https://github.com/EveryInc/compound-engineering-plugin) — un conjunto de skills que se pasan el relevo entre sí: `ce-plan` convierte las respuestas del interrogatorio en la especificación, `ce-work` la ejecuta de punta a punta, `ce-code-review` revisa el resultado, y `lfg` encadena todo el pipeline hasta un PR abierto:
+
+```txt
+ce-plan → ce-work → correr suites → leer fallos → corregir → repetir
+salir cuando: todas las suites en verde, ningún punto del plan sin resolver
+```
+
+Un solo loop puede correr cuatro o cinco horas. Lo que lo hace funcionar no es el loop — es que el plan no dejó nada ambiguo sobre lo que derivar, y cada skill compone sobre lo que capturó la anterior.
+
+</Tab>
+</Tabs>
+
+Las etapas:
+
+1. **Déjate interrogar.** Antes de cualquier código, la IA me interroga a *mí*: qué voy a implementar, cómo, qué voy a usar, qué explícitamente no, qué no debería funcionar así. Es un quiz cuyo único propósito es sacar a la superficie las decisiones que en realidad todavía no había tomado.
+2. **Produce el plan.** Las respuestas se convierten en un plan de acción detallado — directrices, ejemplos de código, diagramas de flujo. No un resumen. Una especificación.
+3. **Corre el loop.** Entonces ejecuta el plan completo, repitiendo y corrigiendo hasta que cada suite de tests pase y todo se sostenga. Un solo loop puede correr cuatro o cinco horas.
+
+<Callout type="info">
+El orden es lo importante. La mayor parte del valor se crea **antes de escribir una línea de código**, en el paso de interrogación. El loop solo funciona porque el plan no es ambiguo.
+</Callout>
+
+## Cómo se ve realmente una UI agéntica
+
+![El IDE agéntico: proyectos y threads a la izquierda, la ejecución activa con sus archivos cambiados en el centro, y el composer con controles de modelo, esfuerzo y acceso.](/blog-agentic-ui.png)
+
+Un IDE para agentes en lugar de para archivos. Los threads a la izquierda agrupados por proyecto, la conversación activa en el centro, y un panel a la derecha que alterna entre un navegador para probar la app, un diff de git, los pull requests abiertos y los propios archivos. Una terminal va debajo, exactamente donde la pondría un editor.
+
+Esa disposición es lo que hizo posible el paralelismo. Correr cinco loops a la vez solo es sensato si puedes ver qué está haciendo cada uno.
+
+## Escala, y ser honesto sobre los tests
+
+Dos números que muestran cuánto se movió el techo.
+
+<Race
+  badge='la misma tarea · cinco formas'
+  title='QUIÉN HACE LA ITERACIÓN, POR MODO'
+  score={[5, 5]}
+  scoreLabel='modos llegando al flujo'
+  axis={["inicio", "iterando", "recuperando", "listo"]}
+  duration={3800}
+  legend={[
+    { cell: 1, label: 'tú interviniendo' },
+    { cell: 2, label: 'la IA iterando' },
+    { cell: 3, label: 'segundo proyecto, otra capa' },
+    { cell: 4, label: 'tercer proyecto, otra capa' }
+  ]}
+  lanes={[
+    { label: "autocompletado", meta: "editor", pace: "steps", greenAt: 11, cells: [2, 1, 1, 2, 1, 1, 2, 2, 1, 1, 2, 1] },
+    { label: "extensiones", meta: "IDE", pace: "hops", greenAt: 15, cells: [2, 2, 2, 1, 1, 2, 2, 2, 1, 1, 1, 2, 2, 2, 1, 2, 2, 2] },
+    { label: "CLIs", meta: "terminal", pace: "bigswings", greenAt: 20, cells: [1, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2] },
+    { label: "skills + loops", meta: "planificado", pace: "leaps", greenAt: 21, cells: [2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2] },
+    { label: "UIs agénticas", meta: "paralelo", pace: "glide", greenAt: 20,
+      cells: [2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2],
+      layers: [
+        [3, 3, 3, 1, 3, 3, 3, 3, 1, 3, 3, 1, 3, 3, 3, 3, 3, 1, 3, 3, 3, 3, 1, 3, 3, 3, 1, 3, 3, 3, 3, 1, 3, 3, 3, 3, 3, 1, 3, 3, 3, 1, 3, 3, 3, 3, 3, 3],
+        [4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 1, 4, 4, 4, 1, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4]
+      ] }
+  ]}
+/>
+
+
+<Callout type="warn">
+Quemar 100 millones de tokens antes se sentía muchísimo. Hoy puedo pasar por **1.500 millones de tokens en un día** entre proyectos en paralelo. La restricción dejó de ser lo rápido que trabajo y pasó a ser cuánto puedo revisar de verdad.
+</Callout>
+
+Sobre testing: antes escribía y corría muy pocos tests. Hoy mis aplicaciones llevan **entre 300 y 400 suites**, lo que suena robusto — y en parte lo es.
+
+Pero voy a ser directo con la debilidad. Buena parte de esos tests son mocks.
+
+<TestLedger
+  labels={{ proves: 'demuestra', misses: 'se le escapa', confidence: 'confianza' }}
+  caption="El número de suites y la confianza real son ejes distintos — el mío está casi todo en la primera fila."
+  rows={[
+    { name: 'Test unitario con mocks', confidence: 35, proves: 'la lógica de la unidad, con las entradas que imaginé', misses: 'si el colaborador real devuelve siquiera esa forma' },
+    { name: 'Test de integración', confidence: 80, proves: 'que las capas de verdad concuerdan', misses: 'más lento, y más difícil atribuir un fallo a una causa' },
+    { name: 'Lo que tengo · ~400 suites', confidence: 40, current: true, proves: 'que las piezas coinciden con mis suposiciones sobre cada una', misses: 'la costura donde las cosas se rompen de verdad' }
+  ]}
+/>
+
+Ejercitan el happy path en vez del comportamiento real del sistema, así que no demuestran que la aplicación funcione de punta a punta; demuestran que las piezas coinciden con mis suposiciones sobre cada una. Es un hueco real, y es lo principal que tengo que arreglar.
+
+<Callout type="info">
+Más tests no es lo mismo que más confianza. Una suite hecha de mocks te dice que tu código es internamente consistente, no que sea correcto.
+</Callout>
+
+## Qué le hizo esto al trabajo
+
+La parte que no esperaba: mientras más avanzaba, menos iba el trabajo sobre código.
+
+Pasé de decidir nombres de variables y disposición de archivos — donde muchos desarrolladores se quedan atascados — a decidir qué construimos, qué forma debe tener el sistema y qué compromisos acepta el equipo. Ese cambio es la razón por la que terminé como Technical Lead Engineer. Avancé rápido, pero no porque produzca más código. Porque paso el día tomando decisiones que antes estaban por encima de mí.
+
+<RoleShift
+  legend={{ code: 'escribiendo código', decisions: 'decidiendo y verificando' }}
+  outcome="Technical Lead Engineer"
+  caption="Proporción del día, por fase. El código no desapareció — cambió quién lo escribe."
+  phases={[
+    { label: 'escribir código casi todo el día', code: 85 },
+    { label: 'revisar y dirigir agentes', code: 55 },
+    { label: 'decisiones de arquitectura y producto', code: 25 },
+    { label: 'hoy', code: 10 }
+  ]}
+/>
+
+## Dónde aterricé
+
+- **Elige herramientas que los modelos conozcan bien.** Maduras, tipadas, convencionales. Convex, Hono, oRPC, TanStack Start, WorkOS, Redis, Postgres.
+- **Planifica antes de generar.** Déjate interrogar, produce una especificación real, después corre el loop. El valor se crea antes de la primera línea.
+- **Lee lo que escribe.** No cada línea — pero siempre la estructura, las fronteras y la disposición de archivos. Es lo que vas a tener que mantener.
+- **Conserva los patrones.** La inyección de dependencias y la separación comando/consulta no son legado. Son lo que hace sobrevivible una base de código rápida.
+- **Mide confianza, no volumen.** 400 tests con mocks no son 400 pruebas.
+
+La aceleración es real. También es completamente condicional a poder distinguir la buena salida de la mala — y esa habilidad es ahora el trabajo.

@@ -30,6 +30,19 @@ Next.js provides several features that make it an excellent choice for building 
 
 These features allow developers to create applications that can handle high traffic, deliver content quickly, and provide a seamless user experience across devices. This makes Next.js a preferred choice for businesses looking to scale their web presence effectively but doesn't means that Next.js is a Golden Hammer for every use case as developers still need to evaluate their specific needs and constraints before choosing a framework.
 
+<Callout type="warn">
+Most "Next.js is slow" reports aren't about Next.js. They're about rendering something per-request that could have been prerendered, or prerendering something that had to be per-request. Everything below is a variation on getting that boundary right.
+</Callout>
+
+<Mermaid chart={`
+flowchart TD
+  R["Request"] --> D{"Does this depend on<br/>the user or the moment?"}
+  D -->|"No"| S["Prerender<br/>ships instantly"]
+  D -->|"Yes"| P{"Is the whole page<br/>dependent?"}
+  P -->|"No"| ST["Static shell<br/>+ stream the dynamic part"]
+  P -->|"Yes"| DY["Render per request"]
+`} />
+
 # Performance Optimization Techniques
 
 To ensure your Next.js application is fast and scalable, consider implementing the following performance optimization techniques:
@@ -85,6 +98,11 @@ This configuration not only enables modern image formats but also sets cache-con
 
 ## Caching
 
+<Callout type="info">
+Caching bugs are rarely "the cache didn't work" — they're "the cache worked longer than I meant." Decide the invalidation story before the TTL. A cached response also pins its headers, which is how a `Content-Disposition` or a stale locale can outlive the code that produced it.
+</Callout>
+
+
 On the latest versions of Next.js (16+), caching has been improved significantly with the introduction of `cacheComponents` and 3 new directives: [`use cache`](https://nextjs.org/docs/app/api-reference/directives/use-cache), [`use cache:private`](https://nextjs.org/docs/app/api-reference/directives/use-cache-private), and [`use cache:remote`](https://nextjs.org/docs/app/api-reference/directives/use-cache-remote), as they came out from the framework itself some developers or the community didn't like them and I understand why and agree that they could have been better designed you can check [Tanner Linsley](https://tanstack.com/blog/directives-and-the-platform-boundary) blog about directives to get better understanding what I mean. But at the end of the day, they are here to stay and we need to learn how to use them properly to take advantage of their benefits in our applications. Proper caching strategies can significantly reduce server load and improve response times, especially for frequently accessed data.
 
 ```ts title='app/actions.ts'
@@ -136,6 +154,11 @@ This configuration defines a custom cache profile called `shortLived`, which can
 Next.js API routes allow you to build backend functionality directly within your Next.js application but the file-based routing system can lead to scalability issues as your application grows. To mitigate this, consider using another approach such as using a dedicated backend framework of rpcs services.
 
 ### Using a Dedicated Backend framework inside Next.js
+
+<Callout type="info">
+The reason to mount a real HTTP framework inside Next rather than hand-rolling route handlers: contracts. A typed contract at the boundary fails loudly when a handler drifts from it, which matters more when handlers are generated than when they're typed by hand.
+</Callout>
+
 
 While Next.js API routes are convenient for small to medium-sized applications, they may not be the best choice for larger applications with complex backend logic. In such cases, consider using a dedicated backend framework like [Elysia](https://elysiajs.com/) or [Hono](https://honojs.dev/) to handle your backend functionality.
 
@@ -789,3 +812,21 @@ Another approach to building a scalable backend for your Next.js application is 
   ```
   </TabsContent>
 </Tabs>
+
+## The measurement discipline
+
+<Callout type="warn">
+Every technique here is falsifiable. Apply one, then check the route table: did the page actually move from dynamic to static, or did you just add code? `next build` prints the answer per route, and it disagrees with intuition more often than you'd expect.
+</Callout>
+
+<Accordions>
+  <Accordion title="Read the artifact, not the diff">
+    A change that "should" make a route static often doesn't, because one runtime read high in the tree keeps the whole subtree dynamic. The build output is the ground truth.
+  </Accordion>
+  <Accordion title="One runtime read poisons the shell">
+    Reading cookies or headers in a root layout makes every descendant per-request, no matter how much of the page is otherwise cacheable. Push those reads as low as they'll go.
+  </Accordion>
+  <Accordion title="Streaming is a boundary decision, not a flag">
+    Wrapping the whole page in one Suspense boundary passes validation while leaving the shell empty. The boundary belongs as close to the dynamic read as you can put it, so the surrounding content stays prerendered.
+  </Accordion>
+</Accordions>

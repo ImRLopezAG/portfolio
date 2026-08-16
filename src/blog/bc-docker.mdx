@@ -14,7 +14,25 @@ tags:
 
 Business Central (BC) is a powerful ERP solution, and running it in a Docker container can simplify deployment and management. This guide provides a PowerShell script to create a Business Central container with various configurations.
 
+<Callout type="warn">
+The reason to containerize BC isn't convenience — it's that a BC environment is a stateful, licence-bound, version-pinned box. Rebuilding one by hand takes an afternoon and is never quite the same twice. A script makes it reproducible; Docker makes it disposable.
+</Callout>
+
+<Mermaid chart={`
+flowchart LR
+  A["Artifact URL<br/>version + country"] --> B["bccontainerhelper<br/>New-BcContainer"]
+  B --> C["Container<br/>service tier + SQL"]
+  C --> D["Published apps<br/>your extensions"]
+  L["Licence file"] --> B
+  X["Auth mode<br/>NavUserPassword / Windows"] --> B
+`} />
+
 ### Prerequisites
+
+<Callout type="info">
+Two of these bite most often: the container helper module must be current (artifact URLs change with each BC release), and PowerShell must be elevated — `New-BcContainer` fails late, after a long download, if it isn't.
+</Callout>
+
 
 - Docker installed and running
 - PowerShell with administrative privileges
@@ -253,3 +271,24 @@ function Add-BcContainer {
     }
 }
 ```
+
+## What this doesn't solve
+
+<Accordions>
+  <Accordion title="Container drift">
+    A container you keep for weeks stops matching the script that made it — published apps, manual data, changed settings. Treat containers as disposable and the script as the source of truth. If recreating is painful, that's the signal something lives in the container that should live in source.
+  </Accordion>
+  <Accordion title="Licence and artifact expiry">
+    Artifact URLs are version- and country-pinned, and licences expire. A script that worked last quarter can fail today for reasons that have nothing to do with the script. Pin the artifact deliberately rather than always taking latest.
+  </Accordion>
+  <Accordion title="Data you actually care about">
+    Anything you'd be upset to lose does not belong inside the container. Export it, seed it, or point the container at external SQL — otherwise the disposability you just bought is a liability.
+  </Accordion>
+  <Accordion title="Team reproducibility">
+    A script on one machine is a personal tool. Committed to the repo with the artifact version pinned, it becomes the environment definition — the same shift as any other infrastructure-as-code move.
+  </Accordion>
+</Accordions>
+
+<Callout type="info">
+The goal is that "my environment is broken" stops being a debugging session and becomes a one-line rebuild.
+</Callout>

@@ -1,5 +1,6 @@
 import { createMDX } from 'fumadocs-mdx/next'
 import type { NextConfig } from 'next'
+import createNextIntlPlugin from 'next-intl/plugin'
 
 const validImagesCdnHosts = [
 	'cdn.jsdelivr.net',
@@ -67,4 +68,22 @@ const nextConfig: NextConfig = {
 
 const withMDX = createMDX({})
 
-export default withMDX(nextConfig)
+/**
+ * `extract: true` enables `useExtracted`/`getExtracted`: a build-time loader
+ * rewrites those calls into keyed `useTranslations` and keeps `messages/*.json`
+ * in sync, so keys are never hand-written. Experimental in next-intl.
+ */
+const withNextIntl = createNextIntlPlugin({
+	requestConfig: './src/i18n/request.ts',
+	experimental: {
+		srcPath: './src',
+		messages: {
+			format: 'json',
+			path: './messages',
+			locales: ['en', 'es'],
+			sourceLocale: 'en',
+		},
+	},
+})
+
+export default withNextIntl(withMDX(nextConfig))

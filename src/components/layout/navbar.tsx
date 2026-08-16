@@ -21,18 +21,21 @@ import {
 } from '@ui/sheet'
 import { Menu } from 'lucide-react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
+import { LocaleToggle } from './locale-toggle'
 import { ModeToggle } from './theme'
 
 export function Navbar() {
+	const t = useTranslations('nav')
 	const [isOpen, setIsOpen] = useState(false)
 	const navLinks = [
-		{ href: '/#home', label: 'Home' },
-		{ href: '/#experience', label: 'Experience' },
-		{ href: '/#skills', label: 'Skills' },
-		{ href: '/#projects', label: 'Projects' },
-		{ href: '/blog', label: 'Blog' },
-		{ href: '/#contact', label: 'Contact' },
+		{ href: '/#home', label: t('home') },
+		{ href: '/#experience', label: t('experience') },
+		{ href: '/#skills', label: t('skills') },
+		{ href: '/#projects', label: t('projects') },
+		{ href: '/blog', label: t('blog') },
+		{ href: '/#contact', label: t('contact') },
 	] as const
 
 	return (
@@ -45,6 +48,7 @@ export function Navbar() {
 					{/* <!-- Mobile --> */}
 					<div className='flex items-center gap-2 lg:hidden'>
 						<Sheet open={isOpen} onOpenChange={setIsOpen}>
+							<LocaleToggle />
 							<ModeToggle />
 							<SheetTrigger asChild>
 								<Menu
@@ -81,6 +85,7 @@ export function Navbar() {
 
 								<SheetFooter className='flex-col items-start justify-start sm:flex-col'>
 									<Separator className='mb-2' />
+									<LocaleToggle />
 									<ModeToggle />
 								</SheetFooter>
 							</SheetContent>
@@ -108,6 +113,7 @@ export function Navbar() {
 					</NavigationMenu>
 
 					<div className='hidden items-center lg:flex'>
+						<LocaleToggle />
 						<ModeToggle />
 					</div>
 				</div>

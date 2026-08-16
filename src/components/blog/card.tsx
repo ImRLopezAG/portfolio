@@ -1,12 +1,14 @@
 import { Badge } from '@ui/badge'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@ui/card'
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 import type { source } from '@/lib/source'
 
 interface Props {
 	post: ReturnType<typeof source.getPages>[number]
 }
-export function BlogCard({ post: { slugs, data } }: Props) {
+export async function BlogCard({ post: { slugs, data } }: Props) {
+	const t = await getTranslations('blog')
 	return (
 		<Card className='overflow-hidden'>
 			<CardHeader className='pb-2'>
@@ -30,7 +32,7 @@ export function BlogCard({ post: { slugs, data } }: Props) {
 					href={`/blog/${slugs.join('/')}`}
 					className='font-medium text-primary hover:underline'
 				>
-					Read more →
+					{t('readMore')}
 				</Link>
 				{data.tags && (
 					<div className='mt-2 flex w-4/5 flex-wrap justify-end gap-2'>

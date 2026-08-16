@@ -4,6 +4,8 @@ import { HeroSection } from '@landing/sections/hero'
 import { TechStack } from '@landing/sections/tech-stack'
 import { WorkSection } from '@landing/sections/work'
 
+export const instant = false
+
 export default async function Home() {
 	return (
 		<section className='container z-10 mx-auto px-4'>

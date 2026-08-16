@@ -1,6 +1,7 @@
 import { nestedToFlat } from '@json-render/core'
 import { formatMonthRange } from '@lib/date'
 import { strapi } from '@services/strapi.service'
+import type { Locale } from '@/i18n/config'
 
 /**
  * Builds the @json-render/react-pdf document spec for the resume from the same
@@ -57,9 +58,9 @@ const subtitleRow = (left: string, right?: string): Node => ({
 	],
 })
 
-function buildDocument(): Node {
+function buildDocument(locale: Locale): Node {
 	const { basics, work, education, skills, languages, projects } =
-		strapi.profile()
+		strapi.profile(locale)
 
 	const linkedin = basics.profiles.find(
 		(p) => p.network.toLowerCase() === 'linkedin',
@@ -236,6 +237,8 @@ function buildDocument(): Node {
  * json-render consumes a *flat* `{ root, elements }` spec; `nestedToFlat` keys
  * the tree above into that shape.
  */
-export function buildResumeSpec() {
-	return nestedToFlat(buildDocument() as unknown as Record<string, unknown>)
+export function buildResumeSpec(locale: Locale) {
+	return nestedToFlat(
+		buildDocument(locale) as unknown as Record<string, unknown>,
+	)
 }

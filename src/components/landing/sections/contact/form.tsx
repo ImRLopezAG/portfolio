@@ -4,6 +4,7 @@ import { emailSchema } from '@lib/schemas/email'
 import { useCreateForm } from '@ui/form'
 import { Textarea } from '@ui/textarea'
 import { Send } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 import {
 	Card,
@@ -14,31 +15,35 @@ import {
 } from '@/components/ui/card'
 import { sendEmail } from './actions'
 export function ContactForm() {
-	const [Form] = useCreateForm(() => ({
-		resolver: zodResolver(emailSchema),
-		defaultValues: {
-			name: '',
-			subject: '',
-			email: '',
-			message: '',
-		},
-		onSubmit: async (email, form) => {
-			const { data, success } = await sendEmail(email)
-			if (!success) {
-				toast.error('Error sending email')
-				return
-			}
-			if (data) {
-				toast.success('Email sent successfully')
-				form.reset()
-			}
-		},
-	}), [])
+	const t = useTranslations('contact')
+	const [Form] = useCreateForm(
+		() => ({
+			resolver: zodResolver(emailSchema),
+			defaultValues: {
+				name: '',
+				subject: '',
+				email: '',
+				message: '',
+			},
+			onSubmit: async (email, form) => {
+				const { data, success } = await sendEmail(email)
+				if (!success) {
+					toast.error('Error sending email')
+					return
+				}
+				if (data) {
+					toast.success('Email sent successfully')
+					form.reset()
+				}
+			},
+		}),
+		[],
+	)
 
 	return (
 		<Card className='translucent w-full max-w-3xl'>
 			<CardHeader>
-				<CardTitle>Send Me a Message</CardTitle>
+				<CardTitle>{t('formTitle')}</CardTitle>
 				<CardDescription>
 					I&apos;ll get back to you as soon as possible
 				</CardDescription>
@@ -53,9 +58,12 @@ export function ContactForm() {
 									name='name'
 									render={({ field }) => (
 										<Form.Item>
-											<Form.Label>Name</Form.Label>
+											<Form.Label>{t('name')}</Form.Label>
 											<Form.Control>
-												<Form.Input placeholder='Your name' {...field} />
+												<Form.Input
+													placeholder={t('namePlaceholder')}
+													{...field}
+												/>
 											</Form.Control>
 											<Form.Message />
 										</Form.Item>
@@ -67,11 +75,11 @@ export function ContactForm() {
 									name='email'
 									render={({ field }) => (
 										<Form.Item>
-											<Form.Label>Email</Form.Label>
+											<Form.Label>{t('email')}</Form.Label>
 											<Form.Control>
 												<Form.Input
 													type='email'
-													placeholder='Your email'
+													placeholder={t('emailPlaceholder')}
 													{...field}
 												/>
 											</Form.Control>
@@ -86,10 +94,10 @@ export function ContactForm() {
 								name='subject'
 								render={({ field }) => (
 									<Form.Item>
-										<Form.Label>Subject</Form.Label>
+										<Form.Label>{t('subject')}</Form.Label>
 										<Form.Control>
 											<Form.Input
-												placeholder='Subject of your message'
+												placeholder={t('subjectPlaceholder')}
 												{...field}
 											/>
 										</Form.Control>
@@ -103,10 +111,10 @@ export function ContactForm() {
 								name='message'
 								render={({ field }) => (
 									<Form.Item className='space-y-2'>
-										<Form.Label>Message</Form.Label>
+										<Form.Label>{t('message')}</Form.Label>
 										<Form.Control>
 											<Textarea
-												placeholder='Your message...'
+												placeholder={t('messagePlaceholder')}
 												rows={5}
 												{...field}
 											/>

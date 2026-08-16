@@ -1,0 +1,345 @@
+---
+title: A Year of Shipping with AI
+description: From three months per CRUD app to running five projects in parallel — the tools, the workflow, and the one opinion I refuse to give up.
+category: AI
+date: Aug 15, 2026
+tags:
+  - AI
+  - Developer Experience
+  - Workflow
+  - Agentic Coding
+  - Tooling
+---
+
+A year ago, a simple application — twelve tables, some business logic, nothing exotic — took me two to three months.
+
+Today that's not the unit of work anymore. And the interesting part isn't that I type faster. It's that the job changed underneath me: I went from writing code most of the day to making decisions most of the day, and somewhere in there I became Technical Lead Engineer.
+
+This is the honest account of how that happened, including the parts I'm still bad at.
+
+<Callout type="info">
+The headline: AI didn't make me write code faster. It moved the bottleneck from **producing** code to **deciding and verifying**. Everything below follows from that.
+</Callout>
+
+## What changed about learning
+
+The old path into a language was strictly layered. You started at the top — the syntax everyone writes — then slowly went deeper: idioms, architecture, tooling, the tricks that separate someone who *uses* a language from someone who *knows* it. That descent took years.
+
+That order inverted. I no longer need to memorize a language end to end. What I need is to understand **how it behaves**: its idioms, its escape hatches, its linters, the low-level details that used to be the last thing you learned.
+
+<Callout type="warn">
+This is not the same as "you don't need to learn." It's that the expensive knowledge moved. Syntax is cheap now. Knowing *why* a design is wrong is not.
+</Callout>
+
+Frameworks noticed. A new framework now ships with AI affordances built in — skills, documented migration paths between comparable tools, machine-readable conventions. Moving between ecosystems stopped being a rewrite and became a translation.
+
+## The stack that actually works
+
+Some tools are dramatically better to build with when AI is in the loop — not because they're trendy, but because they're mature, strongly typed, and well represented in what the models already know.
+
+<Accordions>
+  <Accordion title="Convex — data and sync">
+    My default now. It's not just a database; the client-side sync layer means keeping everything up to date stops being something I write. That's an entire category of code — subscriptions, cache invalidation, optimistic updates — that I no longer hand-roll.
+  </Accordion>
+  <Accordion title="PostgreSQL alongside it">
+    Splitting a Convex database and a Postgres database, or running both together, used to be an architectural argument. Now it's a decision I make on purpose and implement quickly. Relational where relational belongs, reactive where reactive belongs.
+  </Accordion>
+  <Accordion title="Redis — caching">
+    Unchanged and still excellent. Some things don't need reinventing.
+  </Accordion>
+  <Accordion title="WorkOS — auth">
+    Integrates cleanly with Next.js, React, and Convex, and I can combine all three without fighting it. Auth is the classic place where a bad integration poisons everything downstream.
+  </Accordion>
+  <Accordion title="oRPC — typed contracts">
+    Keeps the HTTP layer correct by construction. Contracts mean the types aren't a suggestion — they're enforced across the boundary. This matters more with AI, not less: a generated handler that violates the contract fails immediately instead of silently.
+  </Accordion>
+  <Accordion title="Hono — the HTTP layer">
+    Mature, small, and extremely AI-friendly. The models know it well, which means less time correcting hallucinated APIs.
+  </Accordion>
+  <Accordion title="TanStack Start / Next.js / React">
+    The frontend layer. Well-documented ecosystems with strong conventions — exactly the conditions where generated code lands close to correct.
+  </Accordion>
+</Accordions>
+
+<Callout type="info">
+The pattern: **mature, typed, conventional tools produce better AI output.** A framework the model knows deeply and a contract that fails loudly are worth more than any prompt technique.
+</Callout>
+
+## The opinion I won't give up: read the code
+
+There's a loud take going around podcasts and developer social media that you shouldn't read the code anymore. I think that's wrong, and I think it's the fastest way to build something you can't maintain.
+
+To be precise: you shouldn't obsess over every line. But you absolutely must know **what the AI is doing to your codebase.**
+
+Here's the concrete reason. Left alone, it will not use the file structure you want. That sounds trivial. It isn't.
+
+<Tabs items={['What you get unattended', 'What the layering actually is']}>
+<Tab value="What you get unattended">
+
+<Files>
+  <Folder name="src" defaultOpen>
+    <Folder name="components" defaultOpen>
+      <File name="ProductForm.tsx" />
+      <File name="productHelpers.ts" />
+      <File name="api.ts" />
+      <File name="types.ts" />
+      <File name="utils2.ts" />
+    </Folder>
+    <File name="db.ts" />
+  </Folder>
+</Files>
+
+Everything runs. Nothing can leave. `utils2.ts` is imported by nine files, `api.ts` reaches the database directly, and pulling "catalog" out means reading all of it first.
+
+</Tab>
+<Tab value="What the layering actually is">
+
+<Files>
+  <Folder name="convex" defaultOpen>
+    <Folder name="domain" defaultOpen>
+      <Folder name="catalog" defaultOpen>
+        <File name="schema.ts" />
+        <File name="rules.ts" />
+        <File name="commands.ts" />
+        <File name="queries.ts" />
+        <File name="pricing.ts" />
+        <File name="triggers.ts" />
+      </Folder>
+      <Folder name="shared">
+        <File name="command.ts" />
+        <File name="query.ts" />
+        <File name="fixedPoint.ts" />
+      </Folder>
+    </Folder>
+    <Folder name="api">
+      <File name="catalog.ts" />
+    </Folder>
+  </Folder>
+</Files>
+
+`schema` owns the shape, `rules` owns the invariants, `commands` and `queries` are separated on purpose, and `api/catalog.ts` is the only file that knows it's Convex. The domain doesn't import the transport.
+
+</Tab>
+</Tabs>
+
+<Callout type="warn">
+A good file structure is what makes a module possible to decouple later. If you can't lift a piece of your application out and drop it somewhere else, you don't have an architecture — you have a pile that happens to run.
+</Callout>
+
+The same goes for the patterns people treat as forgotten — dependency injection, command/query separation. They're not obsolete. They're exactly what keeps a fast-moving codebase from calcifying, and they're precisely what generated code will skip unless you insist.
+
+Concretely, this is what "insist" looks like. Every mutation in the ERP I'm building goes through one registry, and the registry — not the handler — owns permission, data classification, the tenant guard, and idempotency:
+
+```ts title="convex/domain/catalog/commands.ts"
+export const catalogCommands = new TenantCommand({
+  defaults: {
+    permission: 'erp.catalog.manage',
+    classification: 'restricted_mutable_master',
+    guard: requireCatalogTenant,
+  },
+  operations: {
+    'catalog.product.create': catalogOperation(
+      createProductCommandSchema,
+      products.publicDto,
+      'product',
+    ),
+    'catalog.sku.create': catalogOperation(
+      createSkuCommandSchema,
+      skuDto,
+      'sku',
+    ),
+  },
+})
+```
+
+The transport layer stays thin on purpose — it spreads the command's input schema and returns the public DTO, and that's all it knows:
+
+```ts title="convex/api/catalog.ts"
+export const createProduct = tenantMutation({
+  args: {
+    idempotencyKey,
+    ...products.commandInput.shape,
+  },
+  returns: products.publicDto,
+  handler: (ctx, args) => createProductCommand(ctx, args),
+})
+```
+
+<Callout type="info">
+This is the part an agent will not invent for you. Ask for "create a product mutation" and you get a handler that validates inline, hits the database, and forgets the audit entry. The registry is the thing you have to insist on — once it exists, every generated operation inherits permissions, auditing, and idempotency for free.
+</Callout>
+
+
+This is the line between a good engineer and someone who merely produces working code. It's also the line between a vibe coder and an application engineer. Those are different jobs.
+
+## The journey: five stages
+
+Going all-in happened over the last seven or eight months, and it moved through distinct stages. Each one broke a ceiling the previous one had.
+
+<StageDeck
+  caption="Swipe, or use the arrows — each stage broke a ceiling the one before it had."
+  stages={[
+    { label: 'tab completion', note: 'never left the file', headline: 'Completions and editor chat', body: "The starting point. Completions plus \"look at this, check that\" in the sidebar. Not really an integration — I wrote code, it wrote code, and we alternated. Useful, but it never left the file I was in." },
+    { label: 'editor extensions', note: 'context arrived', headline: 'Codex and Claude inside the editor', body: 'The jump here was context: everything was referenced in the actual codebase instead of pasted into a chat window. That alone removed most of the friction, and it became the daily loop.' },
+    { label: 'CLIs', note: 'first long runs', headline: 'Terminal agents, and the discomfort of waiting', body: "Where I learned the actual processes — including skills and plugins, which I hadn't been using at all. The agent would work for thirty minutes and I wasn't touching code. It didn't feel productive. It took real adjustment to accept that watching a system execute, verify and test is the work now." },
+    { label: 'skills + loops', note: 'plan then iterate', headline: 'The workflow that changed everything', body: 'Not a longer prompt — a different shape entirely. Get grilled, produce a specification, then let it iterate until every suite passes. A single loop can run four or five hours.' },
+    { label: 'agentic UIs', note: '4-5 in parallel', headline: 'Breaking the one-thing-at-a-time ceiling', body: 'CLIs have a hard limit: one thing at a time. Working on a second project meant another tab and a lot of tedium. Agentic UIs broke that — once it clicked I could run four or five projects simultaneously, each in its own loop.' }
+  ]}
+/>
+
+## The loop: grill, plan, iterate
+
+This is the single highest-leverage change I made, and it's worth describing precisely because it's not what most people mean by "using AI."
+
+<LoopSession
+  cwd="~/dev/one-office"
+  prompt="add catalog.price-list-item.create — mirror catalog.sku.create"
+  finalLabel="all suites green"
+/>
+
+<Tabs items={['1 · The grill', '2 · The plan', '3 · The loop']}>
+<Tab value="1 · The grill">
+
+Before any code, the AI interrogates me. I don't hand-roll this — I run [grill-me](https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me), Matt Pocock's interrogation skill. It refuses to accept a vague answer, keeps a decision tree of everything still unresolved, and drills into each branch until we reach shared understanding:
+
+```txt
+- Which layer owns this: the contract, the service, or the UI?
+- You said "cache it" — invalidate on write, or TTL? What's the staleness budget?
+- Does this need to work offline, or is optimistic UI enough?
+- You're NOT touching auth here, correct?
+- What should happen when the provider returns a 429?
+```
+
+Nothing is written until every one of these has an answer. The skill's whole job is to be annoying *now* so the loop isn't lost *later*.
+
+</Tab>
+<Tab value="2 · The plan">
+
+The answers become a specification, not a summary — guidelines, file targets, the pattern to mirror, and the exit condition:
+
+```md
+## U3 — catalog.price-list-item.create
+Files:    convex/domain/catalog/{schema,rules,commands}.ts
+          convex/api/catalog.ts
+Pattern:  mirror catalog.sku.create — same TenantCommand operation shape
+Rules:    effective range must not overlap an existing item on the same list;
+          money parsed through parseDecimal at FIXED_POINT_SCALES.price
+Expose:   tenantMutation({ args: { idempotencyKey, ...commandInput.shape },
+          returns: publicDto })
+Verify:   domain tests green, including an overlap rejection case
+```
+
+</Tab>
+<Tab value="3 · The loop">
+
+Then it runs the plan and keeps correcting until the exit condition holds. This part rides on the [compound-engineering plugin](https://github.com/EveryInc/compound-engineering-plugin) — a set of skills that hand off to each other: `ce-plan` turns the grill answers into the spec, `ce-work` executes it end to end, `ce-code-review` checks the result, and `lfg` chains the whole pipeline to an open PR:
+
+```txt
+ce-plan → ce-work → run suites → read failures → correct → repeat
+exit when: every suite green, no unresolved plan item
+```
+
+A single loop can run four or five hours. The reason it works isn't the loop — it's that the plan left nothing ambiguous to drift on, and each skill compounds on what the previous one captured.
+
+</Tab>
+</Tabs>
+
+The stages:
+
+1. **Get grilled.** Before any code, the AI interrogates *me*: what am I implementing, how, what am I using, what am I explicitly not using, what shouldn't work this way. It's a quiz whose only purpose is to surface the decisions I hadn't actually made yet.
+2. **Produce the plan.** The answers become a detailed action plan — guidelines, code examples, flow diagrams. Not a summary. A specification.
+3. **Run the loop.** Then it executes the whole plan, repeating and correcting until every test suite passes and everything holds together. A single loop can run four or five hours.
+
+<Callout type="info">
+The order is the point. Most of the value is created **before any code is written**, in the grilling step. The loop only works because the plan is unambiguous.
+</Callout>
+
+## What the agentic UI actually looks like
+
+![The agentic IDE: projects and threads on the left, the active run with its changed files in the middle, and the composer with model, effort and access controls.](/blog-agentic-ui.png)
+
+An IDE for agents rather than for files. Threads on the left grouped by project, the active conversation in the center, and a right-hand panel that switches between a browser to test the app, a git diff, open pull requests, and the files themselves. A terminal sits underneath, exactly where an editor would put it.
+
+That layout is what made parallelism possible. Running five loops at once is only sane if you can see what each one is doing.
+
+## Scale, and being honest about tests
+
+Two numbers that show how much the ceiling moved.
+
+<Race
+  badge='the same task · five ways'
+  title='WHO DOES THE ITERATING, BY MODE'
+  score={[5, 5]}
+  scoreLabel='modes reaching flow'
+  axis={["task start", "iterating", "recovering", "task done"]}
+  duration={3800}
+  legend={[
+    { cell: 1, label: 'you stepping in' },
+    { cell: 2, label: 'the AI iterating' },
+    { cell: 3, label: 'second project, another layer' },
+    { cell: 4, label: 'third project, another layer' }
+  ]}
+  lanes={[
+    { label: "tab completion", meta: "editor", pace: "steps", greenAt: 11, cells: [2, 1, 1, 2, 1, 1, 2, 2, 1, 1, 2, 1] },
+    { label: "editor extensions", meta: "IDE", pace: "hops", greenAt: 15, cells: [2, 2, 2, 1, 1, 2, 2, 2, 1, 1, 1, 2, 2, 2, 1, 2, 2, 2] },
+    { label: "CLIs", meta: "terminal", pace: "bigswings", greenAt: 20, cells: [1, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2] },
+    { label: "skills + loops", meta: "planned", pace: "leaps", greenAt: 21, cells: [2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2] },
+    { label: "agentic UIs", meta: "parallel", pace: "glide", greenAt: 20,
+      cells: [2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2],
+      layers: [
+        [3, 3, 3, 1, 3, 3, 3, 3, 1, 3, 3, 1, 3, 3, 3, 3, 3, 1, 3, 3, 3, 3, 1, 3, 3, 3, 1, 3, 3, 3, 3, 1, 3, 3, 3, 3, 3, 1, 3, 3, 3, 1, 3, 3, 3, 3, 3, 3],
+        [4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 1, 4, 4, 4, 1, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4]
+      ] }
+  ]}
+/>
+
+
+<Callout type="warn">
+Burning 100 million tokens used to feel like a lot. These days I can go through **1.5 billion tokens in a day** across parallel projects. The constraint stopped being how fast I work and became how much I can meaningfully review.
+</Callout>
+
+On testing: I used to write and run very few tests. Now my applications carry **300 to 400 test suites**, which sounds robust — and it partly is.
+
+But I'll be straight about the weakness. A large share of those tests are mocks.
+
+<TestLedger
+  caption="Suite count and real confidence are different axes — mine is mostly the first row."
+  rows={[
+    { name: 'Mocked unit test', confidence: 35, proves: "the unit's logic, given the inputs I imagined", misses: 'whether the real collaborator returns that shape at all' },
+    { name: 'Integration test', confidence: 80, proves: 'the layers actually agree', misses: 'slower, and harder to pin a failure to one cause' },
+    { name: 'What I have · ~400 suites', confidence: 40, current: true, proves: 'the pieces agree with my assumptions about each other', misses: 'the seam where things really break' }
+  ]}
+/>
+
+They exercise the happy path rather than the system's real behavior, so they don't prove the application works end to end; they prove the pieces agree with my assumptions about each other. That's a real gap, and it's my main thing to fix.
+
+<Callout type="info">
+More tests is not the same as more confidence. A suite made of mocks tells you your code is internally consistent, not that it's correct.
+</Callout>
+
+## What it did to the job
+
+The part I didn't expect: the further I got, the less the work was about code.
+
+I moved from deciding variable names and file layouts — where a lot of developers get stuck — to deciding what we build, how the system should be shaped, and which trade-offs the team accepts. That shift is why I ended up as Technical Lead Engineer. I advanced quickly, but not because I produce more code. Because I spend the day making decisions that used to sit above me.
+
+<RoleShift
+  outcome="Technical Lead Engineer"
+  caption="Share of the day, by phase. The code never disappeared — who writes it did."
+  phases={[
+    { label: 'writing code most of the day', code: 85 },
+    { label: 'reviewing and directing agents', code: 55 },
+    { label: 'architecture and product decisions', code: 25 },
+    { label: 'today', code: 10 }
+  ]}
+/>
+
+## Where I've landed
+
+- **Pick tools the models know well.** Mature, typed, conventional. Convex, Hono, oRPC, TanStack Start, WorkOS, Redis, Postgres.
+- **Plan before generating.** Get quizzed, produce a real specification, then loop. The value is created before the first line.
+- **Read what it writes.** Not every line — but always the structure, the boundaries, and the file layout. That's what you'll have to maintain.
+- **Keep the patterns.** Dependency injection and command/query separation aren't legacy. They're what makes a fast codebase survivable.
+- **Measure confidence, not volume.** 400 mocked tests are not 400 proofs.
+
+The speedup is real. It's also entirely conditional on being able to tell good output from bad — and that skill is now the job.

@@ -1,3 +1,4 @@
+import { seo } from '@lib/seo'
 import {
 	DocsBody,
 	DocsDescription,
@@ -7,12 +8,14 @@ import {
 import { createRelativeLink } from 'fumadocs-ui/mdx'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { getLocale } from 'next-intl/server'
 import { getMDXComponents } from '@/components/mdx'
 import { source } from '@/lib/source'
-import { seo } from '@lib/seo'
+
+export const instant = false
 export default async function Page(props: PageProps<'/blog/[[...slug]]'>) {
 	const params = await props.params
-	const page = source.getPage(params.slug)
+	const page = source.getPage(params.slug, await getLocale())
 	if (!page) notFound()
 
 	const MDX = page.data.body
@@ -52,7 +55,7 @@ export async function generateMetadata(
 	props: PageProps<'/blog/[[...slug]]'>,
 ): Promise<Metadata> {
 	const params = await props.params
-	const page = source.getPage(params.slug)
+	const page = source.getPage(params.slug, await getLocale())
 	if (!page) notFound()
 
 	return seo({

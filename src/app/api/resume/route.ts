@@ -4,6 +4,7 @@ import { renderToBuffer } from '@json-render/react-pdf/render'
 import { buildResumeSpec } from '@lib/resume'
 import { strapi } from '@services/strapi.service'
 import { NextResponse } from 'next/server'
+import { getLocale } from 'next-intl/server'
 
 // @react-pdf/renderer needs Node built-ins, so this must stay on the default
 // Node runtime — `cacheComponents` rejects an explicit `runtime` segment config.
@@ -13,10 +14,11 @@ function filename(name: string) {
 }
 
 export async function GET() {
-	const { basics } = strapi.profile()
+	const locale = await getLocale()
+	const { basics } = strapi.profile(locale)
 
 	try {
-		const pdf = await renderToBuffer(buildResumeSpec())
+		const pdf = await renderToBuffer(buildResumeSpec(locale))
 
 		return new NextResponse(new Uint8Array(pdf), {
 			headers: {

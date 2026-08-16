@@ -53,13 +53,34 @@ function MermaidContent({ chart }: { chart: string }) {
 		}),
 	)
 
+	/**
+	 * Mermaid emits `width="100%"` with the intrinsic size as an inline
+	 * `max-width`, so a diagram wider than the article is scaled down until its
+	 * labels are unreadable. Pin the width to the viewBox instead and let the
+	 * wrapper scroll — dropping the attribute alone isn't enough, since an SVG
+	 * without a width still resolves to 100% of its container.
+	 */
+	const intrinsicWidth = Number(
+		svg.match(/viewBox="[\d.]+ [\d.]+ ([\d.]+) [\d.]+"/)?.[1] ?? 0,
+	)
+	const sized = intrinsicWidth
+		? svg
+				.replace(/(<svg[^>]*?)\s+width="[^"]*"/, '$1')
+				.replace(
+					/(<svg[^>]*?)\s+style="[^"]*"/,
+					`$1 style="width:${intrinsicWidth}px;max-width:none"`,
+				)
+		: svg
+
 	return (
-		<div
-			ref={(container) => {
-				if (container) bindFunctions?.(container)
-			}}
-			// biome-ignore lint/security/noDangerouslySetInnerHtml: Here we trust the mermaid library to generate safe SVG
-			dangerouslySetInnerHTML={{ __html: svg }}
-		/>
+		<div className='-mx-2 overflow-x-auto px-2 [&_svg]:max-w-none!'>
+			<div
+				ref={(container) => {
+					if (container) bindFunctions?.(container)
+				}}
+				// biome-ignore lint/security/noDangerouslySetInnerHtml: Here we trust the mermaid library to generate safe SVG
+				dangerouslySetInnerHTML={{ __html: sized }}
+			/>
+		</div>
 	)
 }
