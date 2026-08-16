@@ -14,7 +14,7 @@ export async function WorkSection() {
 	const { projects } = strapi.profile(await getLocale())
 	return (
 		<LandingSection id='projects' title={t('title')}>
-			<div className='grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-6'>
+			<div className='grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-6'>
 				{projects.map((project) => (
 					<Work
 						key={project.id}
