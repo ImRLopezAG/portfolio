@@ -5,11 +5,14 @@ import { Link } from '@ui/link'
 import { AlbumIcon, FileText, Terminal } from 'lucide-react'
 import Image from 'next/image'
 import { getLocale, getTranslations } from 'next-intl/server'
-import { Tech } from './tech-stack/tech'
+import { DEFAULT_LOCALE, isLocale } from '@/i18n/config'
+import { SkillIcon } from './tech-stack/skill-icon'
 
 export async function HeroSection() {
 	const t = await getTranslations('hero')
-	const { basics, skills } = strapi.profile(await getLocale())
+	const activeLocale = await getLocale()
+	const locale = isLocale(activeLocale) ? activeLocale : DEFAULT_LOCALE
+	const { basics, skills } = strapi.profile(locale)
 	const orbitSkills = skills.slice(0, 6) // Take top 6 skills for the orbit
 
 	return (
@@ -102,7 +105,7 @@ export async function HeroSection() {
 						    query changes with the profile data, so a cached PDF can never
 						    survive an edit. */}
 						<Link
-							href={`/api/resume?v=${strapi.version()}`}
+							href={`/api/resume?locale=${locale}&v=${strapi.version()}`}
 							prefetch={false}
 							target='_blank'
 							rel='noopener noreferrer'
@@ -152,12 +155,7 @@ export async function HeroSection() {
 										}}
 									>
 										<div className='animate-[spin_20s_linear_infinite_reverse]'>
-											<Tech
-												name={skill.logo || skill.name}
-												invert={skill.invert}
-												className='h-6 w-6'
-												priority
-											/>
+											<SkillIcon skill={skill} className='h-6 w-6' priority />
 										</div>
 									</div>
 								)

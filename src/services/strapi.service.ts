@@ -6,22 +6,22 @@ const data = {
 	basics: {
 		name: 'Angel Gabriel Lopez Solano',
 		label: {
-			en: 'Full-Stack developer with +3 years of experience & basketball player',
-			es: 'Desarrollador Full-Stack con +3 años de experiencia y jugador de baloncesto',
+			en: 'AI Engineer · Forward Deployed Engineer',
+			es: 'Ingeniero de IA · Forward Deployed Engineer',
 		},
 		url: 'https://github.com/ImRLopezAG',
 		phone: '8492679236',
 		summary: [
 			{
 				text: {
-					en: 'Results-driven software developer with 3+ years of experience crafting impactful, real-world applications in .NET, Next.js, and Dynamics 365. Recognized for designing reliable, scalable solutions in areas such as citizen safety, education, and fintech. Blending technical expertise with a proactive, solution-oriented mindset.',
-					es: 'Desarrollador de software orientado a resultados con más de 3 años construyendo aplicaciones reales en .NET, Next.js y Dynamics 365. Reconocido por diseñar soluciones fiables y escalables en áreas como seguridad ciudadana, educación y fintech, combinando criterio técnico con una mentalidad proactiva.',
+					en: 'AI engineer with 3+ years of software development experience, focused on forward-deployed engineering, ontology-driven applications, and retrieval-augmented generation (RAG). I translate business requirements and domain knowledge into AI-powered products.',
+					es: 'Ingeniero de IA con más de 3 años de experiencia en desarrollo de software, enfocado en forward-deployed engineering, aplicaciones basadas en ontologías y generación aumentada por recuperación (RAG). Convierto requisitos de negocio y conocimiento del dominio en productos con IA.',
 				},
 			},
 			{
 				text: {
-					en: 'Skilled in collaborative and independent work environments, consistently delivering clean, efficient code that exceeds expectations. Eager to contribute technical insights and innovation to a dynamic team.',
-					es: 'Cómodo trabajando de forma autónoma o en equipo, entregando código limpio y eficiente de forma constante. Con ganas de aportar criterio técnico e innovación a un equipo dinámico.',
+					en: 'My work spans LLM agents, real-time voice workflows, semantic search, and integrations with existing systems. I connect data modeling, application development, and infrastructure to bring AI into practical business workflows.',
+					es: 'Mi trabajo abarca agentes basados en LLM, flujos de voz en tiempo real, búsqueda semántica e integraciones con sistemas existentes. Conecto modelado de datos, desarrollo de aplicaciones e infraestructura para incorporar IA a los procesos de negocio.',
 				},
 			},
 		],
@@ -49,6 +49,24 @@ const data = {
 			},
 		],
 	},
+	skills: [
+		'LLM Engineering',
+		'RAG',
+		'Ontology Modeling',
+		'AI Agents',
+		'Voice AI',
+		'Forward Deployed Engineering',
+		'Prompt Engineering',
+		'Embeddings & Semantic Search',
+		'LLM Evaluation',
+		'typescript',
+		'nextjs',
+		'openai',
+		'ai sdk',
+		'postgresql',
+		'docker',
+		'aws',
+	],
 	projects: [
 		{
 			name: 'Receptionist',

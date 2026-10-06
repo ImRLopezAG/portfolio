@@ -26,6 +26,9 @@ const nextConfig: NextConfig = {
 	// Both use React APIs (createContext) that are absent under the
 	// `react-server` condition, so they must resolve at runtime, not be bundled.
 	serverExternalPackages: ['@react-pdf/renderer', '@json-render/react-pdf'],
+	outputFileTracingIncludes: {
+		'/api/resume': ['./public/fonts/cv/*.ttf'],
+	},
 	images: {
 		remotePatterns: validImagesCdnHosts.map(
 			(host) => new URL(`https://${host}/**`),

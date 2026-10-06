@@ -2,7 +2,7 @@ import { LandingSection } from '@landing/section'
 import { cn } from '@lib/utils'
 import { strapi } from '@services/strapi.service'
 import { getLocale, getTranslations } from 'next-intl/server'
-import { Tech } from './tech'
+import { SkillIcon } from './skill-icon'
 export async function TechStack() {
 	const t = await getTranslations('techStack')
 	const { skills } = strapi.profile(await getLocale())
@@ -19,8 +19,8 @@ export async function TechStack() {
 								tech.color,
 							)}
 						>
-							<Tech name={tech.logo || tech.name} invert={tech.invert} />
-							<span className='font-medium text-sm'>
+							<SkillIcon skill={tech} />
+							<span className='wrap-break-word min-w-0 font-medium text-sm'>
 								{tech.name.toUpperCase()}
 							</span>
 						</div>

@@ -269,8 +269,66 @@ type SkillEntry = {
 	color: string
 	logo?: string
 	invert?: boolean
+	icon?: keyof typeof icons
 }
 const SKILL_MAP: Map<string, SkillEntry> = new Map([
+	[
+		'llm engineering',
+		{
+			name: 'LLM Engineering',
+			color: 'hover:border-violet-500/30',
+			icon: 'Brain',
+		},
+	],
+	['rag', { name: 'RAG', color: 'hover:border-blue-500/30', icon: 'Search' }],
+	[
+		'ontology modeling',
+		{
+			name: 'Ontology Modeling',
+			color: 'hover:border-cyan-500/30',
+			icon: 'Network',
+		},
+	],
+	[
+		'ai agents',
+		{ name: 'AI Agents', color: 'hover:border-violet-500/30', icon: 'Bot' },
+	],
+	[
+		'voice ai',
+		{ name: 'Voice AI', color: 'hover:border-rose-500/30', icon: 'AudioLines' },
+	],
+	[
+		'forward deployed engineering',
+		{
+			name: 'Forward Deployed Engineering',
+			color: 'hover:border-emerald-500/30',
+			icon: 'Workflow',
+		},
+	],
+	[
+		'prompt engineering',
+		{
+			name: 'Prompt Engineering',
+			color: 'hover:border-violet-500/30',
+			icon: 'MessageSquare',
+		},
+	],
+	[
+		'embeddings & semantic search',
+		{
+			name: 'Embeddings & Semantic Search',
+			color: 'hover:border-blue-500/30',
+			icon: 'Database',
+		},
+	],
+	[
+		'llm evaluation',
+		{
+			name: 'LLM Evaluation',
+			color: 'hover:border-amber-500/30',
+			icon: 'ClipboardCheck',
+		},
+	],
 	[
 		'tailwind',
 		{
@@ -398,6 +456,7 @@ const skillInput = z.union([
 			name: found?.name ?? name,
 			color: found?.color ?? 'border-blue-400 hover:border-blue-500/30',
 			logo: found?.logo,
+			icon: found?.icon,
 			invert: found?.invert ?? false,
 		}
 	}),
@@ -418,6 +477,7 @@ const skillInput = z.union([
 					found?.color ??
 					'border-blue-400 hover:border-blue-500/30',
 				logo: data.logo ?? found?.logo,
+				icon: found?.icon,
 				invert: data.invert ?? found?.invert ?? false,
 			}
 		}),
@@ -554,6 +614,7 @@ export const profile = z
 			),
 		}),
 		work: z.array(workEntry),
+		skills: skillsArray,
 		education: z.array(
 			z
 				.object({
@@ -600,6 +661,5 @@ export const profile = z
 	.transform((data) => ({
 		...data,
 		id: autoId('PF'),
-		skills: Array.from(SKILL_MAP.values()),
 		work: groupByCompany(data.work),
 	}))

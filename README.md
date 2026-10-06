@@ -20,6 +20,16 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## CV PDFs
+
+The Harvard-style CV uses `@json-render/react-pdf` and the same bilingual profile
+data as the portfolio. PDFs are generated dynamically on every request and sent
+directly to the browser with caching disabled. No static PDF or export step is needed.
+
+Open `/api/resume?locale=en` or `/api/resume?locale=es` to view either version.
+Without a locale parameter, the endpoint uses the visitor's selected language.
+The portfolio's CV link opens the version matching its current language.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
